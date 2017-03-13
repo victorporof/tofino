@@ -1,0 +1,39 @@
+{
+  "parser": "babel-eslint",
+
+  "plugins": [
+    "import",
+    "react",
+    "babel",
+    "jsx-a11y"
+  ],
+
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+
+  "rules": {
+    "max-len": ["error", 120],
+    // Allow underscore because we're using it to signal private class fields,
+    // enforced by the babel plugin `transform-private-underscore`.
+    "no-underscore-dangle": ["off"],
+    // Airbnb style has some highly opinionated syntax restrictions, such as
+    // preferring higher order functions instead of for..of loops.
+    "no-restricted-syntax": ["off"],
+    // Allow modules with a single named export. Since this is an ongoing WIP,
+    // it's often the case that modules are intended to export multiple symbols.
+    "import/prefer-default-export": ["off"],
+    // We prefer extending PureComponent instead of writing stateless functions.
+    "react/prefer-stateless-function": ["off"],
+    // React recommended rules allows arrow functions in component props. This
+    // is bad for PureComponents trying to avoid needless rerenders.
+    "react/jsx-no-bind": ["error", {
+      "ignoreRefs": false,
+      "allowArrowFunctions": false,
+      "allowBind": false
+    }]
+  }
+}

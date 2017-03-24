@@ -48,6 +48,7 @@ describe('modules', () => {
 
     const babelrc = await fs.readJson(path.join(Paths.ROOT_DIR, '.babelrc'));
     const eslintrc = commentJson.parse(await fs.readFile('.eslintrc'));
+    const stylelintrc = commentJson.parse(await fs.readFile('.stylelintrc'));
     const sources = await globby(globs);
     const modules = [
       ...await regexFiles(sources, IMPORTS_REGEX, REQUIRES_REGEX),
@@ -59,6 +60,8 @@ describe('modules', () => {
       eslintrc.parser,
       ...eslintrc.plugins.map(p => `eslint-plugin-${p}`),
       ...eslintrc.extends.filter(p => !p.startsWith('plugin:')).map(p => `eslint-config-${p}`),
+      ...stylelintrc.plugins,
+      ...stylelintrc.extends,
     ];
 
     // Stripping out the native node modules should leave only the third-party

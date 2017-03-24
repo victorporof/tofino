@@ -8,6 +8,7 @@ import gulpif from 'gulp-if';
 import debug from 'gulp-debug';
 import mocha from 'gulp-mocha';
 import eslint from 'gulp-eslint';
+import stylelint from 'gulp-stylelint';
 import fs from 'fs-promise';
 import yargs from 'yargs';
 import colors from 'colors/safe';
@@ -32,6 +33,21 @@ gulp.task('eslint', () => {
     .pipe(eslint.failAfterError());
 });
 
+gulp.task('stylelint', () => {
+  if (yargs.argv.unit) {
+    return Promise.resolve();
+  }
+  const glob = `${Paths.SRC_DIR}/**/*.css`;
+  return gulp.src(glob)
+    .pipe(debug({ title: `Running ${colors.cyan('stylelint')}:` }))
+    .pipe(stylelint({
+      reporters: [{
+        formatter: 'string',
+        console: true,
+      }],
+    }));
+});
+
 gulp.task('mocha', () => {
   const glob = yargs.argv.unit || `${Paths.SRC_DIR}/**/test/**/*.@(js|jsx)`;
   return gulp.src(glob)
@@ -44,5 +60,6 @@ gulp.task('mocha', () => {
 
 gulp.task('test', gulp.series(
   'mocha',
+  'stylelint',
   'eslint',
 ));

@@ -38,6 +38,13 @@ export default createActions({
         CLIENT: {
           HELLO: identity,
         },
+        APP: {
+          WINDOW: {
+            REQUESTED_MINIMIZE: identity,
+            REQUESTED_MAXIMIZE: identity,
+            REQUESTED_CLOSE: identity,
+          },
+        },
       },
     },
   },
@@ -47,6 +54,9 @@ export default createActions({
         APP: {
           WINDOW: {
             CREATE: identity,
+            MINIMIZE: identity,
+            MAXIMIZE: identity,
+            CLOSE: identity,
             DEVTOOLS: {
               OPEN: identity,
             },

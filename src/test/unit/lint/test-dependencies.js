@@ -42,6 +42,13 @@ describe('modules', () => {
       // Used for mocha test configuration in `build/tasks/task-test.js`.
       'babel-register',
 
+      // Entry paths for `build/webpack/config.browser-frontend.js` config file.
+      'font-awesome-webpack',
+
+      // Peer dependencies for `font-awesome-webpack`.
+      'font-awesome',
+      'less',
+
       // Peer dependencies for `url-loader`.
       'file-loader',
     ];
@@ -84,6 +91,11 @@ describe('modules', () => {
     const unimported = [
       // Entry paths for `browser-frontend.js` webpack config file.
       'babel-polyfill',
+      'font-awesome-webpack',
+
+      // Peer dependencies for font awesome.
+      'font-awesome',
+      'less',
     ];
 
     const sources = await globby(globs);

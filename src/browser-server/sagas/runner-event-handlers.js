@@ -16,6 +16,7 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 import uuid from 'uuid/v4';
 
 import { CHROME_URL } from '../constants/endpoints';
+import { DEFAULT_WIDTH, DEFAULT_HEIGHT } from '../constants/browser-window-defaults';
 import SharedActions from '../../shared/actions/shared-actions';
 import RunnerConnectionsModelActions from '../actions/runner-connections-model-actions';
 import WindowsModelActions from '../actions/windows-model-actions';
@@ -32,6 +33,8 @@ function* createWindow({ meta: runnerConn }) {
   yield call([runnerConn, runnerConn.send], SharedActions.commands.fromServer.toRunner.app.window.create({
     winId,
     url: `${CHROME_URL}?${frontendParams}`,
+    width: DEFAULT_WIDTH,
+    height: DEFAULT_HEIGHT,
     style: os === 'darwin' ? 'onlyTitleBarHiddenAndWindowControlsInset' : 'chromeless',
   }));
 }

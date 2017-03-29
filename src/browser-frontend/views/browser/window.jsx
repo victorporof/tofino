@@ -14,6 +14,8 @@ import React, { PureComponent } from 'react';
 import CSSModules from 'react-css-modules';
 
 import Styles from './window.css';
+import Chrome from './chrome';
+import Content from './content';
 
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -21,7 +23,10 @@ import Styles from './window.css';
 export default class Window extends PureComponent {
   render() {
     return (
-      <div styleName="window" />
+      <div styleName="window">
+        <Chrome />
+        <Content />
+      </div>
     );
   }
 }

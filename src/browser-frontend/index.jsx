@@ -14,9 +14,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+import './css/global.css';
+import './css/theme.css';
+
 import { store, client } from './global';
 import * as Meta from './constants/meta';
 import SharedActions from '../shared/actions/shared-actions';
+import PagesModelActions from './actions/pages-model-actions';
 import Window from './views/browser/window';
 
 const setupWs = async () => {
@@ -39,5 +43,10 @@ const setupFrontend = () => {
   ReactDOM.render(app, container);
 };
 
+const setupInitialState = () => {
+  store.dispatch(PagesModelActions.addPage());
+};
+
 setupWs();
 setupFrontend();
+setupInitialState();

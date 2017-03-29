@@ -23,3 +23,14 @@ export const WS_ROUTE = url.format({
   port: PORT,
   pathname: `${VERSION}/frontend`,
 });
+
+export const NEW_TAB_PAGE_URL = url.format({
+  protocol: 'http:',
+  slashes: true,
+  hostname: HOSTNAME,
+  port: PORT,
+  pathname: `${VERSION}/chrome/new-tab`,
+});
+
+// FIXME
+export const DEFAULT_PAGE_URL = 'https://www.mozilla.org/';

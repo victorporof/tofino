@@ -14,6 +14,7 @@ export default {
   ...defaultConfig,
   entry: [
     ...defaultConfig.entry,
+    'font-awesome-webpack',
     ENTRY_PATH,
   ],
   output: {

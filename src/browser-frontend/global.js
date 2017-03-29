@@ -15,6 +15,8 @@ import logger from './logger';
 import { configureStore } from '../shared/store/configure';
 import * as Endpoints from './constants/endpoints';
 import Client from '../shared/util/client';
+import RootReducer from './reducers/root-reducer';
+import RootSaga from './sagas/root-saga';
 
-export const store = configureStore();
+export const store = configureStore({ reducers: RootReducer, sagas: RootSaga });
 export const client = new Client({ endpoint: Endpoints.WS_ROUTE, store, logger });

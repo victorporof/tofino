@@ -17,8 +17,10 @@ import SharedActions from '../../shared/actions/shared-actions';
 
 const BROWSER_WINDOWS = new Map();
 
-function* createWindow({ meta: client, payload: { winId, url, style } }) {
+function* createWindow({ meta: client, payload: { winId, url, width, height, style } }) {
   const win = new electron.BrowserWindow({
+    width,
+    height,
     ...{
       chromeless: { frame: false },
       onlyTitleBarHidden: { titleBarStyle: 'hidden' },
@@ -35,6 +37,30 @@ function* createWindow({ meta: client, payload: { winId, url, style } }) {
   BROWSER_WINDOWS.delete(winId);
 
   yield call([client, client.send], SharedActions.events.fromRunner.toServer.app.window.closed({ winId }));
+}
+
+function* closeWindow({ payload: { winId } }) {
+  const win = BROWSER_WINDOWS.get(winId);
+  if (!win) {
+    throw new Error(`Unknown browser window: ${winId}.`);
+  }
+  yield call([win, win.close]);
+}
+
+function* minimizeWindow({ payload: { winId } }) {
+  const win = BROWSER_WINDOWS.get(winId);
+  if (!win) {
+    throw new Error(`Unknown browser window: ${winId}.`);
+  }
+  yield call([win, win.minimize]);
+}
+
+function* maximizeWindow({ payload: { winId } }) {
+  const win = BROWSER_WINDOWS.get(winId);
+  if (!win) {
+    throw new Error(`Unknown browser window: ${winId}.`);
+  }
+  yield call([win, win.maximize]);
 }
 
 function* openDevTools({ meta: client, payload: { winId, detach } }) {
@@ -59,6 +85,9 @@ function* quit() {
 export default function* () {
   yield [
     takeEvery(SharedActions.commands.fromServer.toRunner.app.window.create, createWindow),
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.close, closeWindow),
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.minimize, minimizeWindow),
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.maximize, maximizeWindow),
     takeEvery(SharedActions.commands.fromServer.toRunner.app.window.devtools.open, openDevTools),
     takeEvery(SharedActions.commands.fromServer.toRunner.platform.quit, quit),
   ];

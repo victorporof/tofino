@@ -14,11 +14,14 @@ import colors from 'colors/safe';
 import { createAction } from 'redux-actions';
 
 export default class Connection {
+  static _instances = new Map()
+
   constructor({ server, pipe, store, logger }) {
     this._server = server;
     this._pipe = pipe;
     this._store = store;
     this._logger = logger;
+    Connection._instances.set(this.id, this);
   }
 
   listen() {
@@ -37,5 +40,9 @@ export default class Connection {
 
   get id() {
     return this._pipe.id;
+  }
+
+  static getWithId(id) {
+    return Connection._instances.get(id);
   }
 }

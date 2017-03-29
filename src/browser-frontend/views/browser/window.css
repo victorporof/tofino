@@ -12,6 +12,9 @@ specific language governing permissions and limitations under the License.
 
 .window {
   overflow: hidden;
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  flex-direction: column;
+  background: var(--theme-window-background);
+  color: var(--theme-window-color);
+  composes: app-drag from '../../../shared/widgets/helpers/common.css';
 }

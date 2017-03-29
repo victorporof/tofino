@@ -15,6 +15,7 @@ import colors from 'colors/safe';
 
 import logger from './logger';
 
+import { serve } from './serve';
 import { configureStore } from '../shared/store/configure';
 import * as Endpoints from './constants/endpoints';
 import Client from '../shared/util/client';
@@ -24,7 +25,11 @@ import SharedActions from '../shared/actions/shared-actions';
 const app = electron.app;
 
 const store = configureStore({ sagas: RootSaga });
-const client = new Client({ endpoint: Endpoints.WS_ROUTE, store, logger });
+const client = new Client({ endpoint: Endpoints.WS_ROUTE_PROMISE, store, logger });
+
+if (!Endpoints.USING_EXTERNAL_SERVER) {
+  serve();
+}
 
 app.on('ready', async () => {
   logger.log(colors.green('Browser runner ready.'));

@@ -22,8 +22,8 @@ export default class Client {
   }
 
   _connect(endpoint) {
-    this._connected = new Promise((resolve) => {
-      const pipe = io(endpoint);
+    this._connected = new Promise(async (resolve) => {
+      const pipe = io(await endpoint);
       pipe.on('connect', () => resolve(pipe));
     });
   }

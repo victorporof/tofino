@@ -13,15 +13,44 @@ specific language governing permissions and limitations under the License.
 import url from 'url';
 
 import yargs from 'yargs';
+import portastic from 'portastic';
 
-export const VERSION = yargs.argv.version;
-export const HOSTNAME = yargs.argv.hostname;
-export const PORT = yargs.argv.port;
+export const USING_EXTERNAL_SERVER = yargs.argv.useExternalServer;
 
-export const WS_ROUTE = url.format({
+export const VERSION = (() => {
+  if (USING_EXTERNAL_SERVER) {
+    return yargs.argv.version;
+  }
+  return 'v1';
+})();
+
+export const HOSTNAME = (() => {
+  if (USING_EXTERNAL_SERVER) {
+    return yargs.argv.hostname;
+  }
+  return 'localhost';
+})();
+
+export const PORT_PROMISE = (async () => {
+  if (USING_EXTERNAL_SERVER) {
+    return yargs.argv.port;
+  }
+  const PORT_RANGE = {
+    min: 9000,
+    max: 9999,
+  };
+  const ports = await portastic.find(PORT_RANGE);
+  if (ports.length === 0) {
+    throw new Error('Couldn\'t find any open ports.');
+  }
+  return ports[0];
+})();
+
+
+export const WS_ROUTE_PROMISE = (async () => url.format({
   protocol: 'ws:',
   slashes: true,
   hostname: HOSTNAME,
-  port: PORT,
+  port: await PORT_PROMISE,
   pathname: `${VERSION}/runner`,
-});
+}))();

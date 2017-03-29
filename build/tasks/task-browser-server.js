@@ -1,8 +1,6 @@
 // Any copyright is dedicated to the Public Domain.
 // http://creativecommons.org/publicdomain/zero/1.0/
 
-import path from 'path';
-
 import gulp from 'gulp';
 import debug from 'gulp-debug';
 import changed from 'gulp-changed';
@@ -13,9 +11,6 @@ import fs from 'fs-promise';
 import colors from 'colors/safe';
 
 import * as Paths from '../../src/shared/paths';
-
-export const POLYFILL_FILENAME = 'browser-server-polyfill.js';
-export const MAIN = path.join(Paths.BROWSER_SERVER_DST, POLYFILL_FILENAME);
 
 gulp.task('browser-server:babel', () =>
   gulp.src(`${Paths.BROWSER_SERVER_SRC}/**/*.@(js|jsx)`)
@@ -31,7 +26,7 @@ gulp.task('browser-server:polyfill', () => {
     import 'babel-polyfill';
     import './${Paths.BROWSER_SERVER_ENTRY_FILENAME}';
   `;
-  return file(POLYFILL_FILENAME, contents, { src: true })
+  return file(Paths.BROWSER_SERVER_POLYFILL_FILENAME, contents, { src: true })
     .pipe(debug({ title: 'Creating' }))
     .pipe(sourcemaps.init())
     .pipe(babel(fs.readJsonSync('.babelrc')))

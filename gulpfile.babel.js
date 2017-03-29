@@ -10,4 +10,5 @@ import './build/tasks/task-browser-server';
 import './build/tasks/task-browser-frontend';
 import './build/tasks/task-start';
 import './build/tasks/task-build';
+import './build/tasks/task-package';
 import './build/tasks/task-test';

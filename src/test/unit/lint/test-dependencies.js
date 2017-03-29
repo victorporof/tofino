@@ -32,6 +32,7 @@ describe('modules', () => {
     const globs = [
       `${Paths.ROOT_DIR}/**/*.@(js|jsx)`,
       `!**/${Paths.LIB_DIR}/**`,
+      `!**/${Paths.DIST_DIR}/**`,
       '!**/node_modules/**',
     ];
 
@@ -116,6 +117,7 @@ describe('modules', () => {
     const globs = [
       `${Paths.ROOT_DIR}/**/*.@(js|jsx)`,
       `!**/${Paths.LIB_DIR}/**`,
+      `!**/${Paths.DIST_DIR}/**`,
       '!**/node_modules/**',
     ];
 

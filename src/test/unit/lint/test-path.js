@@ -14,6 +14,7 @@ describe('hardcoded paths', () => {
     const globs = [
       `${Paths.ROOT_DIR}/**/*.@(js|jsx)`,
       `!**/${Paths.LIB_DIR}/**`,
+      `!**/${Paths.DIST_DIR}/**`,
       '!**/node_modules/**',
       // Exclude the paths module.
       `!${path.join(Paths.SRC_DIR, 'shared', 'paths.js')}`,

@@ -21,7 +21,7 @@ gulp.task('browser-runner:babel', () =>
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST)));
 
-gulp.task('browser-runner:polyfill', () => {
+gulp.task('electron-runner:polyfill', () => {
   const contents = `
     import 'babel-polyfill';
     import './${Paths.ELECTRON_RUNNER_ENTRY_FILENAME}';
@@ -34,7 +34,21 @@ gulp.task('browser-runner:polyfill', () => {
     .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST));
 });
 
+gulp.task('dummy-runner:polyfill', () => {
+  const contents = `
+    import 'babel-polyfill';
+    import './${Paths.DUMMY_RUNNER_ENTRY_FILENAME}';
+  `;
+  return file(Paths.DUMMY_RUNNER_POLYFILL_FILENAME, contents, { src: true })
+    .pipe(debug({ title: 'Creating' }))
+    .pipe(sourcemaps.init())
+    .pipe(babel(fs.readJsonSync('.babelrc')))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST));
+});
+
 gulp.task('browser-runner:build', gulp.series(
   'browser-runner:babel',
-  'browser-runner:polyfill',
+  'electron-runner:polyfill',
+  'dummy-runner:polyfill',
 ));

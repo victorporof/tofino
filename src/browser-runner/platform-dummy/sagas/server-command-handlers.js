@@ -11,11 +11,13 @@ specific language governing permissions and limitations under the License.
 */
 
 import { takeEvery, call, cps } from 'redux-saga/effects';
+import opn from 'opn';
 
 import SharedActions from '../../../shared/actions/shared-actions';
 
 function* create({ meta: client, payload: { url } }) {
   console.log(`Chrome frontend hosted at ${url}`);
+  opn(url);
 }
 
 export default function* () {

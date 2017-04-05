@@ -24,9 +24,9 @@ gulp.task('browser-runner:babel', () =>
 gulp.task('browser-runner:polyfill', () => {
   const contents = `
     import 'babel-polyfill';
-    import './${Paths.BROWSER_RUNNER_ENTRY_FILENAME}';
+    import './${Paths.ELECTRON_RUNNER_ENTRY_FILENAME}';
   `;
-  return file(Paths.BROWSER_RUNNER_POLYFILL_FILENAME, contents, { src: true })
+  return file(Paths.ELECTRON_RUNNER_POLYFILL_FILENAME, contents, { src: true })
     .pipe(debug({ title: 'Creating' }))
     .pipe(sourcemaps.init())
     .pipe(babel(fs.readJsonSync('.babelrc')))

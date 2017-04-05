@@ -19,7 +19,7 @@ export const HOSTNAME = yargs.argv.hostname;
 export const PORT = yargs.argv.port;
 
 export const CHROME_ROUTE = `/${VERSION}/chrome`;
-export const BROWSER_RUNNER_WS_ROUTE = `/${VERSION}/runner`;
+export const ELECTRON_RUNNER_WS_ROUTE = `/${VERSION}/runner`;
 export const BROWSER_FRONTEND_WS_ROUTE = `/${VERSION}/frontend`;
 
 export const CHROME_URL = url.format({

@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License.
 import electron from 'electron';
 import colors from 'colors/safe';
 
-import logger from './logger';
+import logger from '../logger';
 
-import { serve } from './serve';
-import { configureStore } from '../shared/store/configure';
-import * as Endpoints from './constants/endpoints';
-import Client from '../shared/util/client';
+import { serve } from '../serve';
+import { configureStore } from '../../shared/store/configure';
+import * as Endpoints from '../constants/endpoints';
+import Client from '../../shared/util/client';
 import RootSaga from './sagas/root-saga';
-import SharedActions from '../shared/actions/shared-actions';
+import SharedActions from '../../shared/actions/shared-actions';
 
 const app = electron.app;
 

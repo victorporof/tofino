@@ -10,13 +10,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import { takeEvery, call, cps } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 import opn from 'opn';
 
 import SharedActions from '../../../shared/actions/shared-actions';
 
-function* create({ meta: client, payload: { url } }) {
-  console.log(`Chrome frontend hosted at ${url}`);
+function create({ payload: { url } }) {
+  console.log(`Chrome frontend hosted at ${url}`); // eslint-disable-line no-console
   opn(url);
 }
 

@@ -25,7 +25,7 @@ gulp.task('package:write-manifest', () => {
   const src = path.join(Paths.ROOT_DIR, 'package.json');
   const dst = path.join(Paths.BUILD_TARGET_DIR, 'package.json');
   const config = pick(fs.readJsonSync(src), ['name', 'version', 'dependencies']);
-  config.main = path.relative(Paths.BUILD_TARGET_DIR, Paths.BROWSER_RUNNER_DST_MAIN);
+  config.main = path.relative(Paths.BUILD_TARGET_DIR, Paths.ELECTRON_RUNNER_DST_MAIN);
   return fs.writeJson(dst, config);
 });
 

@@ -10,22 +10,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import url from 'url';
+import serverCommandHandlers from './server-command-handlers';
 
-import yargs from 'yargs';
-
-export const VERSION = yargs.argv.version;
-export const HOSTNAME = yargs.argv.hostname;
-export const PORT = yargs.argv.port;
-
-export const CHROME_ROUTE = `/${VERSION}/chrome`;
-export const ELECTRON_RUNNER_WS_ROUTE = `/${VERSION}/runner`;
-export const BROWSER_FRONTEND_WS_ROUTE = `/${VERSION}/frontend`;
-
-export const CHROME_URL = url.format({
-  protocol: 'http:',
-  slashes: true,
-  hostname: yargs.argv.hostname,
-  port: yargs.argv.port,
-  pathname: `${yargs.argv.version}/chrome`,
-});
+export default function* () {
+  yield [
+    serverCommandHandlers(),
+  ];
+}

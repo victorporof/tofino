@@ -15,24 +15,24 @@ import url from 'url';
 import yargs from 'yargs';
 import portastic from 'portastic';
 
-export const USING_EXTERNAL_SERVER = yargs.argv.useExternalServer;
+import { IS_PACKAGED_BUILD } from '../../shared/paths';
 
 export const VERSION = (() => {
-  if (USING_EXTERNAL_SERVER) {
+  if (!IS_PACKAGED_BUILD) {
     return yargs.argv.version;
   }
   return 'v1';
 })();
 
 export const HOSTNAME = (() => {
-  if (USING_EXTERNAL_SERVER) {
+  if (!IS_PACKAGED_BUILD) {
     return yargs.argv.hostname;
   }
   return 'localhost';
 })();
 
 export const PORT_PROMISE = (async () => {
-  if (USING_EXTERNAL_SERVER) {
+  if (!IS_PACKAGED_BUILD) {
     return yargs.argv.port;
   }
   const PORT_RANGE = {

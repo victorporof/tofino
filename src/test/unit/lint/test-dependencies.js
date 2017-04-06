@@ -90,11 +90,11 @@ describe('modules', () => {
     ];
 
     const unimported = [
-      // Entry paths for `browser-frontend.js` webpack config file.
+      // Entry paths for `build/webpack/config.browser-frontend.js` config file.
       'babel-polyfill',
       'font-awesome-webpack',
 
-      // Peer dependencies for font awesome.
+      // Peer dependencies for `font-awesome-webpack`.
       'font-awesome',
       'less',
     ];

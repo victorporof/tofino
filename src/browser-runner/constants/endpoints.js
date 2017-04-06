@@ -15,7 +15,7 @@ import url from 'url';
 import yargs from 'yargs';
 import portastic from 'portastic';
 
-import { IS_PACKAGED_BUILD } from '../../shared/paths';
+import { IS_PACKAGED_BUILD } from '../../shared/build-info';
 
 export const SERVER_API_VERSION = 'v1';
 

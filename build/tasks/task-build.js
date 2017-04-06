@@ -6,9 +6,10 @@ import debug from 'gulp-debug';
 import file from 'gulp-file';
 
 import * as Paths from '../../src/shared/paths';
+import * as BuildInfo from '../../src/shared/build-info';
 
 gulp.task('build:write-build-type', () =>
-  file(Paths.BUILD_TYPE_FILENAME, '"local"', { src: true })
+  file(BuildInfo.BUILD_TYPE_FILENAME, '"local"', { src: true })
     .pipe(debug({ title: 'Creating' }))
     .pipe(gulp.dest(Paths.BUILD_TARGET_DIR)));
 

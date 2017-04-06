@@ -17,7 +17,7 @@ import logger from '../logger';
 
 import { serve } from '../serve';
 import { configureStore } from '../../shared/store/configure';
-import { IS_PACKAGED_BUILD } from '../../shared/paths';
+import { IS_PACKAGED_BUILD } from '../../shared/build-info';
 import * as Endpoints from '../constants/endpoints';
 import Client from '../../shared/util/client';
 import RootSaga from './sagas/root-saga';

@@ -14,7 +14,7 @@ const PORT_RANGE = {
   max: 9999,
 };
 
-gulp.task('start', async () => {
+gulp.task('serve', async () => {
   const ports = await portastic.find(PORT_RANGE);
   if (ports.length === 0) {
     throw new Error('Couldn\'t find any open ports.');
@@ -28,7 +28,7 @@ gulp.task('start', async () => {
   ];
 
   return Promise.all([
-    spawn('electron', Paths.ELECTRON_RUNNER_DST_MAIN, args, { logger }),
+    spawn('node', Paths.DUMMY_RUNNER_DST_MAIN, args, { logger }),
     spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
   ]);
 });

@@ -36,7 +36,7 @@ const wss = io(server);
 app.use(morgan('dev'));
 
 setupChromeRoute({ pathname: Endpoints.CHROME_ROUTE, app });
-setupBrowserRunnerWsNamespace({ pathname: Endpoints.BROWSER_RUNNER_WS_ROUTE, wss, store });
+setupBrowserRunnerWsNamespace({ pathname: Endpoints.ELECTRON_RUNNER_WS_ROUTE, wss, store });
 setupBrowserFrontendWsNamespace({ pathname: Endpoints.BROWSER_FRONTEND_WS_ROUTE, wss, store });
 
 server.listen(Endpoints.PORT, Endpoints.HOSTNAME, () => {

@@ -10,22 +10,18 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import url from 'url';
+import { takeEvery } from 'redux-saga/effects';
+import opn from 'opn';
 
-import yargs from 'yargs';
+import SharedActions from '../../../shared/actions/shared-actions';
 
-export const VERSION = yargs.argv.version;
-export const HOSTNAME = yargs.argv.hostname;
-export const PORT = yargs.argv.port;
+function create({ payload: { url } }) {
+  console.log(`Chrome frontend hosted at ${url}`); // eslint-disable-line no-console
+  opn(url);
+}
 
-export const CHROME_ROUTE = `/${VERSION}/chrome`;
-export const ELECTRON_RUNNER_WS_ROUTE = `/${VERSION}/runner`;
-export const BROWSER_FRONTEND_WS_ROUTE = `/${VERSION}/frontend`;
-
-export const CHROME_URL = url.format({
-  protocol: 'http:',
-  slashes: true,
-  hostname: yargs.argv.hostname,
-  port: yargs.argv.port,
-  pathname: `${yargs.argv.version}/chrome`,
-});
+export default function* () {
+  yield [
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.create, create),
+  ];
+}

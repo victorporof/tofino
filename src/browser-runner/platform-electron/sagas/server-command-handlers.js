@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License.
 import { takeEvery, call, cps } from 'redux-saga/effects';
 import electron from 'electron';
 
-import SharedActions from '../../shared/actions/shared-actions';
+import SharedActions from '../../../shared/actions/shared-actions';
 
 const BROWSER_WINDOWS = new Map();
 

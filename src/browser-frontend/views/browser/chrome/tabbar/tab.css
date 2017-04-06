@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License.
   overflow: hidden;
   align-items: center;
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
-  transition: width 0.2s ease-out, opacity 0.05s ease-out;
+  transition: width 0.2s var(--animation-curve), opacity 0.05s var(--animation-curve);
   user-select: none;
 }
 

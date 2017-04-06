@@ -14,18 +14,18 @@ import url from 'url';
 
 import yargs from 'yargs';
 
-export const VERSION = yargs.argv.version;
+export const API_VERSION = 'v1';
 export const HOSTNAME = yargs.argv.hostname;
 export const PORT = yargs.argv.port;
 
-export const CHROME_ROUTE = `/${VERSION}/chrome`;
-export const ELECTRON_RUNNER_WS_ROUTE = `/${VERSION}/runner`;
-export const BROWSER_FRONTEND_WS_ROUTE = `/${VERSION}/frontend`;
+export const CHROME_ROUTE = `/${API_VERSION}/chrome`;
+export const ELECTRON_RUNNER_WS_ROUTE = `/${API_VERSION}/runner`;
+export const BROWSER_FRONTEND_WS_ROUTE = `/${API_VERSION}/frontend`;
 
 export const CHROME_URL = url.format({
   protocol: 'http:',
   slashes: true,
   hostname: yargs.argv.hostname,
   port: yargs.argv.port,
-  pathname: `${yargs.argv.version}/chrome`,
+  pathname: `${API_VERSION}/chrome`,
 });

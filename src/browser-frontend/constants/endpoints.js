@@ -12,24 +12,24 @@ specific language governing permissions and limitations under the License.
 
 import url from 'url';
 
-export const HOSTNAME = location.hostname;
-export const PORT = location.port;
-export const VERSION = location.pathname.match(/\/(v[0-9]+)\//).pop();
+export const SERVER_API_VERSION = location.pathname.match(/\/(v[0-9]+)\//).pop();
+export const SERVER_HOSTNAME = location.hostname;
+export const SERVER_PORT = location.port;
 
-export const WS_ROUTE = url.format({
+export const SERVER_WS_ROUTE = url.format({
   protocol: 'ws:',
   slashes: true,
-  hostname: HOSTNAME,
-  port: PORT,
-  pathname: `${VERSION}/frontend`,
+  hostname: SERVER_HOSTNAME,
+  port: SERVER_PORT,
+  pathname: `${SERVER_API_VERSION}/frontend`,
 });
 
 export const NEW_TAB_PAGE_URL = url.format({
   protocol: 'http:',
   slashes: true,
-  hostname: HOSTNAME,
-  port: PORT,
-  pathname: `${VERSION}/chrome/new-tab`,
+  hostname: SERVER_HOSTNAME,
+  port: SERVER_PORT,
+  pathname: `${SERVER_API_VERSION}/chrome/new-tab`,
 });
 
 // FIXME

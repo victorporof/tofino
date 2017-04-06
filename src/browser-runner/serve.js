@@ -20,9 +20,8 @@ import * as Paths from '../shared/paths';
 
 export const serve = async () => {
   const args = [
-    '--version', Endpoints.VERSION,
-    '--hostname', Endpoints.HOSTNAME,
-    '--port', await Endpoints.PORT_PROMISE,
+    '--hostname', Endpoints.SERVER_HOSTNAME,
+    '--port', await Endpoints.SERVER_PORT_PROMISE,
   ];
 
   const command = path.join(Paths.ROOT_DIR, 'node');

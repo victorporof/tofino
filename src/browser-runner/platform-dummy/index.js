@@ -21,7 +21,7 @@ import RootSaga from './sagas/root-saga';
 import SharedActions from '../../shared/actions/shared-actions';
 
 const store = configureStore({ sagas: RootSaga });
-const client = new Client({ endpoint: Endpoints.WS_ROUTE_PROMISE, store, logger });
+const client = new Client({ endpoint: Endpoints.SERVER_WS_ROUTE_PROMISE, store, logger });
 
 async function start() {
   await client.listen();

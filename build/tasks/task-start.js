@@ -21,7 +21,6 @@ gulp.task('start', async () => {
   }
 
   const args = [
-    '--version', 'v1',
     '--hostname', 'localhost',
     '--port', ports[0],
   ];

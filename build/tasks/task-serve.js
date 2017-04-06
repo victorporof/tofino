@@ -21,8 +21,6 @@ gulp.task('serve', async () => {
   }
 
   const args = [
-    '--use-external-server',
-    '--version', 'v1',
     '--hostname', 'localhost',
     '--port', ports[0],
   ];

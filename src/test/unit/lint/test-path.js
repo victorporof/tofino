@@ -18,6 +18,7 @@ describe('hardcoded paths', () => {
       '!**/node_modules/**',
       // Exclude the paths module.
       `!${path.join(Paths.SRC_DIR, 'shared', 'paths.js')}`,
+      `!${path.join(Paths.SRC_DIR, 'shared', 'build-info.js')}`,
       // Exclude this file.
       `!${__filename}`,
     ];

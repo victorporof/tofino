@@ -14,7 +14,6 @@ import colors from 'colors/safe';
 
 import logger from '../logger';
 
-import { serve } from '../serve';
 import { configureStore } from '../../shared/store/configure';
 import * as Endpoints from '../constants/endpoints';
 import Client from '../../shared/util/client';
@@ -22,11 +21,7 @@ import RootSaga from './sagas/root-saga';
 import SharedActions from '../../shared/actions/shared-actions';
 
 const store = configureStore({ sagas: RootSaga });
-const client = new Client({ endpoint: Endpoints.WS_ROUTE_PROMISE, store, logger });
-
-if (!Endpoints.USING_EXTERNAL_SERVER) {
-  serve();
-}
+const client = new Client({ endpoint: Endpoints.SERVER_WS_ROUTE_PROMISE, store, logger });
 
 async function start() {
   await client.listen();

@@ -4,11 +4,12 @@
   "scripts": {
     "test": "gulp test",
     "clean": "gulp clean",
-    "start": "cross-env NODE_ENV=production gulp build+start --obj-dir-name production",
-    "serve": "cross-env NODE_ENV=production gulp build+serve",
-    "dev": "cross-env NODE_ENV=development gulp build+start --obj-dir-name development",
-    "dev+logging": "cross-env NODE_ENV=development LOGGING=on gulp build+start --obj-dir-name development",
-    "package": "gulp package --obj-dir-name package"
+    "start": "cross-env NODE_ENV=production gulp build+start --obj-dir-name production-electron",
+    "serve": "cross-env NODE_ENV=development gulp build+serve --obj-dir-name development-headless",
+    "serve+logging": "cross-env NODE_ENV=development LOGGING=on gulp build+serve --obj-dir-name development-headless",
+    "dev": "cross-env NODE_ENV=development gulp build+start --obj-dir-name development-electron",
+    "dev+logging": "cross-env NODE_ENV=development LOGGING=on gulp build+start --obj-dir-name development-electron",
+    "package": "gulp package --obj-dir-name electron-package"
   },
   "devDependencies": {
     "babel-eslint": "7.1.1",

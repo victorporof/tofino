@@ -19,4 +19,4 @@ import RootReducer from './reducers/root-reducer';
 import RootSaga from './sagas/root-saga';
 
 export const store = configureStore({ reducers: RootReducer, sagas: RootSaga });
-export const client = new Client({ endpoint: Endpoints.WS_ROUTE, store, logger });
+export const client = new Client({ endpoint: Endpoints.SERVER_WS_ROUTE, store, logger });

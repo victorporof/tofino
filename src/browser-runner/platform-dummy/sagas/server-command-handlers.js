@@ -13,10 +13,12 @@ specific language governing permissions and limitations under the License.
 import { takeEvery } from 'redux-saga/effects';
 import opn from 'opn';
 
+import logger from '../../logger';
+
 import SharedActions from '../../../shared/actions/shared-actions';
 
 function create({ payload: { url } }) {
-  console.log(`Chrome frontend hosted at ${url}`); // eslint-disable-line no-console
+  logger.log(`Chrome frontend hosted at ${url}`);
   opn(url);
 }
 

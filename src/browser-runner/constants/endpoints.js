@@ -15,24 +15,19 @@ import url from 'url';
 import yargs from 'yargs';
 import portastic from 'portastic';
 
-export const USING_EXTERNAL_SERVER = yargs.argv.useExternalServer;
+import { IS_PACKAGED_BUILD } from '../../shared/build-info';
 
-export const VERSION = (() => {
-  if (USING_EXTERNAL_SERVER) {
-    return yargs.argv.version;
-  }
-  return 'v1';
-})();
+export const SERVER_API_VERSION = 'v1';
 
-export const HOSTNAME = (() => {
-  if (USING_EXTERNAL_SERVER) {
+export const SERVER_HOSTNAME = (() => {
+  if (!IS_PACKAGED_BUILD) {
     return yargs.argv.hostname;
   }
   return 'localhost';
 })();
 
-export const PORT_PROMISE = (async () => {
-  if (USING_EXTERNAL_SERVER) {
+export const SERVER_PORT_PROMISE = (async () => {
+  if (!IS_PACKAGED_BUILD) {
     return yargs.argv.port;
   }
   const PORT_RANGE = {
@@ -46,11 +41,10 @@ export const PORT_PROMISE = (async () => {
   return ports[0];
 })();
 
-
-export const WS_ROUTE_PROMISE = (async () => url.format({
+export const SERVER_WS_ROUTE_PROMISE = (async () => url.format({
   protocol: 'ws:',
   slashes: true,
-  hostname: HOSTNAME,
-  port: await PORT_PROMISE,
-  pathname: `${VERSION}/runner`,
+  hostname: SERVER_HOSTNAME,
+  port: await SERVER_PORT_PROMISE,
+  pathname: `${SERVER_API_VERSION}/runner`,
 }))();

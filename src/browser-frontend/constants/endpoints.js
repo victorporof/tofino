@@ -33,4 +33,4 @@ export const NEW_TAB_PAGE_URL = url.format({
 });
 
 // FIXME
-export const DEFAULT_PAGE_URL = 'https://www.mozilla.org/';
+export const DEFAULT_PAGE_URL = 'https://duckduckgo.com/';

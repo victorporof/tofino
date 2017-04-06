@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 import React, { PureComponent, PropTypes } from 'react';
+import identity from 'lodash/identity';
 
 export default class WebContents extends PureComponent {
   static _instances = new Set()
@@ -58,4 +59,30 @@ export default class WebContents extends PureComponent {
 WebContents.propTypes = {
   impl: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired, // eslint-disable-line
+};
+
+WebContents.implPropTypes = {
+  className: PropTypes.string,
+  onDidStartLoading: PropTypes.func,
+  onDidStopLoading: PropTypes.func,
+  onDidSucceedLoad: PropTypes.func,
+  onDidFailLoad: PropTypes.func,
+  onPageTitleSet: PropTypes.func,
+  onPageFaviconSet: PropTypes.func,
+  onDidNavigate: PropTypes.func,
+  onDidNavigateInternal: PropTypes.func,
+  onDidNavigateToNewWindow: PropTypes.func,
+};
+
+WebContents.defaultProps = {
+  className: '',
+  onDidStartLoading: identity,
+  onDidStopLoading: identity,
+  onDidSucceedLoad: identity,
+  onDidFailLoad: identity,
+  onPageTitleSet: identity,
+  onPageFaviconSet: identity,
+  onDidNavigate: identity,
+  onDidNavigateInternal: identity,
+  onDidNavigateToNewWindow: identity,
 };

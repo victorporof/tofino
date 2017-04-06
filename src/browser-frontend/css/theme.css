@@ -4,6 +4,7 @@
   --theme-font-family: sans-serif;
   --theme-font-size: 13px;
   --theme-focus-outline-style: none;
+  --animation-curve: cubic-bezier(0.07, 0.95, 0, 1);
 
   /* Controls */
 

@@ -12,7 +12,6 @@ specific language governing permissions and limitations under the License.
 
 import { takeEvery } from 'redux-saga/effects';
 import { spawn } from '../../../shared/util/spawn';
-import yargs from 'yargs';
 
 import logger from '../../logger';
 

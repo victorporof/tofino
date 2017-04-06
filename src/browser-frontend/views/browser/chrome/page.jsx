@@ -80,7 +80,6 @@ export default class Page extends PureComponent {
 
   render() {
     let impl;
-    console.log(this.props.platform);
     if (this.props.platform === 'electron') {
       impl = WebView;
     } else if (this.props.platform === 'dummy') {

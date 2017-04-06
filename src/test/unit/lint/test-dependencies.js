@@ -52,6 +52,9 @@ describe('modules', () => {
 
       // Peer dependencies for `url-loader`.
       'file-loader',
+
+      // Directly spawned
+      'qbrt',
     ];
 
     const babelrc = await fs.readJson(path.join(Paths.ROOT_DIR, '.babelrc'));

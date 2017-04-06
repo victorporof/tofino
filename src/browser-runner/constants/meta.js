@@ -10,25 +10,6 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-.tabbar {
-  overflow: hidden;
-  height: var(--theme-tabbar-height);
-  box-sizing: border-box;
-  flex: 1;
-  padding: 0 10px;
-  padding-top: 10px;
-  background: var(--theme-tabbar-background);
-}
+import yargs from 'yargs';
 
-.tabbar.darwin {
-  margin-left: 70px;
-}
-
-.tabbar.linux,
-.tabbar.win32 {
-  margin-right: 70px;
-}
-
-.tabbar > :nth-child(n+2) {
-  margin-left: 10px;
-}
+export const OS = yargs.argv.mockOs || process.platform;

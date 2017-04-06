@@ -1,0 +1,45 @@
+/*
+Copyright 2016 Mozilla
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
+*/
+
+.tab {
+  overflow: hidden;
+  align-items: center;
+  composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
+  transition: width 0.2s ease-out, opacity 0.05s ease-out;
+  user-select: none;
+}
+
+.tab.selected {
+  background: var(--theme-tab-active-background);
+  color: var(--theme-tab-active-color);
+}
+
+.tab.deselected {
+  background: var(--theme-tab-inactive-background);
+  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
+  color: var(--theme-tab-inactive-color);
+}
+
+.tab.initial {
+  width: var(--theme-tab-initial-width);
+  opacity: var(--theme-tab-initial-opacity);
+}
+
+.tab.open {
+  width: var(--theme-tab-open-width);
+  opacity: var(--theme-tab-open-opacity);
+}
+
+.tab.closed {
+  width: var(--theme-tab-closed-width);
+  opacity: var(--theme-tab-closed-opacity);
+}

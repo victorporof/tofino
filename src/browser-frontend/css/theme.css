@@ -1,0 +1,98 @@
+:root {
+  /* Global */
+
+  --theme-font-family: sans-serif;
+  --theme-font-size: 13px;
+  --theme-focus-outline-style: none;
+
+  /* Controls */
+
+  --theme-button-enabled-opacity: 1;
+  --theme-button-disabled-opacity: 0.5;
+  --theme-input-enabled-opacity: 1;
+  --theme-input-disabled-opacity: 0.9;
+
+  /* Window */
+
+  --theme-window-background: #2a2e4e;
+  --theme-window-color: #fff;
+
+  /* Window Management Controls */
+
+  --theme-window-controls-background-size: 16px 16px;
+  --theme-window-controls-close: url('../assets/window-controls/glyph-window-close.svg');
+  --theme-window-controls-minimize: url('../assets/window-controls/glyph-window-minimize.svg');
+  --theme-window-controls-maximize: url('../assets/window-controls/glyph-window-maximize.svg');
+
+  /* Tabbar */
+
+  --theme-tabbar-height: 40px;
+  --theme-tabbar-background: transparent;
+  --theme-new-tab-button-image: url('../assets/New - 16.svg');
+
+  /* Tab */
+
+  --theme-tab-initial-width: 0;
+  --theme-tab-initial-opacity: 0;
+  --theme-tab-open-width: var(--theme-tab-flex-width);
+  --theme-tab-open-opacity: 1;
+  --theme-tab-closed-width: var(--theme-tab-initial-width);
+  --theme-tab-closed-opacity: var(--theme-tab-initial-opacity);
+  --theme-tab-flex-width: 190px;
+  --theme-tab-active-background: #f0f0f2;
+  --theme-tab-active-color: #000;
+  --theme-tab-inactive-background: transparent;
+  --theme-tab-inactive-color: #fff;
+  --theme-tab-separator-color: rgba(255, 255, 255, 0.2);
+  --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
+
+  /* Navbar */
+
+  --theme-navbar-height: 40px;
+  --theme-navbar-background: #eee;
+
+  /* Navbar: Navigation Buttons */
+
+  --theme-back-button-image: url('../assets/Back - 16.svg');
+  --theme-forward-button-image: url('../assets/Forward - 16.svg');
+  --theme-refresh-button-image: url('../assets/Refresh - 16.svg');
+  --theme-home-button-image: url('../assets/Home - 16.svg');
+
+  /* Navbar: Toolbar Buttons */
+
+  --theme-app-menu-button-image: url('../assets/Menu - 16.svg');
+  --theme-app-sidebar-button-image: url('../assets/Sidebar - 16.svg');
+  --theme-app-library-button-image: url('../assets/Library - 16.svg');
+  --theme-app-extensions-button-image: url('../assets/Extensions - 16.svg');
+
+  /* Locationbar */
+
+  --theme-locationbar-background: #fff;
+  --theme-locationbar-color: #000;
+  --theme-locationbar-border: 1px solid var(--theme-separator-color);
+  --theme-locationbar-border-radius: 3px;
+
+  /* Locationbar: Badges */
+
+  --theme-locationbar-security-unknown-color: #aaa;
+  --theme-locationbar-secure-color: #090;
+  --theme-locationbar-insecure-color: #900;
+
+  /* Locationbar: Buttons */
+
+  --theme-locationbar-bookmark-button-image: url('../assets/Bookmark - 16 - Outline.svg');
+  --theme-locationbar-unbookmark-button-image: url('../assets/Bookmark - 16 - Filled.svg');
+  --theme-locationbar-more-button-image: url('../assets/More - 16.svg');
+
+  /* Inputbar */
+
+  --theme-locationbar-input-flex-width: 30px;
+
+  /* Page */
+
+  --theme-page-background: #fff;
+
+  /* Misc */
+
+  --theme-separator-color: rgba(0, 0, 0, 0.2);
+}

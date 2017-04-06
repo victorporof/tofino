@@ -12,6 +12,7 @@ specific language governing permissions and limitations under the License.
 
 import { takeEvery } from 'redux-saga/effects';
 import opn from 'opn';
+import yargs from 'yargs';
 
 import logger from '../../logger';
 
@@ -19,7 +20,7 @@ import SharedActions from '../../../shared/actions/shared-actions';
 
 function create({ payload: { url } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
-  opn(url);
+  opn(url, { app: yargs.argv.browser });
 }
 
 export default function* () {

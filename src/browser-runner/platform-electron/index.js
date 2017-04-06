@@ -19,6 +19,7 @@ import { serve } from '../serve';
 import { configureStore } from '../../shared/store/configure';
 import { IS_PACKAGED_BUILD } from '../../shared/build-info';
 import * as Endpoints from '../constants/endpoints';
+import * as Meta from '../constants/meta';
 import Client from '../../shared/util/client';
 import RootSaga from './sagas/root-saga';
 import SharedActions from '../../shared/actions/shared-actions';
@@ -37,7 +38,7 @@ app.on('ready', async () => {
   await client.listen();
   await client.send(SharedActions.events.fromRunner.toServer.client.hello({
     clientMetaData: {
-      os: process.platform,
+      os: Meta.OS,
       platform: 'electron',
     },
   }));

@@ -15,12 +15,15 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import WebContentsActions from '../../../actions/webcontents-actions';
+import * as Meta from '../../../constants/meta';
 
 import Styles from './page.css';
 import WebContents from '../../../../shared/widgets/web-contents';
-import WebView from '../../../../shared/widgets/webview';
+import WebView from '../../../../shared/widgets/web-contents/webview';
+import IframeDummyBrowser from '../../../../shared/widgets/web-contents/iframe-dummy-browser';
 
 @connect(() => ({
+  platform: Meta.PLATFORM,
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -75,9 +78,17 @@ export default class Page extends PureComponent {
   }
 
   render() {
+    let impl;
+    if (this.props.platform === 'electron') {
+      impl = WebView;
+    } else if (this.props.platform === 'dummy') {
+      impl = IframeDummyBrowser;
+    } else {
+      throw new Error('Unknown browser runner platform.');
+    }
     return (
       <WebContents
-        impl={WebView}
+        impl={impl}
         id={this.props.pageId}
         ref={this.setWebContentsRef}
         styleName="page"
@@ -98,4 +109,5 @@ export default class Page extends PureComponent {
 Page.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pageId: PropTypes.string.isRequired,
+  platform: PropTypes.string.isRequired,
 };

@@ -19,7 +19,10 @@ import SharedActions from '../../../shared/actions/shared-actions';
 
 function create({ payload: { url } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
-  spawn('qbrt', 'run', [url], { logger });
+  const qbrt = process.platform === 'win32'
+    ? 'qbrt.cmd'
+    : 'qbrt';
+  spawn(qbrt, 'run', [url], { logger });
 }
 
 export default function* () {

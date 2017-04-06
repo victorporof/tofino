@@ -28,7 +28,7 @@ gulp.task('start', async () => {
   ];
 
   return Promise.all([
-    spawn('electron', Paths.ELECTRON_RUNNER_DST_MAIN, args, { logger }),
+    spawn(process.platform === 'win32' ? 'electron.cmd' : 'electron', Paths.ELECTRON_RUNNER_DST_MAIN, args, { logger }),
     spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
   ]);
 });

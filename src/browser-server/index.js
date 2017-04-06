@@ -33,7 +33,9 @@ const app = express();
 const server = http.Server(app);
 const wss = io(server);
 
-app.use(morgan('dev'));
+app.use(morgan('dev', {
+  skip: () => process.env.NODE_ENV !== 'development' || process.env.LOGGING !== 'on',
+}));
 
 setupChromeRoute({ pathname: Endpoints.CHROME_ROUTE, app });
 setupBrowserRunnerWsNamespace({ pathname: Endpoints.ELECTRON_RUNNER_WS_ROUTE, wss, store });

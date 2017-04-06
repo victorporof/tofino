@@ -16,6 +16,7 @@ import logger from '../logger';
 
 import { configureStore } from '../../shared/store/configure';
 import * as Endpoints from '../constants/endpoints';
+import * as Meta from '../constants/meta';
 import Client from '../../shared/util/client';
 import RootSaga from './sagas/root-saga';
 import SharedActions from '../../shared/actions/shared-actions';
@@ -27,7 +28,7 @@ async function start() {
   await client.listen();
   await client.send(SharedActions.events.fromRunner.toServer.client.hello({
     clientMetaData: {
-      os: process.platform,
+      os: Meta.OS,
       platform: 'dummy',
     },
   }));

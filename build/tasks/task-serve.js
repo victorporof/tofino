@@ -29,6 +29,7 @@ gulp.task('serve', async () => {
   const runnerArgs = [
     ...args,
     ...(yargs.argv.browser ? ['--browser', yargs.argv.browser] : []),
+    ...(yargs.argv.mockOs ? ['--mock-os', yargs.argv.mockOs] : []),
   ];
 
   return Promise.all([

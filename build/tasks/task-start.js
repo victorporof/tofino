@@ -2,6 +2,7 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 
 import gulp from 'gulp';
+import yargs from 'yargs';
 import portastic from 'portastic';
 
 import logger from '../logger';
@@ -25,8 +26,13 @@ gulp.task('start', async () => {
     '--port', ports[0],
   ];
 
+  const runnerArgs = [
+    ...args,
+    ...(yargs.argv.mockOs ? ['--mock-os', yargs.argv.mockOs] : []),
+  ];
+
   return Promise.all([
-    spawn('electron', Paths.ELECTRON_RUNNER_DST_MAIN, args, { logger }),
+    spawn('electron', Paths.ELECTRON_RUNNER_DST_MAIN, runnerArgs, { logger }),
     spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
   ]);
 });

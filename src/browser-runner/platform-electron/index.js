@@ -34,7 +34,7 @@ if (IS_PACKAGED_BUILD) {
 }
 
 app.on('ready', async () => {
-  logger.log(colors.green('Browser runner ready.'));
+  logger.log(colors.green('Browser runner (electron) ready.'));
   await client.listen();
   await client.send(SharedActions.events.fromRunner.toServer.client.hello({
     clientMetaData: {

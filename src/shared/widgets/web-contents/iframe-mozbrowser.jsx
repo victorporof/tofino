@@ -20,7 +20,10 @@ export default class IframeMozBrowser extends PureComponent {
   }
 
   componentDidMount() {
-    this._iframe.addEventListener('load', () => {
+    this._iframe.addEventListener('mozbrowserloadstart', () => {
+      this.props.onDidStartLoading();
+    });
+    this._iframe.addEventListener('mozbrowserloadend', () => {
       this.props.onDidStopLoading();
       this.props.onPageTitleSet({ title: 'Loaded' });
     });
@@ -35,11 +38,15 @@ export default class IframeMozBrowser extends PureComponent {
   }
 
   goBack = () => {
-    throw new Error('Not implemented.');
+    // These aren't working. The mozbrowser API extensions don't seem to be
+    // attached.
+    this._iframe.goBack();
   }
 
   goForward = () => {
-    throw new Error('Not implemented.');
+    // These aren't working. The mozbrowser API extensions don't seem to be
+    // attached.
+    this._iframe.goForward();
   }
 
   reload = () => {
@@ -53,6 +60,7 @@ export default class IframeMozBrowser extends PureComponent {
         ref={this.setIframeRef}
         class={this.props.className}
         mozbrowser="mozbrowser"
+        remote="remote"
         frameborder="0"
       />
     );

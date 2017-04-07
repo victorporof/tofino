@@ -55,7 +55,8 @@
     "stylelint-declaration-use-variable": "1.6.0",
     "stylelint-order": "0.4.1",
     "url-loader": "0.5.8",
-    "webpack": "2.2.1"
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.4.2"
   },
   "dependencies": {
     "babel-polyfill": "6.23.0",
@@ -63,6 +64,7 @@
     "dateformat": "2.0.0",
     "electron": "1.6.2",
     "express": "4.15.2",
+    "express-http-proxy": "0.11.0",
     "font-awesome": "4.7.0",
     "font-awesome-webpack": "0.0.5-beta.2",
     "fs-promise": "2.0.2",

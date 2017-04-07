@@ -5,11 +5,11 @@ import gulp from 'gulp';
 import debug from 'gulp-debug';
 import changed from 'gulp-changed';
 import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 import colors from 'colors/safe';
 
-import logger from '../logger';
-
 import * as Paths from '../../src/shared/paths';
+import * as Endpoints from '../../src/shared/endpoints';
 import config from '../webpack/config.browser-frontend';
 import { makeDevConfig, makeProdConfig } from '../webpack/config.base';
 
@@ -25,17 +25,20 @@ gulp.task('browser-frontend:copy-html', () =>
     .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST)),
 );
 
-gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {
+gulp.task('browser-frontend:webpack', (cb) => {
   const currentConfig = process.env.NODE_ENV === 'production'
     ? makeProdConfig(config)
     : makeDevConfig(config);
 
-  webpack(currentConfig, (err, stats) => {
-    if (err) { reject(err); return; }
-    if (stats) { logger.log(stats.toString(WEBPACK_STATS_OPTIONS)); }
-    resolve();
+  const compiler = webpack(currentConfig);
+  const server = new WebpackDevServer(compiler, {
+    stats: WEBPACK_STATS_OPTIONS,
   });
-}));
+
+  server.listen(
+    Endpoints.WEBPACK_DEV_SERVER_PORT,
+    Endpoints.WEBPACK_DEV_SERVER_HOST, cb);
+});
 
 gulp.task('browser-frontend:build', gulp.series(
   'browser-frontend:copy-html',

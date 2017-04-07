@@ -18,6 +18,8 @@ const WEBPACK_STATS_OPTIONS = {
   warnings: false,
 };
 
+let gWebpackDevServer;
+
 gulp.task('browser-frontend:copy-html', () =>
   gulp.src(`${Paths.BROWSER_FRONTEND_SRC}/**/*.html`)
     .pipe(changed(Paths.BROWSER_FRONTEND_DST))
@@ -35,6 +37,10 @@ gulp.task('browser-frontend:webpack', (cb) => {
     stats: WEBPACK_STATS_OPTIONS,
   });
 
+  // We'll have to close the webpack dev server later, so store it as a global.
+  // If we leave the server open, the build process will keep running forever.
+  gWebpackDevServer = server;
+
   server.listen(
     Endpoints.WEBPACK_DEV_SERVER_PORT,
     Endpoints.WEBPACK_DEV_SERVER_HOST, cb);
@@ -44,3 +50,7 @@ gulp.task('browser-frontend:build', gulp.series(
   'browser-frontend:copy-html',
   'browser-frontend:webpack',
 ));
+
+gulp.task('browser-frontend:build:cleanup', cb =>
+  gWebpackDevServer.close(cb),
+);

@@ -49,5 +49,7 @@ const url = Runtime.commandLineArgs[0] || Runtime.packageJSON.mainURL || 'index.
 const argument = Cc['@mozilla.org/supports-string;1'].createInstance(Ci.nsISupportsString);
 argument.data = url;
 
+// TODO: Set up 'hot reload' by using incremental builds and taking over ctrl+r
+
 const win = Services.ww.openWindow(null, SHELL_URL, '_blank', WINDOW_FEATURES, argument);
 Runtime.openDevTools(win);

@@ -11,11 +11,23 @@ specific language governing permissions and limitations under the License.
 */
 
 import express from 'express';
+import proxy from 'express-http-proxy';
 
 import * as Paths from '../../shared/paths';
+import * as Endpints from '../../shared/endpoints';
 
 export default ({ pathname, app }) => {
   const router = express.Router();
   app.use(pathname, router);
+
+  // In development builds, we want to reroute script bundle requests to the
+  // webpack dev server, which incrementally rebuilds the browser chrome,
+  // in memory, when sources change.
+  if (process.env.NODE_ENV === 'development') {
+    const frontendBundle = Paths.BROWSER_FRONTEND_BUNDLED_FILENAME;
+    const webpackServer = `${Endpints.WEBPACK_DEV_SERVER_HOST}:${Endpints.WEBPACK_DEV_SERVER_PORT}`;
+    router.get(`*${frontendBundle}`, proxy(webpackServer));
+  }
+
   router.use(express.static(Paths.BROWSER_FRONTEND_DST));
 };

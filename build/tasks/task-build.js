@@ -21,12 +21,20 @@ gulp.task('build', gulp.series(
   'browser-frontend:build',
 ));
 
+gulp.task('build:cleanup', gulp.series(
+  'browser-frontend:build:cleanup',
+  // No other gulp tasks require cleanup for now. Add any necessary post-run
+  // cleanups here to allow the build process to exit gracefully.
+));
+
 gulp.task('build+start', gulp.series(
   'build',
   'start',
+  'build:cleanup',
 ));
 
 gulp.task('build+serve', gulp.series(
   'build',
   'serve',
+  'build:cleanup',
 ));

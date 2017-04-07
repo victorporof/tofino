@@ -5,14 +5,20 @@ import gulp from 'gulp';
 import debug from 'gulp-debug';
 import changed from 'gulp-changed';
 import webpack from 'webpack';
-import webpackStream from 'webpack-stream';
+import WebpackDevServer from 'webpack-dev-server';
 import colors from 'colors/safe';
 
-import logger from '../logger';
-
 import * as Paths from '../../src/shared/paths';
-import config, { ENTRY_PATH } from '../webpack/config.browser-frontend';
+import * as Endpoints from '../../src/shared/endpoints';
+import config from '../webpack/config.browser-frontend';
 import { makeDevConfig, makeProdConfig } from '../webpack/config.base';
+
+const WEBPACK_STATS_OPTIONS = {
+  colors: true,
+  warnings: false,
+};
+
+let gWebpackDevServer;
 
 gulp.task('browser-frontend:copy-html', () =>
   gulp.src(`${Paths.BROWSER_FRONTEND_SRC}/**/*.html`)
@@ -21,21 +27,30 @@ gulp.task('browser-frontend:copy-html', () =>
     .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST)),
 );
 
-gulp.task('browser-frontend:webpack', () => {
+gulp.task('browser-frontend:webpack', (cb) => {
   const currentConfig = process.env.NODE_ENV === 'production'
     ? makeProdConfig(config)
     : makeDevConfig(config);
 
-  return gulp.src(ENTRY_PATH)
-    .pipe(debug({ title: `Running ${colors.cyan('webpack')}` }))
-    .pipe(webpackStream(currentConfig, webpack, (err, stats) => {
-      if (err) logger.log(err);
-      if (stats) logger.log(stats.toString({ colors: true, warnings: false, chunks: false }));
-    }))
-    .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST));
+  const compiler = webpack(currentConfig);
+  const server = new WebpackDevServer(compiler, {
+    stats: WEBPACK_STATS_OPTIONS,
+  });
+
+  // We'll have to close the webpack dev server later, so store it as a global.
+  // If we leave the server open, the build process will keep running forever.
+  gWebpackDevServer = server;
+
+  server.listen(
+    Endpoints.WEBPACK_DEV_SERVER_PORT,
+    Endpoints.WEBPACK_DEV_SERVER_HOST, cb);
 });
 
 gulp.task('browser-frontend:build', gulp.series(
   'browser-frontend:copy-html',
   'browser-frontend:webpack',
 ));
+
+gulp.task('browser-frontend:build:cleanup', cb =>
+  gWebpackDevServer.close(cb),
+);

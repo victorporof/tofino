@@ -18,6 +18,11 @@ specific language governing permissions and limitations under the License.
   user-select: none;
 }
 
+.tab:not(.selected):hover {
+  background: var(--theme-tab-hover-background);
+  color: var(--theme-tab-hover-color);
+}
+
 .tab.selected {
   background: var(--theme-tab-active-background);
   color: var(--theme-tab-active-color);

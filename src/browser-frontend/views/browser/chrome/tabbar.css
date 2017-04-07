@@ -28,7 +28,3 @@ specific language governing permissions and limitations under the License.
 .tabbar.win32 {
   margin-right: 70px;
 }
-
-.tabbar > :nth-child(n+2) {
-  margin-left: 10px;
-}

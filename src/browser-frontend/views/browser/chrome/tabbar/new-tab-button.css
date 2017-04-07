@@ -13,6 +13,12 @@ specific language governing permissions and limitations under the License.
 .new-tab-button {
   flex-shrink: 0;
   align-items: center;
+  padding: 0 10px;
+  background: var(--theme-new-tab-button-background);
+}
+
+.new-tab-button:hover {
+  background: var(--theme-new-tab-button-hover-background);
 }
 
 .icon {

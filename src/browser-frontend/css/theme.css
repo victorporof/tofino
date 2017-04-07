@@ -30,6 +30,8 @@
   --theme-tabbar-height: 40px;
   --theme-tabbar-background: transparent;
   --theme-new-tab-button-image: url('../assets/New - 16.svg');
+  --theme-new-tab-button-background: transparent;
+  --theme-new-tab-button-hover-background: rgba(255, 255, 255, 0.05);
 
   /* Tab */
 
@@ -40,6 +42,8 @@
   --theme-tab-closed-width: var(--theme-tab-initial-width);
   --theme-tab-closed-opacity: var(--theme-tab-initial-opacity);
   --theme-tab-flex-width: 190px;
+  --theme-tab-hover-background: rgba(255, 255, 255, 0.05);
+  --theme-tab-hover-color: #fff;
   --theme-tab-active-background: #f0f0f2;
   --theme-tab-active-color: #000;
   --theme-tab-inactive-background: transparent;

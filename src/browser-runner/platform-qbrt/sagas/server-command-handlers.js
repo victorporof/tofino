@@ -10,19 +10,20 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, call } from 'redux-saga/effects';
 import { spawn } from '../../../shared/util/spawn';
 
 import logger from '../../logger';
 
 import SharedActions from '../../../shared/actions/shared-actions';
 
-function create({ payload: { url } }) {
+function* create({ meta: client, payload: { winId, url } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
   const qbrt = process.platform === 'win32'
     ? 'qbrt.cmd'
     : 'qbrt';
   spawn(qbrt, 'run', [url], { logger });
+  yield call([client, client.send], SharedActions.events.fromRunner.toServer.app.window.created({ winId }));
 }
 
 export default function* () {

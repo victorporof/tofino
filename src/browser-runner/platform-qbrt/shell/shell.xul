@@ -19,5 +19,5 @@
         windowtype="navigator:browser"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/javascript" src="shell.js"/>
-  <browser id="content" type="content-primary" flex="1"/>
+  <browser id="content" flex="1"/>
 </window>

@@ -18,7 +18,18 @@ const { classes: Cc, interfaces: Ci, results: Cr, utils: Cu } = Components;
 const { Runtime } = Cu.import('resource://qbrt/modules/Runtime.jsm', {});
 const { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
 
-const SHELL_URL = 'chrome://app/content/shell.xul';
+
+// TODO: Pass correct values as command line arguments to qbrt
+const searchParams = [
+  'runnerConnId=%2Fv1%2Frunner%23k4cFvGGdjECa9trEAAAB',
+  'winId=2d12c846-3712-411b-8efb-f810683aa3ac',
+  'os=darwin',
+  'platform=qbrt',
+  'apiVersion=v1',
+  'hostname=localhost',
+  'port=9000',
+].join('&');
+const SHELL_URL = `chrome://app/content/index.html?${searchParams}`;
 
 const WINDOW_FEATURES = [
   'width=640',

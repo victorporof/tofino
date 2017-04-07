@@ -12,9 +12,13 @@ specific language governing permissions and limitations under the License.
 
 import url from 'url';
 
-export const SERVER_API_VERSION = location.pathname.match(/\/(v[0-9]+)\//).pop();
-export const SERVER_HOSTNAME = location.hostname;
-export const SERVER_PORT = location.port;
+// Support loading a file over chrome URI for qbrt by allowing these to be passed
+// as search params
+const params = new URLSearchParams(location.search);
+export const SERVER_API_VERSION = params.get('apiVersion') ||
+                                  location.pathname.match(/\/(v[0-9]+)\//).pop();
+export const SERVER_HOSTNAME = params.get('hostname') || location.hostname;
+export const SERVER_PORT = params.get('port') || location.port;
 
 export const SERVER_WS_ROUTE = url.format({
   protocol: 'ws:',

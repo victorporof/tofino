@@ -14,6 +14,9 @@ import React, { PureComponent } from 'react';
 
 import WebContents from '.';
 
+// Implement a mozbrowser, see following docs and examples:
+// https://developer.mozilla.org/en-US/docs/Web/API/Using_the_Browser_API
+// https://github.com/mdn/browser-api-demo/blob/master/main.js
 export default class WebView extends PureComponent {
   constructor(...args) { // eslint-disable-line
     super(...args);

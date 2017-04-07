@@ -20,12 +20,20 @@ export default class IframeMozBrowser extends PureComponent {
   }
 
   componentDidMount() {
-    this._iframe.addEventListener('mozbrowserloadstart', () => {
+    this._iframe.addEventListener('mozbrowsertitlechange', (e) => {
+      this.props.onPageTitleSet({ title: e.detail });
+    });
+    this._iframe.addEventListener('mozbrowserlocationchange', (e) => {
+      this.props.onDidNavigate({ url: e.detail.url });
+    });
+    this._iframe.addEventListener('mozbrowserloadstart', (e) => {
       this.props.onDidStartLoading();
     });
-    this._iframe.addEventListener('mozbrowserloadend', () => {
+    this._iframe.addEventListener('mozbrowserloadend', (e) => {
       this.props.onDidStopLoading();
-      this.props.onPageTitleSet({ title: 'Loaded' });
+    });
+    this._iframe.addEventListener('mozbrowsererror', (e) => {
+      this.props.onDidFailLoad();
     });
   }
 
@@ -50,7 +58,7 @@ export default class IframeMozBrowser extends PureComponent {
   }
 
   reload = () => {
-    throw new Error('Not implemented.');
+    this._iframe.reload();
   }
 
   render() {

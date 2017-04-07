@@ -88,6 +88,9 @@ export const QBRT_RUNNER_ENTRY_FILENAME = 'platform-qbrt/index.js';
 export const QBRT_RUNNER_POLYFILL_FILENAME = 'browser-runner-qbrt-polyfill.js';
 export const QBRT_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, QBRT_RUNNER_POLYFILL_FILENAME);
 
+export const QBRT_RUNNER_SHELL_SRC = path.join(BROWSER_RUNNER_SRC, 'platform-qbrt', 'shell');
+export const QBRT_RUNNER_SHELL_DST = path.join(BROWSER_RUNNER_DST, 'platform-qbrt', 'shell');
+
 /**
  * Browser server paths.
  */

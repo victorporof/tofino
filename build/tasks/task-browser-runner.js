@@ -60,9 +60,15 @@ gulp.task('qbrt-runner:polyfill', () => {
     .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST));
 });
 
+gulp.task('qbrt-runner:shell', () => {
+  return gulp.src(`${Paths.QBRT_RUNNER_SHELL_SRC}/**/*`)
+    .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST));
+});
+
 gulp.task('browser-runner:build', gulp.series(
   'browser-runner:babel',
   'electron-runner:polyfill',
   'dummy-runner:polyfill',
   'qbrt-runner:polyfill',
+  'qbrt-runner:shell',
 ));

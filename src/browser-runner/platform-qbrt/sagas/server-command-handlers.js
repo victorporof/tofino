@@ -12,6 +12,7 @@ specific language governing permissions and limitations under the License.
 
 import { takeEvery, call } from 'redux-saga/effects';
 import { spawn } from '../../../shared/util/spawn';
+import * as Paths from '../../../shared/paths';
 
 import logger from '../../logger';
 
@@ -22,7 +23,7 @@ function* create({ meta: client, payload: { winId, url } }) {
   const qbrt = process.platform === 'win32'
     ? 'qbrt.cmd'
     : 'qbrt';
-  spawn(qbrt, 'run', [url], { logger });
+  spawn(qbrt, 'run', [Paths.QBRT_RUNNER_SHELL_DST, `${url}`], { logger });
   yield call([client, client.send], SharedActions.events.fromRunner.toServer.app.window.created({ winId }));
 }
 

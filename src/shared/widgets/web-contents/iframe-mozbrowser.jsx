@@ -14,6 +14,10 @@ import React, { PureComponent } from 'react';
 
 import WebContents from '.';
 
+// Implement a mozbrowser, see following docs and examples:
+// https://developer.mozilla.org/en-US/docs/Web/API/Using_the_Browser_API
+// https://github.com/mdn/browser-api-demo/blob/master/main.js
+// https://github.com/mozilla/positron-electron/blob/3345aa05f8d55e0c91abbf52489b6c7e40a336d5/lib/renderer/web-view/web-view.js#L300-L360
 export default class IframeMozBrowser extends PureComponent {
   constructor(...args) { // eslint-disable-line
     super(...args);
@@ -26,13 +30,13 @@ export default class IframeMozBrowser extends PureComponent {
     this._iframe.addEventListener('mozbrowserlocationchange', (e) => {
       this.props.onDidNavigate({ url: e.detail.url });
     });
-    this._iframe.addEventListener('mozbrowserloadstart', (e) => {
+    this._iframe.addEventListener('mozbrowserloadstart', () => {
       this.props.onDidStartLoading();
     });
-    this._iframe.addEventListener('mozbrowserloadend', (e) => {
+    this._iframe.addEventListener('mozbrowserloadend', () => {
       this.props.onDidStopLoading();
     });
-    this._iframe.addEventListener('mozbrowsererror', (e) => {
+    this._iframe.addEventListener('mozbrowsererror', () => {
       this.props.onDidFailLoad();
     });
   }

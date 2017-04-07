@@ -16,7 +16,10 @@
   ],
 
   "rules": {
-    "max-len": ["error", 120],
+    "max-len": ["error", {
+      "code": 120,
+      "ignoreUrls": true
+    }],
     // Allow underscore because we're using it to signal private class fields,
     // enforced by the babel plugin `transform-private-underscore`.
     "no-underscore-dangle": ["off"],

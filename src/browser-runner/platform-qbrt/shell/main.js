@@ -12,9 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. */
 
-'use strict';
+/* global Components */
 
-const { classes: Cc, interfaces: Ci, results: Cr, utils: Cu } = Components;
+const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 const { Runtime } = Cu.import('resource://qbrt/modules/Runtime.jsm', {});
 const { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
 
@@ -49,7 +49,5 @@ const url = Runtime.commandLineArgs[0] || Runtime.packageJSON.mainURL || 'index.
 const argument = Cc['@mozilla.org/supports-string;1'].createInstance(Ci.nsISupportsString);
 argument.data = url;
 
-// TODO: report error if URL isn't found.
-let win = Services.ww.openWindow(null, SHELL_URL, '_blank', WINDOW_FEATURES, argument);
-
+const win = Services.ww.openWindow(null, SHELL_URL, '_blank', WINDOW_FEATURES, argument);
 Runtime.openDevTools(win);

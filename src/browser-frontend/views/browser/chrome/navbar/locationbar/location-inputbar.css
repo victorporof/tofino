@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 .location-inputbar {
+  overflow: hidden;
   width: var(--theme-locationbar-input-flex-width);
   flex: 1;
   padding: 4px 6px;

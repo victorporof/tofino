@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 .locationbar {
+  overflow: hidden;
   flex: 1;
   padding: 0 12px 0 6px;
   border: var(--theme-locationbar-border);
@@ -18,4 +19,10 @@ specific language governing permissions and limitations under the License.
   margin: 4px 10vw;
   background: var(--theme-locationbar-background);
   color: var(--theme-locationbar-color);
+}
+
+@media (max-width: 800px) {
+  .locationbar {
+    margin: 4px 1vw;
+  }
 }

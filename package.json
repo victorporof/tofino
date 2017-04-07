@@ -7,6 +7,8 @@
     "start": "cross-env NODE_ENV=production gulp build+start --obj-dir-name production-electron",
     "serve": "cross-env NODE_ENV=development gulp build+serve --obj-dir-name development-headless",
     "serve+logging": "cross-env NODE_ENV=development LOGGING=on gulp build+serve --obj-dir-name development-headless",
+    "qbrt": "cross-env NODE_ENV=development gulp build+start --platform qbrt --obj-dir-name development-qbrt",
+    "qbrt+logging": "cross-env NODE_ENV=development LOGGING=on gulp build+start --platform qbrt --obj-dir-name development-qbrt",
     "dev": "cross-env NODE_ENV=development gulp build+start --obj-dir-name development-electron",
     "dev+logging": "cross-env NODE_ENV=development LOGGING=on gulp build+start --obj-dir-name development-electron",
     "package": "gulp package --obj-dir-name electron-package"
@@ -48,6 +50,7 @@
     "inline-environment-variables-webpack-plugin": "1.1.0",
     "is-builtin-module": "1.0.0",
     "node-libs-browser": "2.0.0",
+    "qbrt": "0.1.0",
     "style-loader": "0.16.0",
     "stylelint-config-css-modules": "0.1.0",
     "stylelint-config-idiomatic-order": "github:bouwwouw/stylelint-config-idiomatic-order",

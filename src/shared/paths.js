@@ -84,6 +84,10 @@ export const DUMMY_RUNNER_ENTRY_FILENAME = 'platform-dummy/index.js';
 export const DUMMY_RUNNER_POLYFILL_FILENAME = 'browser-runner-dummy-polyfill.js';
 export const DUMMY_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, DUMMY_RUNNER_POLYFILL_FILENAME);
 
+export const QBRT_RUNNER_ENTRY_FILENAME = 'platform-qbrt/index.js';
+export const QBRT_RUNNER_POLYFILL_FILENAME = 'browser-runner-qbrt-polyfill.js';
+export const QBRT_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, QBRT_RUNNER_POLYFILL_FILENAME);
+
 /**
  * Browser server paths.
  */

@@ -22,14 +22,14 @@ gulp.task('eslint', () => {
   const ignorePath = path.join(Paths.ROOT_DIR, '.eslintignore');
   const ignoreGlobs = fs.readFileSync(ignorePath, { encoding: 'utf8' });
   const glob = [
-    `${Paths.SRC_DIR}/**/*.@(js|jsx)`,
+    `${Paths.ROOT_DIR}/**/*.@(js|jsx)`,
     ...ignoreGlobs.trim().split('\n').map(i => `!${i}`),
   ];
   return gulp.src(glob)
     .pipe(debug({ title: `Running ${colors.cyan(`eslint${yargs.argv.fix ? ' --fix' : ''}`)}:` }))
-    .pipe(eslint())
+    .pipe(eslint({ fix: yargs.argv.fix }))
     .pipe(eslint.format())
-    .pipe(gulpif(f => f.eslint != null && f.eslint.fixed, gulp.dest(Paths.SRC_DIR)))
+    .pipe(gulpif(f => f.eslint != null && f.eslint.fixed, gulp.dest(Paths.ROOT_DIR)))
     .pipe(eslint.failAfterError());
 });
 

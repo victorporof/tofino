@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "gulp test",
+    "fix": "gulp eslint --fix",
     "clean": "gulp clean",
     "start": "cross-env NODE_ENV=production gulp build+start --obj-dir-name production-electron",
     "serve": "cross-env NODE_ENV=development gulp build+serve --obj-dir-name development-headless",

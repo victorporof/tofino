@@ -32,9 +32,3 @@ gulp.task('build+start', gulp.series(
   'start',
   'build:cleanup',
 ));
-
-gulp.task('build+serve', gulp.series(
-  'build',
-  'serve',
-  'build:cleanup',
-));

@@ -26,24 +26,36 @@ gulp.task('start', async () => {
     '--port', ports[0],
   ];
 
-  const runnerArgs = [
-    ...args,
-    ...(yargs.argv.mockOs ? ['--mock-os', yargs.argv.mockOs] : []),
-  ];
+  if (yargs.argv.platform === 'electron') {
+    const electron = process.platform === 'win32'
+      ? 'electron.cmd'
+      : 'electron';
 
-  if (yargs.argv.platform === 'qbrt') {
     return Promise.all([
-      spawn('node', Paths.QBRT_RUNNER_DST_MAIN, runnerArgs, { logger }),
+      spawn(electron, Paths.ELECTRON_RUNNER_DST_MAIN, args, { logger }),
       spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
     ]);
   }
 
-  const electron = process.platform === 'win32'
-    ? 'electron.cmd'
-    : 'electron';
+  if (yargs.argv.platform === 'qbrt') {
+    return Promise.all([
+      spawn('node', Paths.QBRT_RUNNER_DST_MAIN, args, { logger }),
+      spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
+    ]);
+  }
 
-  return Promise.all([
-    spawn(electron, Paths.ELECTRON_RUNNER_DST_MAIN, runnerArgs, { logger }),
-    spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
-  ]);
+  if (yargs.argv.platform === 'dummy') {
+    const runnerArgs = [
+      ...args,
+      ...(yargs.argv.browser ? ['--browser', yargs.argv.browser] : []),
+      ...(yargs.argv.mockOs ? ['--mock-os', yargs.argv.mockOs] : []),
+    ];
+
+    return Promise.all([
+      spawn('node', Paths.DUMMY_RUNNER_DST_MAIN, runnerArgs, { logger }),
+      spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
+    ]);
+  }
+
+  throw new Error('Invalid browser runner platform.');
 });

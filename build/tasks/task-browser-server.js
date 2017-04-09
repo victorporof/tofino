@@ -6,7 +6,6 @@ import debug from 'gulp-debug';
 import changed from 'gulp-changed';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
-import file from 'gulp-file';
 import fs from 'fs-promise';
 import colors from 'colors/safe';
 
@@ -21,20 +20,6 @@ gulp.task('browser-server:babel', () =>
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(Paths.BROWSER_SERVER_DST)));
 
-gulp.task('browser-server:polyfill', () => {
-  const contents = `
-    import 'babel-polyfill';
-    import './${Paths.BROWSER_SERVER_ENTRY_FILENAME}';
-  `;
-  return file(Paths.BROWSER_SERVER_POLYFILL_FILENAME, contents, { src: true })
-    .pipe(debug({ title: 'Creating' }))
-    .pipe(sourcemaps.init())
-    .pipe(babel(fs.readJsonSync('.babelrc')))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(Paths.BROWSER_SERVER_DST));
-});
-
 gulp.task('browser-server:build', gulp.series(
   'browser-server:babel',
-  'browser-server:polyfill',
 ));

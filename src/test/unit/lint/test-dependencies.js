@@ -43,6 +43,9 @@ describe('modules', () => {
       // Used for mocha test configuration in `build/tasks/task-test.js`.
       'babel-register',
 
+      // Used for the `babel-plugin-transform-runtime` in `babelrc` config file.
+      'babel-runtime',
+
       // Entry paths for `build/webpack/config.browser-frontend.js` config file.
       'font-awesome-webpack',
 
@@ -93,8 +96,10 @@ describe('modules', () => {
     ];
 
     const unimported = [
+      // Used for the `babel-plugin-transform-runtime` in `babelrc` config file.
+      'babel-runtime',
+
       // Entry paths for `build/webpack/config.browser-frontend.js` config file.
-      'babel-polyfill',
       'font-awesome-webpack',
 
       // Peer dependencies for `font-awesome-webpack`.

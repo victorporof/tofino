@@ -6,7 +6,7 @@ import debug from 'gulp-debug';
 import changed from 'gulp-changed';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import colors from 'colors/safe';
+import colors from 'colour';
 
 import logger from '../logger';
 

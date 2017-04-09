@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License.
 
 import cp from 'child_process';
 
-import colors from 'colors/safe';
+import colors from 'colour';
 
 export const spawn = (command, main, args, { logger }, options = {}) => new Promise((resolve, reject) => {
   logger.log('Spawning',

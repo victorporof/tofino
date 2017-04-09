@@ -10,7 +10,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import colors from 'colors/safe';
+import colors from 'colour';
 import { createAction } from 'redux-actions';
 
 export default class Connection {

@@ -11,7 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 import electron from 'electron';
-import colors from 'colors/safe';
+import colors from 'colour';
 
 import logger from '../logger';
 

@@ -7,9 +7,7 @@ import devConfig from './config.base.snippets.dev';
 import prodConfig from './config.base.snippets.prod';
 
 export default {
-  entry: [
-    'babel-polyfill',
-  ],
+  entry: [],
   module: {
     rules: [{
       test: /\.jsx?$/,

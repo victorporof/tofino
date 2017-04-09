@@ -8,7 +8,6 @@ export default {
   ...defaultConfig,
   context: Paths.BROWSER_FRONTEND_SRC,
   entry: [
-    ...defaultConfig.entry,
     'font-awesome-webpack',
     `./${Paths.BROWSER_FRONTEND_ENTRY_FILENAME}`,
   ],

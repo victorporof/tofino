@@ -77,16 +77,13 @@ export const BROWSER_RUNNER_SRC = IS_PACKAGED_BUILD ? undefined : path.join(SRC_
 export const BROWSER_RUNNER_DST = path.join(BUILD_TARGET_DIR, BROWSER_RUNNER_DIRNAME);
 
 export const ELECTRON_RUNNER_ENTRY_FILENAME = 'platform-electron/index.js';
-export const ELECTRON_RUNNER_POLYFILL_FILENAME = 'browser-runner-electron-polyfill.js';
-export const ELECTRON_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, ELECTRON_RUNNER_POLYFILL_FILENAME);
+export const ELECTRON_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, ELECTRON_RUNNER_ENTRY_FILENAME);
 
 export const DUMMY_RUNNER_ENTRY_FILENAME = 'platform-dummy/index.js';
-export const DUMMY_RUNNER_POLYFILL_FILENAME = 'browser-runner-dummy-polyfill.js';
-export const DUMMY_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, DUMMY_RUNNER_POLYFILL_FILENAME);
+export const DUMMY_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, DUMMY_RUNNER_ENTRY_FILENAME);
 
 export const QBRT_RUNNER_ENTRY_FILENAME = 'platform-qbrt/index.js';
-export const QBRT_RUNNER_POLYFILL_FILENAME = 'browser-runner-qbrt-polyfill.js';
-export const QBRT_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, QBRT_RUNNER_POLYFILL_FILENAME);
+export const QBRT_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, QBRT_RUNNER_ENTRY_FILENAME);
 
 export const QBRT_RUNNER_SHELL_SRC = path.join(BROWSER_RUNNER_SRC, 'platform-qbrt', 'shell');
 export const QBRT_RUNNER_SHELL_DST = path.join(BROWSER_RUNNER_DST, 'platform-qbrt', 'shell');
@@ -99,5 +96,4 @@ export const BROWSER_SERVER_SRC = IS_PACKAGED_BUILD ? undefined : path.join(SRC_
 export const BROWSER_SERVER_DST = path.join(BUILD_TARGET_DIR, BROWSER_SERVER_DIRNAME);
 
 export const BROWSER_SERVER_ENTRY_FILENAME = 'index.js';
-export const BROWSER_SERVER_POLYFILL_FILENAME = 'browser-server-polyfill.js';
-export const BROWSER_SERVER_DST_MAIN = path.join(BROWSER_SERVER_DST, BROWSER_SERVER_POLYFILL_FILENAME);
+export const BROWSER_SERVER_DST_MAIN = path.join(BROWSER_SERVER_DST, BROWSER_SERVER_ENTRY_FILENAME);

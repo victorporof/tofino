@@ -6,7 +6,6 @@ import debug from 'gulp-debug';
 import changed from 'gulp-changed';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
-import file from 'gulp-file';
 import fs from 'fs-promise';
 import colors from 'colors/safe';
 
@@ -21,55 +20,13 @@ gulp.task('browser-runner:babel', () =>
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST)));
 
-gulp.task('electron-runner:polyfill', () => {
-  const contents = `
-    import 'babel-polyfill';
-    import './${Paths.ELECTRON_RUNNER_ENTRY_FILENAME}';
-  `;
-  return file(Paths.ELECTRON_RUNNER_POLYFILL_FILENAME, contents, { src: true })
-    .pipe(debug({ title: 'Creating' }))
-    .pipe(sourcemaps.init())
-    .pipe(babel(fs.readJsonSync('.babelrc')))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST));
-});
-
-gulp.task('dummy-runner:polyfill', () => {
-  const contents = `
-    import 'babel-polyfill';
-    import './${Paths.DUMMY_RUNNER_ENTRY_FILENAME}';
-  `;
-  return file(Paths.DUMMY_RUNNER_POLYFILL_FILENAME, contents, { src: true })
-    .pipe(debug({ title: 'Creating' }))
-    .pipe(sourcemaps.init())
-    .pipe(babel(fs.readJsonSync('.babelrc')))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST));
-});
-
-gulp.task('qbrt-runner:polyfill', () => {
-  const contents = `
-    import 'babel-polyfill';
-    import './${Paths.QBRT_RUNNER_ENTRY_FILENAME}';
-  `;
-  return file(Paths.QBRT_RUNNER_POLYFILL_FILENAME, contents, { src: true })
-    .pipe(debug({ title: 'Creating' }))
-    .pipe(sourcemaps.init())
-    .pipe(babel(fs.readJsonSync('.babelrc')))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(Paths.BROWSER_RUNNER_DST));
-});
-
-gulp.task('qbrt-runner:shell', () => {
-  return gulp.src(`${Paths.QBRT_RUNNER_SHELL_SRC}/**/*`)
+gulp.task('qbrt-runner:copy-shell', () =>
+  gulp.src(`${Paths.QBRT_RUNNER_SHELL_SRC}/**/*`)
     .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST))
-    .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST));
-});
+    .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
+    .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST)));
 
 gulp.task('browser-runner:build', gulp.series(
   'browser-runner:babel',
-  'electron-runner:polyfill',
-  'dummy-runner:polyfill',
-  'qbrt-runner:polyfill',
-  'qbrt-runner:shell',
+  'qbrt-runner:copy-shell',
 ));

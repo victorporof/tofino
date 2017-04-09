@@ -12,8 +12,8 @@ import logger from '../logger';
 
 import * as Paths from '../../src/shared/paths';
 import * as Endpoints from '../../src/shared/endpoints';
-import config from '../webpack/config.browser-frontend';
-import { makeDevConfig, makeProdConfig } from '../webpack/config.base';
+import prodConfig from '../webpack/config.browser-frontend.prod';
+import devConfig from '../webpack/config.browser-frontend.dev';
 
 const WEBPACK_STATS_OPTIONS = {
   colors: true,
@@ -32,8 +32,7 @@ gulp.task('browser-frontend:copy-html', () =>
 gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {
   if (process.env.NODE_ENV !== 'development') {
     // In a production environment, webpack directly to disk.
-    const currentConfig = makeProdConfig(config);
-    webpack(currentConfig, (err, stats) => {
+    webpack(prodConfig, (err, stats) => {
       if (err) { reject(err); return; }
       if (stats) { logger.log(stats.toString(WEBPACK_STATS_OPTIONS)); }
       resolve();
@@ -41,9 +40,9 @@ gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {
   } else {
     // In a development environment, webpack in memory and serve
     // the build with webpack-dev-server.
-    const currentConfig = makeDevConfig(config);
-    const compiler = webpack(currentConfig);
+    const compiler = webpack(devConfig);
     const server = new WebpackDevServer(compiler, {
+      ...devConfig.devServer,
       stats: WEBPACK_STATS_OPTIONS,
     });
 

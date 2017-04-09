@@ -3,16 +3,16 @@
 
 import InlineEnviromentVariablesPlugin from 'inline-environment-variables-webpack-plugin';
 
-import devConfig from './config.base.snippets.dev';
-import prodConfig from './config.base.snippets.prod';
-
 export default {
   entry: [],
+  output: {},
   module: {
     rules: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
       use: [{
+        loader: 'webpack-module-hot-accept',
+      }, {
         loader: 'babel-loader',
       }],
     }, {
@@ -32,6 +32,7 @@ export default {
         loader: 'url-loader',
       }],
     }],
+    exprContextCritical: false,
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -45,29 +46,3 @@ export default {
     }),
   ],
 };
-
-export const makeDevConfig = baseConfig => ({
-  ...devConfig,
-  ...baseConfig,
-  output: {
-    ...devConfig.output || {},
-    ...baseConfig.output || {},
-  },
-  plugins: [
-    ...devConfig.plugins || [],
-    ...baseConfig.plugins || [],
-  ],
-});
-
-export const makeProdConfig = baseConfig => ({
-  ...prodConfig,
-  ...baseConfig,
-  output: {
-    ...prodConfig.output || {},
-    ...baseConfig.output || {},
-  },
-  plugins: [
-    ...prodConfig.plugins || [],
-    ...baseConfig.plugins || [],
-  ],
-});

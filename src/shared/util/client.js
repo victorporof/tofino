@@ -11,7 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 import io from 'socket.io-client';
-import colors from 'colors/safe';
+import colors from 'colour';
 import { createAction } from 'redux-actions';
 
 export default class Client {

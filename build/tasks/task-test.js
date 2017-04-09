@@ -11,7 +11,7 @@ import eslint from 'gulp-eslint';
 import stylelint from 'gulp-stylelint';
 import fs from 'fs-promise';
 import yargs from 'yargs';
-import colors from 'colors/safe';
+import colors from 'colour';
 
 import * as Paths from '../../src/shared/paths';
 

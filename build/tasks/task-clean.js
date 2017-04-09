@@ -3,7 +3,7 @@
 
 import gulp from 'gulp';
 import del from 'del';
-import colors from 'colors/safe';
+import colors from 'colour';
 
 import logger from '../logger';
 

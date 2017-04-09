@@ -7,7 +7,7 @@ import changed from 'gulp-changed';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
 import fs from 'fs-promise';
-import colors from 'colors/safe';
+import colors from 'colour';
 
 import * as Paths from '../../src/shared/paths';
 

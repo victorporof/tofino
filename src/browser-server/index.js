@@ -15,7 +15,7 @@ import http from 'http';
 import express from 'express';
 import io from 'socket.io';
 import morgan from 'morgan';
-import colors from 'colors/safe';
+import colors from 'colour';
 
 import logger from './logger';
 

@@ -25,8 +25,11 @@ export default ({ pathname, app }) => {
   // in memory, when sources change.
   if (process.env.NODE_ENV === 'development') {
     const frontendBundle = Paths.BROWSER_FRONTEND_BUNDLED_FILENAME;
-    const webpackServer = `${Endpints.WEBPACK_DEV_SERVER_HOST}:${Endpints.WEBPACK_DEV_SERVER_PORT}`;
-    router.get(`*${frontendBundle}`, proxy(webpackServer));
+    const webpackDevServer = `${Endpints.WEBPACK_DEV_SERVER_HOST}:${Endpints.WEBPACK_DEV_SERVER_PORT}`;
+    router.get(`/${frontendBundle}`, proxy(webpackDevServer));
+    router.get('/hot-module-reload/:resource', proxy(webpackDevServer, {
+      forwardPath: req => `/${req.params.resource}`,
+    }));
   }
 
   router.use(express.static(Paths.BROWSER_FRONTEND_DST));

@@ -3,9 +3,13 @@
 
 import webpack from 'webpack';
 
+import baseConfig from './config.base';
+
 export default {
+  ...baseConfig,
   devtool: 'source-map',
   plugins: [
+    ...baseConfig.plugins,
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
     }),

@@ -10,9 +10,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+/* global module */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
 
 import './css/global.css';
 import './css/theme.css';
@@ -36,9 +39,11 @@ const setupWs = async () => {
 const setupFrontend = () => {
   const container = document.querySelector('.container');
   const app = (
-    <Provider store={store}>
-      <Window />
-    </Provider>
+    <AppContainer>
+      <Provider store={store}>
+        <Window />
+      </Provider>
+    </AppContainer>
   );
   ReactDOM.render(app, container);
 };
@@ -50,3 +55,7 @@ const setupInitialState = () => {
 setupWs();
 setupFrontend();
 setupInitialState();
+
+if (module.hot) {
+  module.hot.accept('./views/browser/window', () => setupFrontend());
+}

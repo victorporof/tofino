@@ -2,17 +2,18 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 
 import * as Paths from '../../src/shared/paths';
-import defaultConfig from './config.base';
+import baseProdConfig from './config.default-prod';
 
 export default {
-  ...defaultConfig,
+  ...baseProdConfig,
   context: Paths.BROWSER_FRONTEND_SRC,
   entry: [
+    ...baseProdConfig.entry,
     'font-awesome-webpack',
     `./${Paths.BROWSER_FRONTEND_ENTRY_FILENAME}`,
   ],
   output: {
-    ...defaultConfig.output,
+    ...baseProdConfig.output,
     path: Paths.BROWSER_FRONTEND_DST,
     filename: Paths.BROWSER_FRONTEND_BUNDLED_FILENAME,
   },

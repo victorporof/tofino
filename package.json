@@ -61,7 +61,8 @@
     "stylelint-order": "0.4.1",
     "url-loader": "0.5.8",
     "webpack": "2.2.1",
-    "webpack-dev-server": "2.4.2"
+    "webpack-dev-server": "2.4.2",
+    "webpack-module-hot-accept": "1.0.5"
   },
   "dependencies": {
     "babel-runtime": "6.23.0",
@@ -84,6 +85,7 @@
     "react-css-modules": "4.1.0",
     "react-dom": "15.4.2",
     "react-fontawesome": "1.5.0",
+    "react-hot-loader": "3.0.0-beta.6",
     "react-immutable-proptypes": "2.1.0",
     "react-pure-render": "1.0.2",
     "react-redux": "5.0.3",

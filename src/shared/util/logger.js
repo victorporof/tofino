@@ -10,8 +10,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import colors from 'colors/safe';
+import isBrowser from 'is-browser';
+import colors from 'colour';
+import ansi from 'ansi-webkit';
 import df from 'dateformat';
+import unzip from 'lodash/unzip';
+import compact from 'lodash/compact';
+
+colors.mode = 'console';
 
 export default class Logger {
   constructor(name, writer, options = {}) {
@@ -24,6 +30,18 @@ export default class Logger {
     if (!this._options.always && process.env.LOGGING !== 'on') {
       return;
     }
-    this._writer.log(df(Date.now(), '[HH:MM:ss:l]'), colors.bold(this._name), ...args);
+    this._write('log', df(Date.now(), '[HH:MM:ss:l]'), colors.bold(this._name), ...args);
+  }
+
+  _write(level, ...args) {
+    if (isBrowser) {
+      const [str, styles] = unzip(args.map((arg) => {
+        const [data, style] = ansi.parse(arg);
+        return [data || arg, style];
+      }));
+      this._writer[level](str.join(' '), ...compact(styles));
+    } else {
+      this._writer[level](...args);
+    }
   }
 }

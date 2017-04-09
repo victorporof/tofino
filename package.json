@@ -65,6 +65,7 @@
     "webpack-module-hot-accept": "1.0.5"
   },
   "dependencies": {
+    "ansi-webkit": "1.0.1",
     "babel-runtime": "6.23.0",
     "colour": "github:victorporof/colour.js#safe",
     "dateformat": "2.0.0",

@@ -64,6 +64,7 @@
   --theme-tab-open-opacity: 1;
   --theme-tab-open-height: 100%;
   --theme-tab-closed-width: var(--theme-tab-initial-width);
+  --theme-tab-closed-height: var(--theme-tab-initial-height);
   --theme-tab-closed-opacity: var(--theme-tab-initial-opacity);
   --theme-tab-flex-width: 190px;
   --theme-tab-hover-background: rgba(255, 255, 255, 0.05);

@@ -16,9 +16,6 @@ specific language governing permissions and limitations under the License.
   user-select: none;
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
   width: var(--theme-tab-open-width);
-
-  /* quick width expansion, tab slides up */
-  /*transition: height 0.2s 0.05s var(--animation-curve), width 0.05s var(--animation-curve), opacity 0.05s var(--animation-curve);*/
   margin-top: auto;
 
   background-size: 100% 200%;
@@ -59,11 +56,15 @@ specific language governing permissions and limitations under the License.
 }
 
 .tab.closed {
-  height: var(--theme-tab-initial-height);
+  transition: width 0.5s var(--animation-curve);
+  opacity:  var(--theme-tab-closed-opacity);
+  width: var(--theme-tab-closed-width);
 }
 
 .tab.selected-closed {
+  transition: width 0.2s  0.3s var(--animation-curve), height 0.5s var(--animation-curve);
   background-position: 0 100%;
-  height: var(--theme-tab-initial-height);
+  height: var(--theme-tab-closed-height);
   color: var(--theme-tab-active-color);
+  width: var(--theme-tab-closed-width);
 }

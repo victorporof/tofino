@@ -58,9 +58,11 @@
   /* Tab */
 
   --theme-tab-initial-width: 0;
+  --theme-tab-initial-height: 0;
   --theme-tab-initial-opacity: 0;
   --theme-tab-open-width: var(--theme-tab-flex-width);
   --theme-tab-open-opacity: 1;
+  --theme-tab-open-height: 100%;
   --theme-tab-closed-width: var(--theme-tab-initial-width);
   --theme-tab-closed-opacity: var(--theme-tab-initial-opacity);
   --theme-tab-flex-width: 190px;

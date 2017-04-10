@@ -16,10 +16,11 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 import PagesModelActions from '../actions/pages-model-actions';
 import UIPageModel from '../model/ui-page-model';
 
-function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
+function* closeTabAnimated({ payload: { pageId, removePageAfterMs, selected } }) {
+  let tabState = selected ? UIPageModel.TAB_STATES.SELECTEDCLOSED : UIPageModel.TAB_STATES.CLOSED;
   yield put(PagesModelActions.tabbar.setTabState({
     pageId,
-    tabState: UIPageModel.TAB_STATES.CLOSED,
+    tabState: tabState,
   }));
 
   yield put(PagesModelActions.selectNextLogicalPage({

@@ -15,6 +15,7 @@ specific language governing permissions and limitations under the License.
   align-items: center;
   user-select: none;
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
+  width: var(--theme-tab-open-width);
 
   /* quick width expansion, tab slides up */
   /*transition: height 0.2s 0.05s var(--animation-curve), width 0.05s var(--animation-curve), opacity 0.05s var(--animation-curve);*/
@@ -23,8 +24,11 @@ specific language governing permissions and limitations under the License.
   background-size: 100% 200%;
   background-position: 0 0;
   background-repeat: no-repeat;
-  transition: width 0.05s var(--animation-curve), background-position 0.5s var(--animation-curve);
+  transition: width 0.05s var(--animation-curve), background-position 0.5s var(--animation-curve), height 0.5s var(--animation-curve);
   background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, var(--theme-tab-active-background) 50%);
+
+  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
+  color: var(--theme-tab-inactive-color);
 }
 
 .tab:not(.selected):hover {
@@ -35,11 +39,11 @@ specific language governing permissions and limitations under the License.
 .tab.selected {
   background-position: 0 100%;
   color: var(--theme-tab-active-color);
+  box-shadow: none;
 }
 
 .tab.deselected {
-  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
-  color: var(--theme-tab-inactive-color);
+
 }
 
 .tab.initial {
@@ -50,12 +54,16 @@ specific language governing permissions and limitations under the License.
 }
 
 .tab.open {
-  width: var(--theme-tab-open-width);
   opacity: var(--theme-tab-open-opacity);
   height: var(--theme-tab-open-height);
 }
 
 .tab.closed {
-  width: var(--theme-tab-closed-width);
-  opacity: var(--theme-tab-closed-opacity);
+  height: var(--theme-tab-initial-height);
+}
+
+.tab.selected-closed {
+  background-position: 0 100%;
+  height: var(--theme-tab-initial-height);
+  color: var(--theme-tab-active-color);
 }

@@ -29,9 +29,9 @@ gulp.task('browser-frontend:copy-html', () => {
     .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST));
 });
 
-gulp.task('browser-frontend:copy-qbrt-shell', () => {
+gulp.task('browser-frontend:copy-to-qbrt-shell', () => {
   return gulp.src(`${Paths.BROWSER_FRONTEND_DST}/**/*`)
-    .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST));
+    .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST));
 });
 
 gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {
@@ -65,7 +65,7 @@ gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {
 gulp.task('browser-frontend:build', gulp.series(
   'browser-frontend:copy-html',
   'browser-frontend:webpack',
-  'browser-frontend:copy-qbrt-shell',
+  'browser-frontend:copy-to-qbrt-shell',
 ));
 
 gulp.task('browser-frontend:build:cleanup', (cb) => {

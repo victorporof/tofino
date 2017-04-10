@@ -14,6 +14,7 @@ import React, { PureComponent } from 'react';
 
 import WindowControls from './chrome/decorations/window-controls';
 import TabBar from './chrome/tabbar';
+import AppMenu from './chrome/app-menu';
 
 export default class Chrome extends PureComponent {
   render() {
@@ -21,6 +22,7 @@ export default class Chrome extends PureComponent {
       <div>
         <WindowControls />
         <TabBar />
+        <AppMenu />
       </div>
     );
   }

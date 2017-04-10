@@ -12,28 +12,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. */
 
-/* global Components */
+/* global Components, dump */
 
 const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 const { Runtime } = Cu.import('resource://qbrt/modules/Runtime.jsm', {});
 const { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
 
+// Slurp up command line args passed into qbrt and convert them to GET params
+// for the frontend.
 
-// TODO: Pass correct values as command line arguments to qbrt
-const searchParams = [
-  'runnerConnId=%2Fv1%2Frunner%23k4cFvGGdjECa9trEAAAB',
-  'winId=2d12c846-3712-411b-8efb-f810683aa3ac',
-  'os=darwin',
-  'platform=qbrt',
-  'apiVersion=v1',
-  'hostname=localhost',
-  'port=9000',
-].join('&');
-const SHELL_URL = `chrome://app/content/index.html?${searchParams}`;
+let width = 640;
+let height = 480;
+let searchParams = null;
+for (let i = 1; i < Runtime.commandLineArgs.length; i += 2) {
+  if (Runtime.commandLineArgs[i].indexOf('-width') !== -1) {
+    width = Runtime.commandLineArgs[i + 1];
+  } else if (Runtime.commandLineArgs[i].indexOf('-height') !== -1) {
+    height = Runtime.commandLineArgs[i + 1];
+  } else if (Runtime.commandLineArgs[i].indexOf('-searchParams') !== -1) {
+    searchParams = Runtime.commandLineArgs[i + 1];
+  }
+}
 
+const SHELL_URL = `chrome://app/content/index.html${searchParams}`;
+
+dump(`Loading frontend at: ${SHELL_URL}\n`);
+
+// TODO: Handle `style` argument for window chrome
 const WINDOW_FEATURES = [
-  'width=640',
-  'height=480',
+  `width=${width}`,
+  `height=${height}`,
   'resizable',
   'scrollbars',
 ].join(',');

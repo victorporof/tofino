@@ -62,6 +62,7 @@ gulp.task('qbrt-runner:polyfill', () => {
 
 gulp.task('qbrt-runner:shell', () => {
   return gulp.src(`${Paths.QBRT_RUNNER_SHELL_SRC}/**/*`)
+    .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST))
     .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST));
 });
 

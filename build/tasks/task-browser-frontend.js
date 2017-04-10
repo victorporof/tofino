@@ -31,7 +31,8 @@ gulp.task('browser-frontend:copy-html', () => {
 
 gulp.task('browser-frontend:copy-to-qbrt-shell', () => {
   return gulp.src(`${Paths.BROWSER_FRONTEND_DST}/**/*`)
-    .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST));
+    .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST))
+    .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST));
 });
 
 gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {

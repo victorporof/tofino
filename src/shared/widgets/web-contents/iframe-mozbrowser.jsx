@@ -14,18 +14,30 @@ import React, { PureComponent } from 'react';
 
 import WebContents from '.';
 
+// Implement a mozbrowser, see following docs and examples:
+// https://developer.mozilla.org/en-US/docs/Web/API/Using_the_Browser_API
+// https://github.com/mdn/browser-api-demo/blob/master/main.js
+// https://github.com/mozilla/positron-electron/blob/3345aa05f8d55e0c91abbf52489b6c7e40a336d5/lib/renderer/web-view/web-view.js#L300-L360
 export default class IframeMozBrowser extends PureComponent {
   constructor(...args) { // eslint-disable-line
     super(...args);
   }
 
   componentDidMount() {
+    this._iframe.addEventListener('mozbrowsertitlechange', (e) => {
+      this.props.onPageTitleSet({ title: e.detail });
+    });
+    this._iframe.addEventListener('mozbrowserlocationchange', (e) => {
+      this.props.onDidNavigate({ url: e.detail.url });
+    });
     this._iframe.addEventListener('mozbrowserloadstart', () => {
       this.props.onDidStartLoading();
     });
     this._iframe.addEventListener('mozbrowserloadend', () => {
       this.props.onDidStopLoading();
-      this.props.onPageTitleSet({ title: 'Loaded' });
+    });
+    this._iframe.addEventListener('mozbrowsererror', () => {
+      this.props.onDidFailLoad();
     });
   }
 
@@ -50,7 +62,7 @@ export default class IframeMozBrowser extends PureComponent {
   }
 
   reload = () => {
-    throw new Error('Not implemented.');
+    this._iframe.reload();
   }
 
   render() {

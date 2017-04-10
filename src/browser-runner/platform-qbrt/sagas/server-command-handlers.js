@@ -10,19 +10,41 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import { parse } from 'url';
+import querystring from 'querystring';
+
 import { takeEvery, call } from 'redux-saga/effects';
 import { spawn } from '../../../shared/util/spawn';
-
+import * as Paths from '../../../shared/paths';
 import logger from '../../logger';
-
 import SharedActions from '../../../shared/actions/shared-actions';
 
-function* create({ meta: client, payload: { winId, url } }) {
+function* create({ meta: client, payload: { winId, url, width, height, style } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
   const qbrt = process.platform === 'win32'
     ? 'qbrt.cmd'
     : 'qbrt';
-  spawn(qbrt, 'run', [url], { logger });
+
+  // Normally these parameters are inferred from the url in the frontend, but when
+  // running in qbrt the frontend is loaded as a chrome:// url so we need to tack
+  // these on as get parameters
+  const parsedURL = parse(url);
+  const extraParams = querystring.stringify({
+    port: parsedURL.port,
+    hostname: parsedURL.hostname,
+    apiVersion: parsedURL.pathname.split('/')[1],
+  });
+  const searchParams = `${parsedURL.search}&${extraParams}`;
+  const args = [Paths.QBRT_RUNNER_SHELL_DST,
+    '--width', width,
+    '--height', height,
+    '--style', style,
+    '--searchParams', searchParams,
+  ];
+
+  // TODO: Pass important params (server version, hostname, port, etc) along as
+  // args once https://github.com/mozilla/qbrt/pull/51 lands
+  spawn(qbrt, 'run', args, { logger });
   yield call([client, client.send], SharedActions.events.fromRunner.toServer.app.window.created({ winId }));
 }
 

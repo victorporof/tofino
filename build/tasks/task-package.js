@@ -32,7 +32,10 @@ gulp.task('package:write-manifest', () => {
 
 gulp.task('package:install-modules', () => {
   const cwd = Paths.BUILD_TARGET_DIR;
-  return spawn('npm', 'install', ['--production'], { logger }, { cwd });
+  const npm = process.platform === 'win32'
+    ? 'npm.cmd'
+    : 'npm';
+  return spawn(npm, 'install', ['--production'], { logger }, { cwd });
 });
 
 gulp.task('package:copy-node', () => {

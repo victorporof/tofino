@@ -44,8 +44,8 @@ export default class WebView extends PureComponent {
     this._webview.addEventListener('did-navigate-in-page', () => {
       this.props.onDidNavigateInternal();
     });
-    this._webview.addEventListener('new-window', () => {
-      this.props.onDidNavigateToNewWindow();
+    this._webview.addEventListener('new-window', (e) => {
+      this.props.onDidNavigateToNewWindow({ url: e.url });
     });
   }
 

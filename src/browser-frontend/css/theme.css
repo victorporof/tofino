@@ -28,6 +28,13 @@
   --theme-doorhanger-collapsed-transform: scale(0, 0);
   --theme-doorhanger-collapsed-opacity: 0;
 
+  /* Controls: Expandos */
+
+  --theme-expando-down-image: url('../assets/Arrow Head - Down - 16.svg');
+  --theme-expando-left-image: url('../assets/Arrow Head - Left - 16.svg');
+  --theme-expando-right-image: url('../assets/Arrow Head - Right - 16.svg');
+  --theme-expando-up-image: url('../assets/Arrow Head - Up - 16.svg');
+
   /* Window */
 
   --theme-window-background: #2a2e4e;

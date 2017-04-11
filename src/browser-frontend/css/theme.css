@@ -119,6 +119,23 @@
 
   --theme-page-background: #fff;
 
+  /* App Menu */
+
+  --theme-app-menu-width: 200px;
+  --theme-app-menu-item-padding: 12px 14px;
+  --theme-app-menu-new-window-button-image: url('../assets/Window - New - 16.svg');
+  --theme-app-menu-new-private-window-button-image: url('../assets/Private Browsing - 16.svg');
+  --theme-app-menu-sidebar-button-image: url('../assets/Sidebar - 16.svg');
+  --theme-app-menu-library-button-image: url('../assets/Library - 16.svg');
+  --theme-app-menu-extensions-button-image: url('../assets/Extensions - 16.svg');
+  --theme-app-menu-preferences-button-image: url('../assets/Preferences - 16 - macOS.svg');
+  --theme-app-menu-cut-button-image: url('../assets/Cut - 16.svg');
+  --theme-app-menu-copy-button-image: url('../assets/Copy - 16.svg');
+  --theme-app-menu-paste-button-image: url('../assets/Paste - 16.svg');
+  --theme-app-menu-full-screen-button-image: url('../assets/Full Screen - 16.svg');
+  --theme-app-menu-print-button-image: url('../assets/Print - 16.svg');
+  --theme-app-menu-developer-button-image: url('../assets/Developer - 16.svg');
+
   /* Misc */
 
   --theme-separator-color: rgba(0, 0, 0, 0.2);

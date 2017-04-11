@@ -14,7 +14,7 @@ import React, { PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 
 import WidgetComponent from './helpers/widget-component';
-import Styles from './button.css';
+import Styles from './fitted-image.css';
 
 const BKG_MODE_DEFAULT = 'cover';
 const BKG_REPEAT_DEFAULT = 'no-repeat';
@@ -28,6 +28,7 @@ export default class FittedImage extends WidgetComponent {
     return (
       <div
         className={this.props.className}
+        styleName="fitted-image"
         style={{
           width: this.props.width,
           height: this.props.height,

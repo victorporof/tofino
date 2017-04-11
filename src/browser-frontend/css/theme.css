@@ -71,10 +71,14 @@
   --theme-tab-hover-color: #fff;
   --theme-tab-active-background: #f0f0f2;
   --theme-tab-active-color: #000;
+  --theme-tab-active-background-position: 0 100%;
   --theme-tab-inactive-background: transparent;
   --theme-tab-inactive-color: #fff;
+  --theme-tab-inactive-background-position: 0 0;
   --theme-tab-separator-color: rgba(255, 255, 255, 0.2);
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
+  --theme-tab-background-size: 100% 200%;
+  --theme-tab-background-repeat: no-repeat;
 
   /* Navbar */
 

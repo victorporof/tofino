@@ -45,7 +45,7 @@ export default class Tab extends PureComponent {
     return (
       <a
         tabIndex={0}
-        styleName={`tab ${this.props.selected ? 'selected' : 'deselected'} ${this.props.tabState}`}
+        styleName={`tab ${this.props.selected ? 'selected' : ''} ${this.props.tabState}`}
         title={this.props.tooltipText}
         onClick={this.handleClick}
       >

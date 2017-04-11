@@ -17,10 +17,10 @@ import PagesModelActions from '../actions/pages-model-actions';
 import UIPageModel from '../model/ui-page-model';
 
 function* closeTabAnimated({ payload: { pageId, removePageAfterMs, selected } }) {
-  let tabState = selected ? UIPageModel.TAB_STATES.SELECTEDCLOSED : UIPageModel.TAB_STATES.CLOSED;
+  const tabState = selected ? UIPageModel.TAB_STATES.SELECTEDCLOSED : UIPageModel.TAB_STATES.CLOSED;
   yield put(PagesModelActions.tabbar.setTabState({
     pageId,
-    tabState: tabState,
+    tabState,
   }));
 
   yield put(PagesModelActions.selectNextLogicalPage({

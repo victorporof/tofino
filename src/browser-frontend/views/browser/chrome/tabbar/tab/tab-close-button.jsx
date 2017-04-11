@@ -32,7 +32,7 @@ export default class TabCloseButton extends PureComponent {
     this.props.dispatch(PagesModelActions.tabbar.closeTabAnimated({
       pageId: this.props.pageId,
       removePageAfterMs: 200,
-      selected: this.props.selected
+      selected: this.props.selected,
     }));
     e.stopPropagation();
   }

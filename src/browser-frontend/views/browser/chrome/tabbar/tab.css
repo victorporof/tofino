@@ -17,13 +17,11 @@ specific language governing permissions and limitations under the License.
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
   width: var(--theme-tab-open-width);
   margin-top: auto;
-
   background-size: 100% 200%;
   background-position: 0 0;
   background-repeat: no-repeat;
-  transition: width 0.05s var(--animation-curve), background-position 0.5s var(--animation-curve), height 0.5s var(--animation-curve);
+  transition: width 0.05s var(--animation-curve), background-position 0.2s var(--animation-curve), height 0.2s var(--animation-curve);
   background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, var(--theme-tab-active-background) 50%);
-
   box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
   color: var(--theme-tab-inactive-color);
 }
@@ -40,7 +38,6 @@ specific language governing permissions and limitations under the License.
 }
 
 .tab.deselected {
-
 }
 
 .tab.initial {
@@ -62,7 +59,7 @@ specific language governing permissions and limitations under the License.
 }
 
 .tab.selected-closed {
-  transition: width 0.2s  0.3s var(--animation-curve), height 0.5s var(--animation-curve);
+  transition: width 0.05s  0.15s var(--animation-curve), height 0.2s var(--animation-curve);
   background-position: 0 100%;
   height: var(--theme-tab-closed-height);
   color: var(--theme-tab-active-color);

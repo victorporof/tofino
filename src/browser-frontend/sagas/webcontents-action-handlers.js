@@ -95,7 +95,7 @@ function* onPageDidNavigateInternal() {
 }
 
 function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
-  yield put(PagesModelActions.addPage({ parentId, url }));
+  yield put(PagesModelActions.addPage({ parentId, url, background: false }));
 }
 
 export default function* () {

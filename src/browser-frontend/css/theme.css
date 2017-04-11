@@ -6,12 +6,27 @@
   --theme-focus-outline-style: none;
   --animation-curve: cubic-bezier(0.07, 0.95, 0, 1);
 
-  /* Controls */
+  /* Controls: Button */
 
   --theme-button-enabled-opacity: 1;
   --theme-button-disabled-opacity: 0.5;
+
+  /* Controls: Input */
+
   --theme-input-enabled-opacity: 1;
   --theme-input-disabled-opacity: 0.9;
+
+  /* Controls: Doorhanger */
+
+  --theme-doorhanger-border-color: rgba(0, 0, 0, 0.3);
+  --theme-doorhanger-border-radius: 1px;
+  --theme-doorhanger-background: #fff;
+  --theme-doorhanger-box-shadow: -3px 3px 10px -1px rgba(0, 0, 0, 0.1);
+  --theme-doorhanger-color: #000;
+  --theme-doorhanger-expanded-transform: scale(1, 1);
+  --theme-doorhanger-expanded-opacity: 1;
+  --theme-doorhanger-collapsed-transform: scale(0, 0);
+  --theme-doorhanger-collapsed-opacity: 0;
 
   /* Window */
 

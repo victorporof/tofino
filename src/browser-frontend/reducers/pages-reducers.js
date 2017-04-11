@@ -19,7 +19,7 @@ import PagesModelActions from '../actions/pages-model-actions';
 import DomainPageModel from '../model/domain-page-model';
 import UIPageModel from '../model/ui-page-model';
 
-function addPage(state, { payload: { url, index, background } = {} }) {
+function addPage(state, { payload: { url, parentId, background } = {} }) {
   return state.withMutations((mut) => {
     const pageId = uuid();
     const pageUrl = url || Endpoints.DEFAULT_PAGE_URL;
@@ -32,7 +32,7 @@ function addPage(state, { payload: { url, index, background } = {} }) {
     mut.updateIn(['ui', 'pages', 'visuals'], m => m.set(pageId, pageUIState));
 
     const pageCount = state.ui.pages.displayOrder.count();
-    const pageIndex = index != null ? index : pageCount;
+    const pageIndex = parentId ? state.ui.pages.displayOrder.findIndex(id => id === parentId) + 1 : pageCount;
     mut.updateIn(['ui', 'pages', 'displayOrder'], l => l.insert(pageIndex, pageId));
 
     if (!background) {

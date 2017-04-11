@@ -10,15 +10,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
+import { Component } from 'react';
 
-import WidgetComponent from './helpers/widget-component';
+import { shouldComponentWithPlainJsPropsUpdate } from './should-component-update';
 
-export default class SpinnerType2 extends WidgetComponent {
-  render() {
-    return (
-      <FontAwesome name="circle-o-notch" spin />
-    );
+export default class WidgetComponent extends Component {
+  constructor(...args) {
+    super(...args);
+    this.shouldComponentUpdate = shouldComponentWithPlainJsPropsUpdate.bind(this);
   }
 }

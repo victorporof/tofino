@@ -10,11 +10,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 
+import WidgetComponent from './helpers/widget-component';
 import Styles from './button.css';
-import { shouldComponentWithPlainJsPropsUpdate } from './helpers/should-component-update';
 
 const BKG_MODE_DEFAULT = 'cover';
 const BKG_REPEAT_DEFAULT = 'no-repeat';
@@ -23,12 +23,7 @@ const BKG_POSIITON_DEFAULT = 'center';
 @CSSModules(Styles, {
   allowMultiple: true,
 })
-export default class FittedImage extends Component {
-  constructor(props) {
-    super(props);
-    this.shouldComponentUpdate = shouldComponentWithPlainJsPropsUpdate.bind(this);
-  }
-
+export default class FittedImage extends WidgetComponent {
   render() {
     return (
       <div

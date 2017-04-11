@@ -10,22 +10,17 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import identity from 'lodash/identity';
 
+import WidgetComponent from './helpers/widget-component';
 import Styles from './button.css';
-import { shouldComponentWithPlainJsPropsUpdate } from './helpers/should-component-update';
 
 @CSSModules(Styles, {
   allowMultiple: true,
 })
-export default class Button extends Component {
-  constructor(props) {
-    super(props);
-    this.shouldComponentUpdate = shouldComponentWithPlainJsPropsUpdate.bind(this);
-  }
-
+export default class Button extends WidgetComponent {
   render() {
     return (
       <button

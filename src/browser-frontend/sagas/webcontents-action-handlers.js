@@ -94,8 +94,8 @@ function* onPageDidNavigateInternal() {
   // TODO
 }
 
-function* onPageDidNavigateToNewWindow() {
-  // TODO
+function* onPageDidNavigateToNewWindow({ payload: { pageId, url } }) {
+  yield put(PagesModelActions.addPage({ url, pageId }));
 }
 
 export default function* () {

@@ -74,8 +74,8 @@ export default class Page extends PureComponent {
     this.props.dispatch(WebContentsActions.events.pageDidNavigateInternal({ pageId: this.props.pageId }));
   }
 
-  handleDidNavigateToNewWindow = () => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigateToNewWindow({ pageId: this.props.pageId }));
+  handleDidNavigateToNewWindow = ({ url }) => {
+    this.props.dispatch(WebContentsActions.events.pageDidNavigateToNewWindow({ pageId: this.props.pageId, url }));
   }
 
   render() {

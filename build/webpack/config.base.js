@@ -11,9 +11,9 @@ export default {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       use: [{
-        loader: 'webpack-module-hot-accept',
-      }, {
         loader: 'babel-loader',
+      }, {
+        loader: 'webpack-module-hot-accept',
       }],
     }, {
       test: /\.css$/,

@@ -27,6 +27,7 @@
   --theme-doorhanger-expanded-opacity: 1;
   --theme-doorhanger-collapsed-transform: scale(0, 0);
   --theme-doorhanger-collapsed-opacity: 0;
+  --theme-doorhanger-arrow-image: url('../assets/Panel Arrow - 24.svg');
 
   /* Controls: Expandos */
 

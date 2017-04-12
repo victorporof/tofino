@@ -37,7 +37,7 @@ export default class AppMenu extends PureComponent {
         styleName="app-menu"
         anchorSelector=".app-menu-doorhanger-anchor"
         anchorDocument={document}
-        verticalOffsetPx={-6}
+        verticalOffsetPx={-8}
         expands={{
           horizontal: 'leftwards',
           vertical: 'downwards',

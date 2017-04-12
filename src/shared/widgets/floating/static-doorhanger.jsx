@@ -16,12 +16,16 @@ import CSSModules from 'react-css-modules';
 import WidgetComponent from '../helpers/widget-component';
 import Styles from './static-doorhanger.css';
 import Tooltip from './tooltip';
-import CSSArrow from '../css-arrow';
+import FittedImage from '../fitted-image';
 
 /**
  * Static doorhangers are tooltips with certain visual UI elements surrounding
  * their children (such as arrows, background and shadow etc.).
  */
+
+const ARROW_WIDTH_PX = 24;
+const ARROW_HEIGHT_PX = 12;
+const ARROW_HORIZONTAL_OFFSET_PX = 6;
 
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -44,9 +48,9 @@ export default class StaticDoorhanger extends WidgetComponent {
     const { y } = this.props.position;
 
     if (this.props.expands.horizontal === 'rightwards') {
-      x -= this.props.arrowHorizontalOffsetPx + this.props.arrowWidthPx;
+      x -= ARROW_HORIZONTAL_OFFSET_PX + (ARROW_WIDTH_PX / 2);
     } else {
-      x += this.props.arrowHorizontalOffsetPx + this.props.arrowWidthPx;
+      x += ARROW_HORIZONTAL_OFFSET_PX + (ARROW_WIDTH_PX / 2);
     }
 
     return (
@@ -61,21 +65,19 @@ export default class StaticDoorhanger extends WidgetComponent {
             expands-${this.props.expands.vertical}`}
           style={{
             ...(this.props.expands.vertical === 'downwards'
-              ? { paddingTop: this.props.arrowHeightPx }
-              : { paddingBottom: this.props.arrowHeightPx }),
+              ? { paddingTop: ARROW_HEIGHT_PX }
+              : { paddingBottom: ARROW_HEIGHT_PX }),
           }}
         >
-          {/* FIXME: Use a proper SVG arrow for doorhangers. */}
-          <CSSArrow
-            width={`${this.props.arrowWidthPx}px`}
-            height={`${this.props.arrowHeightPx}px`}
-            point={this.props.expands.vertical === 'downwards' ? 'up' : 'down'}
-            color="var(--theme-doorhanger-border-color)"
+          <FittedImage
+            src="var(--theme-doorhanger-arrow-image)"
+            width={`${ARROW_WIDTH_PX}px`}
+            height={`${ARROW_HEIGHT_PX}px`}
             styleName="arrow"
             style={{
               ...(this.props.expands.horizontal === 'rightwards'
-                ? { left: this.props.arrowHorizontalOffsetPx }
-                : { right: this.props.arrowHorizontalOffsetPx }),
+                ? { left: ARROW_HORIZONTAL_OFFSET_PX }
+                : { right: ARROW_HORIZONTAL_OFFSET_PX }),
             }}
           />
           <div
@@ -100,9 +102,6 @@ StaticDoorhanger.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
   }).isRequired,
-  arrowWidthPx: PropTypes.number,
-  arrowHeightPx: PropTypes.number,
-  arrowHorizontalOffsetPx: PropTypes.number,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -111,9 +110,6 @@ StaticDoorhanger.propTypes = {
 };
 
 StaticDoorhanger.defaultProps = {
-  arrowWidthPx: 11,
-  arrowHeightPx: 11,
-  arrowHorizontalOffsetPx: 6,
   className: '',
   children: [],
 };

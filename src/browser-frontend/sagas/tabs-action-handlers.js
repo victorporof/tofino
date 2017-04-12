@@ -11,13 +11,18 @@ specific language governing permissions and limitations under the License.
 */
 
 import { delay } from 'redux-saga';
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import PagesModelActions from '../actions/pages-model-actions';
 import UIPageModel from '../model/ui-page-model';
+import { getSelectedPageId } from '../selectors/ui-pages-selectors';
 
-function* closeTabAnimated({ payload: { pageId, removePageAfterMs, selected } }) {
-  const tabState = selected ? UIPageModel.TAB_STATES.SELECTEDCLOSED : UIPageModel.TAB_STATES.CLOSED;
+function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
+  const selectedPageId = yield select(getSelectedPageId);
+  const tabState = selectedPageId === pageId
+  ? UIPageModel.TAB_STATES.SELECTEDCLOSED
+  : UIPageModel.TAB_STATES.CLOSED;
+
   yield put(PagesModelActions.tabbar.setTabState({
     pageId,
     tabState,

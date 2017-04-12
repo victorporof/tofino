@@ -7,3 +7,4 @@ branches:
     - bfg-browser
   script:
     - npm run test
+    - npm run package

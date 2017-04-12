@@ -30,6 +30,7 @@ export default class FittedImage extends WidgetComponent {
         className={this.props.className}
         styleName="fitted-image"
         style={{
+          ...this.props.style,
           width: this.props.width,
           height: this.props.height,
           backgroundImage: this.props.src,
@@ -47,6 +48,7 @@ FittedImage.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   className: PropTypes.string,
+  style: PropTypes.object, // eslint-disable-line
   mode: PropTypes.oneOf(['cover', 'contain']),
   repeat: PropTypes.string,
   position: PropTypes.string,
@@ -54,6 +56,7 @@ FittedImage.propTypes = {
 
 FittedImage.defaultProps = {
   className: '',
+  style: {},
   mode: BKG_MODE_DEFAULT,
   repeat: BKG_REPEAT_DEFAULT,
   position: BKG_POSIITON_DEFAULT,

@@ -58,20 +58,27 @@
   /* Tab */
 
   --theme-tab-initial-width: 0;
+  --theme-tab-initial-height: 0;
   --theme-tab-initial-opacity: 0;
   --theme-tab-open-width: var(--theme-tab-flex-width);
   --theme-tab-open-opacity: 1;
+  --theme-tab-open-height: 100%;
   --theme-tab-closed-width: var(--theme-tab-initial-width);
+  --theme-tab-closed-height: var(--theme-tab-initial-height);
   --theme-tab-closed-opacity: var(--theme-tab-initial-opacity);
   --theme-tab-flex-width: 190px;
   --theme-tab-hover-background: rgba(255, 255, 255, 0.05);
   --theme-tab-hover-color: #fff;
   --theme-tab-active-background: #f0f0f2;
   --theme-tab-active-color: #000;
+  --theme-tab-active-background-position: 0 100%;
   --theme-tab-inactive-background: transparent;
   --theme-tab-inactive-color: #fff;
+  --theme-tab-inactive-background-position: 0 0;
   --theme-tab-separator-color: rgba(255, 255, 255, 0.2);
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
+  --theme-tab-background-size: 100% 200%;
+  --theme-tab-background-repeat: no-repeat;
 
   /* Navbar */
 

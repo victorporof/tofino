@@ -16,6 +16,7 @@ const TAB_STATES = {
   INITIAL: 'initial',
   OPEN: 'open',
   CLOSED: 'closed',
+  SELECTEDCLOSED: 'selected-closed',
 };
 
 const UIPageModel = Immutable.Record({

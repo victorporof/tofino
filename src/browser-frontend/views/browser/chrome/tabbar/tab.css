@@ -13,38 +13,50 @@ specific language governing permissions and limitations under the License.
 .tab {
   overflow: hidden;
   align-items: center;
+  margin-top: auto;
+  background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, var(--theme-tab-active-background) 50%);
+  background-position: var(--theme-tab-inactive-background-position);
+  background-repeat: var(--theme-tab-background-repeat);
+  background-size: var(--theme-tab-background-size);
+  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
+  color: var(--theme-tab-inactive-color);
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
-  transition: width 0.2s var(--animation-curve), opacity 0.05s var(--animation-curve);
+  transition: width 0.05s var(--animation-curve), background-position 0.2s var(--animation-curve), height 0.2s var(--animation-curve);
   user-select: none;
 }
 
-.tab:not(.selected):hover {
+.tab:not(.selected):not(.selected-closed):hover {
   background: var(--theme-tab-hover-background);
   color: var(--theme-tab-hover-color);
 }
 
 .tab.selected {
-  background: var(--theme-tab-active-background);
+  background-position: var(--theme-tab-active-background-position);
+  box-shadow: none; /* stylelint-disable-line sh-waqar/declaration-use-variable */
   color: var(--theme-tab-active-color);
-}
-
-.tab.deselected {
-  background: var(--theme-tab-inactive-background);
-  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
-  color: var(--theme-tab-inactive-color);
 }
 
 .tab.initial {
   width: var(--theme-tab-initial-width);
+  height: var(--theme-tab-initial-height);
   opacity: var(--theme-tab-initial-opacity);
 }
 
 .tab.open {
   width: var(--theme-tab-open-width);
-  opacity: var(--theme-tab-open-opacity);
+  height: var(--theme-tab-open-height);
 }
 
 .tab.closed {
   width: var(--theme-tab-closed-width);
   opacity: var(--theme-tab-closed-opacity);
+  transition: width 0.2s var(--animation-curve), opacity 0.1s var(--animation-curve);
+}
+
+.tab.selected-closed {
+  width: var(--theme-tab-closed-width);
+  height: var(--theme-tab-closed-height);
+  background-position: var(--theme-tab-active-background-position);
+  color: var(--theme-tab-active-color);
+  transition: width 0.05s  0.15s var(--animation-curve), height 0.2s var(--animation-curve);
 }

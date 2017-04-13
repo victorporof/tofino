@@ -42,6 +42,7 @@ export default class Tab extends PureComponent {
   }
 
   render() {
+    
     return (
       <a
         tabIndex={0}

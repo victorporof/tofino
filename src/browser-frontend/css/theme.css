@@ -147,4 +147,9 @@
   /* Misc */
 
   --theme-separator-color: rgba(0, 0, 0, 0.2);
+
+  /* Loading Spinner */
+
+  --theme-tab-connecting: url('../assets/Ball-Comp-Grey.gif');
+  --theme-tab-loading: url('../assets/Ball-Comp-Blue.gif');
 }

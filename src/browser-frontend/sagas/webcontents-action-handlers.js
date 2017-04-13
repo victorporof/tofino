@@ -51,6 +51,7 @@ function* onPageDidStartLoading({ payload: { pageId } }) {
 }
 
 function* onPageDidStopLoading({ payload: { pageId } }) {
+  // yield put()
   yield put(PagesModelActions.setPageLoadState({
     pageId,
     loadState: DomainPageMetaModel.LOAD_STATES.LOADED,

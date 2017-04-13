@@ -19,8 +19,7 @@ import * as DomainPagesSelectors from '../../../../../selectors/domain-pages-sel
 import DomainPageMetaModel from '../../../../../model/domain-page-meta-model';
 
 import Styles from './tab-favicon.css';
-import SpinnerType1 from '../../../../../../shared/widgets/spinner-type1';
-import SpinnerType2 from '../../../../../../shared/widgets/spinner-type2';
+import Spinner from '../../../../../../shared/widgets/spinner';
 import FittedImage from '../../../../../../shared/widgets/fitted-image';
 
 @connect((state, ownProps) => ({
@@ -36,15 +35,28 @@ export default class TabFavicon extends PureComponent {
 
     if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.INITIAL ||
         this.props.loadState === DomainPageMetaModel.LOAD_STATES.CONNECTING) {
-      contents = <SpinnerType1 />;
+      contents = (<Spinner
+        src="var(--theme-tab-connecting)"
+        width="28px"
+        height="16px"
+        mode="contain"
+        className="spinner"
+      />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADING) {
-      contents = <SpinnerType2 />;
+      contents = (<Spinner
+        src="var(--theme-tab-loading)"
+        width="28px"
+        height="16px"
+        mode="contain"
+        className="spinner"
+      />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
       if (this.props.favicon !== DomainPageMetaModel.UNKNOWN_FAVICON) {
         contents = (<FittedImage
           src={`url(${this.props.favicon})`}
           width="16px"
           height="16px"
+          style={{ margin: '0 6px 0 6px' }}
         />);
       } else {
         contents = <FontAwesome name="globe" />;

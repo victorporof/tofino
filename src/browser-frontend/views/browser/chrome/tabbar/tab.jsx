@@ -19,7 +19,9 @@ import UIPageModel from '../../../../model/ui-page-model';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
 
 import Styles from './tab.css';
-import TabContents from './tab/tab-contents';
+import TabTitle from './tab/tab-title';
+import TabFavicon from './tab/tab-favicon';
+import TabCloseButton from './tab/tab-close-button';
 
 @connect((state, ownProps) => ({
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
@@ -51,7 +53,9 @@ export default class Tab extends PureComponent {
         title={this.props.tooltipText}
         onClick={this.handleClick}
       >
-        <TabContents pageId={this.props.pageId} />
+        <TabFavicon pageId={this.props.pageId} />
+        <TabTitle pageId={this.props.pageId} />
+        <TabCloseButton pageId={this.props.pageId} />
       </a>
     );
   }

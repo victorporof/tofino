@@ -14,10 +14,10 @@ specific language governing permissions and limitations under the License.
   margin-left: 4px;
 }
 
-:hover > * > .tab-close-button.tab-deselected {
+:hover > .tab-close-button.tab-deselected {
   filter: invert(100%);
 }
 
-:not(:hover) > * > .tab-close-button {
+:not(:hover) > .tab-close-button {
   display: none;
 }

@@ -14,7 +14,9 @@ specific language governing permissions and limitations under the License.
   overflow: hidden;
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
+  box-sizing: border-box;
   align-items: center;
+  padding: 0 6px;
   margin-top: auto;
   background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, var(--theme-tab-active-background) 50%);
   background-position: var(--theme-tab-inactive-background-position);

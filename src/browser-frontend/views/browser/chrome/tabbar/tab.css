@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 .tab {
+  position: relative;
   overflow: hidden;
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
@@ -42,6 +43,32 @@ specific language governing permissions and limitations under the License.
   width: var(--theme-tab-initial-width);
   height: var(--theme-tab-initial-height);
   opacity: var(--theme-tab-initial-opacity);
+}
+
+.tab.has-owner {
+  left: 0;
+  transition:
+    width 0.05s var(--animation-curve),
+    background-position 0.2s var(--animation-curve),
+    height 0.2s var(--animation-curve),
+    left 0.2s var(--animation-curve);
+}
+
+.tab.has-owner * {
+  opacity: var(--theme-tab-open-opacity);
+  transform: translate(0, 0);
+  transition: opacity 0.2s 0.2s var(--animation-curve), transform 0.2s 0.2s var(--animation-curve);
+}
+
+.tab.has-owner.initial * {
+  opacity: var(--theme-tab-initial-opacity);
+  transform: translate(0, 30px);
+}
+
+.tab.has-owner.initial {
+  left: -190px;
+  width: var(--theme-tab-open-width);
+  height: var(--theme-tab-open-height);
 }
 
 .tab.closed {

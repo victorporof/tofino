@@ -25,6 +25,7 @@ import TabContents from './tab/tab-contents';
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
   tooltipText: UIPagesSelectors.getComputedPageTooltipText(state, ownProps.pageId),
   tabState: UIPagesSelectors.getPageTabState(state, ownProps.pageId),
+  tabOwner: UIPagesSelectors.getPageOwnerId(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -47,7 +48,9 @@ export default class Tab extends PureComponent {
         tabIndex={0}
         styleName={`tab \
           ${this.props.selected ? 'selected' : ''} \
-          ${this.props.tabState !== 'open' ? this.props.tabState : ''}`}
+          ${this.props.tabState !== 'open' ? this.props.tabState : ''} \
+          ${this.props.tabOwner ? 'has-owner' : ''}`
+        }
         title={this.props.tooltipText}
         onClick={this.handleClick}
       >
@@ -63,4 +66,5 @@ Tab.WrappedComponent.propTypes = {
   selected: PropTypes.bool.isRequired,
   tooltipText: PropTypes.string.isRequired,
   tabState: PropTypes.string.isRequired,
+  tabOwner: PropTypes.string.isRequired,
 };

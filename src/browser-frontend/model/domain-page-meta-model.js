@@ -19,6 +19,7 @@ const LOAD_STATES = {
   INITIAL: 'initial',
   CONNECTING: 'connecting',
   LOADING: 'loading',
+  ANIMATED: 'animated',
   LOADED: 'loaded',
   FAILED: 'failed',
 };

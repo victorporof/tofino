@@ -10,6 +10,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import WebContents from '../../shared/widgets/web-contents';
@@ -51,7 +52,12 @@ function* onPageDidStartLoading({ payload: { pageId } }) {
 }
 
 function* onPageDidStopLoading({ payload: { pageId } }) {
-  // yield put()
+  yield put(PagesModelActions.setPageLoadState({
+    pageId,
+    loadState: DomainPageMetaModel.LOAD_STATES.ANIMATED,
+  }));
+
+  yield call(delay, 400);
   yield put(PagesModelActions.setPageLoadState({
     pageId,
     loadState: DomainPageMetaModel.LOAD_STATES.LOADED,

@@ -57,3 +57,14 @@ specific language governing permissions and limitations under the License.
   color: var(--theme-tab-active-color);
   transition: width 0.05s  0.15s var(--animation-curve), height 0.2s var(--animation-curve);
 }
+
+.tab.animated {
+  background-image: var(--theme-inactive-tab-background-loaded);
+  background-position: var(--theme-tab-inactive-background-position);
+  transition: none !important;
+}
+
+.tab.selected.animated {
+  background-image: var(--theme-active-tab-background-loaded);
+  background-position: var(--theme-tab-active-background-position);
+}

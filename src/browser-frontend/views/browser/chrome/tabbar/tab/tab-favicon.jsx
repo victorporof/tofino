@@ -50,7 +50,8 @@ export default class TabFavicon extends PureComponent {
         mode="contain"
         className="spinner"
       />);
-    } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
+    } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED ||
+              this.props.loadState === DomainPageMetaModel.LOAD_STATES.ANIMATED) {
       if (this.props.favicon !== DomainPageMetaModel.UNKNOWN_FAVICON) {
         contents = (<FittedImage
           src={`url(${this.props.favicon})`}

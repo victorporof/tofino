@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 import PagesModelActions from '../../../../actions/pages-model-actions';
 import UIPageModel from '../../../../model/ui-page-model';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
+import * as DomainPagesSelectors from '../../../../selectors/domain-pages-selectors';
+import DomainPageMetaModel from '../../../../model/domain-page-meta-model';
 
 import Styles from './tab.css';
 import TabContents from './tab/tab-contents';
@@ -25,6 +27,7 @@ import TabContents from './tab/tab-contents';
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
   tooltipText: UIPagesSelectors.getComputedPageTooltipText(state, ownProps.pageId),
   tabState: UIPagesSelectors.getPageTabState(state, ownProps.pageId),
+  loadState: DomainPagesSelectors.getPageLoadState(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -42,13 +45,13 @@ export default class Tab extends PureComponent {
   }
 
   render() {
-    
     return (
       <a
         tabIndex={0}
         styleName={`tab \
           ${this.props.selected ? 'selected' : ''} \
-          ${this.props.tabState !== 'open' ? this.props.tabState : ''}`}
+          ${this.props.tabState !== 'open' ? this.props.tabState : ''} \
+          ${this.props.loadState === DomainPageMetaModel.LOAD_STATES.ANIMATED ? this.props.loadState : ''}`}
         title={this.props.tooltipText}
         onClick={this.handleClick}
       >
@@ -64,4 +67,5 @@ Tab.WrappedComponent.propTypes = {
   selected: PropTypes.bool.isRequired,
   tooltipText: PropTypes.string.isRequired,
   tabState: PropTypes.string.isRequired,
+  loadState: PropTypes.string.isRequired,
 };

@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License.
 import cp from 'child_process';
 
 import colors from 'colour';
+import { IS_PACKAGED_BUILD } from '../build-info';
 
 export const spawn = (command, main, args, { logger }, options = {}) => new Promise((resolve, reject) => {
   logger.log('Spawning',
@@ -20,7 +21,10 @@ export const spawn = (command, main, args, { logger }, options = {}) => new Prom
     colors.blue(main),
     colors.yellow(args.join(' ')));
 
-  const child = cp.spawn(command, [main, ...args], { stdio: 'inherit', ...options });
+  const stdio = process.platform === 'win32' && IS_PACKAGED_BUILD
+    ? 'ignore'
+    : 'inherit';
+  const child = cp.spawn(command, [main, ...args], { stdio, ...options });
   child.on('error', reject);
   child.on('exit', resolve);
 

@@ -44,15 +44,15 @@ export function getPageTabState(state, pageId) {
   return getPageVisuals(state, pageId).get('tabState');
 }
 
-export function getPageOwnerId(state, pageId) {
-  return getPageVisuals(state, pageId).get('tabOwner');
-}
-
 export function getOptionalClass(state, pageId) {
   return getPageVisuals(state, pageId).get('optionalClass');
 }
 
 // UI page computed properties getters.
+
+export function getPageDisplayOwner(state, pageId) {
+  return !!PagesSelectors.getPageOwnerId(state, pageId);
+}
 
 export function getComputedPageDisplayTitle(state, pageId) {
   const loadState = PagesSelectors.getPageLoadState(state, pageId);

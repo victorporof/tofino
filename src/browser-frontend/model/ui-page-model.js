@@ -22,7 +22,6 @@ const TAB_STATES = {
 const UIPageModel = Immutable.Record({
   tabState: TAB_STATES.INITIAL,
   locationInputBarValue: '',
-  tabOwner: '',
   optionalClass: '',
 });
 

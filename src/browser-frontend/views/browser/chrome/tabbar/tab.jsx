@@ -25,7 +25,7 @@ import TabContents from './tab/tab-contents';
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
   tooltipText: UIPagesSelectors.getComputedPageTooltipText(state, ownProps.pageId),
   tabState: UIPagesSelectors.getPageTabState(state, ownProps.pageId),
-  tabOwner: UIPagesSelectors.getPageOwnerId(state, ownProps.pageId),
+  tabOwner: UIPagesSelectors.getPageDisplayOwner(state, ownProps.pageId),
   optionalClass: UIPagesSelectors.getOptionalClass(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
@@ -68,6 +68,6 @@ Tab.WrappedComponent.propTypes = {
   selected: PropTypes.bool.isRequired,
   tooltipText: PropTypes.string.isRequired,
   tabState: PropTypes.string.isRequired,
-  tabOwner: PropTypes.string.isRequired,
+  tabOwner: PropTypes.bool.isRequired,
   optionalClass: PropTypes.string.isRequired,
 };

@@ -19,7 +19,6 @@ import * as DomainPagesSelectors from '../../../../../selectors/domain-pages-sel
 import DomainPageMetaModel from '../../../../../model/domain-page-meta-model';
 
 import Styles from './tab-favicon.css';
-import Spinner from '../../../../../../shared/widgets/spinner';
 import FittedImage from '../../../../../../shared/widgets/fitted-image';
 
 @connect((state, ownProps) => ({
@@ -35,20 +34,22 @@ export default class TabFavicon extends PureComponent {
 
     if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.INITIAL ||
         this.props.loadState === DomainPageMetaModel.LOAD_STATES.CONNECTING) {
-      contents = (<Spinner
+      contents = (<FittedImage
         src="var(--theme-tab-connecting)"
         width="28px"
         height="16px"
         mode="contain"
         className="spinner"
+        style={{ marginRight: '2px' }}
       />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADING) {
-      contents = (<Spinner
+      contents = (<FittedImage
         src="var(--theme-tab-loading)"
         width="28px"
         height="16px"
         mode="contain"
         className="spinner"
+        style={{ marginRight: '2px' }}
       />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED ||
               this.props.loadState === DomainPageMetaModel.LOAD_STATES.ANIMATED) {
@@ -57,7 +58,7 @@ export default class TabFavicon extends PureComponent {
           src={`url(${this.props.favicon})`}
           width="16px"
           height="16px"
-          style={{ margin: '0 6px 0 6px' }}
+          style={{ margin: '0 8px 0 6px' }}
         />);
       } else {
         contents = <FontAwesome name="globe" />;

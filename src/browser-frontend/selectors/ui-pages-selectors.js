@@ -48,6 +48,10 @@ export function getPageOwnerId(state, pageId) {
   return getPageVisuals(state, pageId).get('tabOwner');
 }
 
+export function getOptionalClass(state, pageId) {
+  return getPageVisuals(state, pageId).get('optionalClass');
+}
+
 // UI page computed properties getters.
 
 export function getComputedPageDisplayTitle(state, pageId) {

@@ -12,6 +12,8 @@ specific language governing permissions and limitations under the License.
 
 .tab {
   overflow: hidden;
+  width: var(--theme-tab-open-width);
+  height: var(--theme-tab-open-height);
   align-items: center;
   margin-top: auto;
   background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, var(--theme-tab-active-background) 50%);
@@ -40,11 +42,6 @@ specific language governing permissions and limitations under the License.
   width: var(--theme-tab-initial-width);
   height: var(--theme-tab-initial-height);
   opacity: var(--theme-tab-initial-opacity);
-}
-
-.tab.open {
-  width: var(--theme-tab-open-width);
-  height: var(--theme-tab-open-height);
 }
 
 .tab.closed {

@@ -10,6 +10,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import WebContents from '../../shared/widgets/web-contents';
@@ -96,6 +97,12 @@ function* onPageDidNavigateInternal() {
 
 function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
   yield put(PagesModelActions.addPage({ parentId, url, background: false }));
+
+  // Add class to prevent the deselect animation of the parent tab when opening a child tab
+  // then remove class once deselect is finished.
+  yield put(PagesModelActions.tabbar.changeOptionalTabClass({ parentId, optionalClass: 'noanimate' }));
+  yield call(delay, 200);
+  yield put(PagesModelActions.tabbar.changeOptionalTabClass({ parentId, optionalClass: '' }));
 }
 
 export default function* () {

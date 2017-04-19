@@ -45,7 +45,6 @@ specific language governing permissions and limitations under the License.
 .tab.initial {
   width: var(--theme-tab-initial-width);
   height: var(--theme-tab-initial-height);
-  opacity: var(--theme-tab-initial-opacity);
 }
 
 .tab.has-owner {

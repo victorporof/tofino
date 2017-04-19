@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import PagesModelActions from '../../../../actions/pages-model-actions';
 import UIPageModel from '../../../../model/ui-page-model';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
+import * as DomainPagesSelectors from '../../../../selectors/domain-pages-selectors';
 
 import Styles from './tab.css';
 import TabContents from './tab/tab-contents';
@@ -25,7 +26,7 @@ import TabContents from './tab/tab-contents';
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
   tooltipText: UIPagesSelectors.getComputedPageTooltipText(state, ownProps.pageId),
   tabState: UIPagesSelectors.getPageTabState(state, ownProps.pageId),
-  tabOwner: UIPagesSelectors.getPageDisplayOwner(state, ownProps.pageId),
+  tabOwner: !!DomainPagesSelectors.getPageOwnerId(state, ownProps.pageId),
   optionalClass: UIPagesSelectors.getOptionalClass(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {

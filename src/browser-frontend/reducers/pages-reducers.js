@@ -24,7 +24,7 @@ function addPage(state, { payload: { url, parentId, background } = {} }) {
     const pageId = uuid();
     const pageUrl = url || Endpoints.DEFAULT_PAGE_URL;
 
-    const tabOwner = parentId || '';
+    const tabOwner = parentId;
     const pageDomainState = new DomainPageModel({ id: pageId, url: pageUrl });
     const pageUIState = new UIPageModel({
       locationInputBarValue: pageUrl,

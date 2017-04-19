@@ -19,11 +19,11 @@ function setTabState(state, { payload: { pageId, tabState } }) {
   return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabState'], tabState);
 }
 
-function changeOptionalClass(state, { payload: { parentId, optionalClass } }) {
-  return state.setIn(['ui', 'pages', 'visuals', parentId, 'optionalClass'], optionalClass);
+function changeOptionalTabClass(state, { payload: { pageId, optionalClass } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'optionalClass'], optionalClass);
 }
 
 export default handleActions({
   [PagesModelActions.tabbar.setTabState]: setTabState,
-  [PagesModelActions.tabbar.changeOptionalClass]: changeOptionalClass,
+  [PagesModelActions.tabbar.changeOptionalTabClass]: changeOptionalTabClass,
 }, new Model());

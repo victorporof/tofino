@@ -98,9 +98,11 @@ function* onPageDidNavigateInternal() {
 function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
   yield put(PagesModelActions.addPage({ parentId, url, background: false }));
 
-  yield put(PagesModelActions.tabbar.changeOptionalClass({ parentId, optionalClass: 'noanimate' }));
-  yield call(delay, 400);
-  yield put(PagesModelActions.tabbar.changeOptionalClass({ parentId, optionalClass: '' }));
+  // Add class to prevent the deselect animation of the parent tab when opening a child tab
+  // then remove class once deselect is finished.
+  yield put(PagesModelActions.tabbar.changeOptionalTabClass({ parentId, optionalClass: 'noanimate' }));
+  yield call(delay, 200);
+  yield put(PagesModelActions.tabbar.changeOptionalTabClass({ parentId, optionalClass: '' }));
 }
 
 export default function* () {

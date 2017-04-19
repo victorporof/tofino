@@ -50,10 +50,6 @@ export function getOptionalClass(state, pageId) {
 
 // UI page computed properties getters.
 
-export function getPageDisplayOwner(state, pageId) {
-  return !!PagesSelectors.getPageOwnerId(state, pageId);
-}
-
 export function getComputedPageDisplayTitle(state, pageId) {
   const loadState = PagesSelectors.getPageLoadState(state, pageId);
   if (loadState === DomainPageMetaModel.LOAD_STATES.INITIAL ||

@@ -39,8 +39,6 @@ export default class TabFavicon extends PureComponent {
         width="28px"
         height="16px"
         mode="contain"
-        className="spinner"
-        style={{ marginRight: '2px' }}
       />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADING) {
       contents = (<FittedImage
@@ -48,17 +46,14 @@ export default class TabFavicon extends PureComponent {
         width="28px"
         height="16px"
         mode="contain"
-        className="spinner"
-        style={{ marginRight: '2px' }}
       />);
-    } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED ||
-              this.props.loadState === DomainPageMetaModel.LOAD_STATES.ANIMATED) {
+    } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
       if (this.props.favicon !== DomainPageMetaModel.UNKNOWN_FAVICON) {
         contents = (<FittedImage
           src={`url(${this.props.favicon})`}
           width="16px"
           height="16px"
-          style={{ margin: '0 8px 0 6px' }}
+          styleName="favicon"
         />);
       } else {
         contents = <FontAwesome name="globe" />;

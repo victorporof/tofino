@@ -16,6 +16,7 @@ import express from 'express';
 import io from 'socket.io';
 import morgan from 'morgan';
 import colors from 'colour';
+import MentatConnection from 'neon-mentat';
 
 import logger from './logger';
 
@@ -28,6 +29,9 @@ import setupBrowserRunnerWsNamespace from './ws/browser-runner';
 import setupBrowserFrontendWsNamespace from './ws/browser-frontend';
 
 const store = configureStore({ reducers: RootReducer, sagas: RootSaga });
+
+const conn = new MentatConnection();
+console.log("Mentat Connection started", conn);
 
 const app = express();
 const server = http.Server(app);

@@ -3,6 +3,7 @@ os:
   - osx
 language: rust
 sudo: required
+dist: trusty
 
 before_install:
   - source $HOME/.nvm/nvm.sh
@@ -13,7 +14,6 @@ before_install:
 script:
   - npm run test
   - npm run package
-
 
 branches:
   only:

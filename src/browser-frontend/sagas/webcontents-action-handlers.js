@@ -58,17 +58,10 @@ function* onPageDidStopLoading({ payload: { pageId } }) {
     loadState: DomainPageMetaModel.LOAD_STATES.LOADED,
   }));
 
-  // Set the tab state class in order to show the loaded flash,
-  // then once we are sure the flash is finished set the tab back to the usual state.
-  yield put(PagesModelActions.tabbar.setTabState({
-    pageId,
-    tabState: UIPageModel.TAB_STATES.TABLOADED,
-  }));
+  // Show the tab loaded flash.
+  yield put(PagesModelActions.tabbar.startTabLoadedAnimation({ pageId }));
   yield call(delay, 400);
-  yield put(PagesModelActions.tabbar.setTabState({
-    pageId,
-    tabState: UIPageModel.TAB_STATES.OPEN,
-  }));
+  yield put(PagesModelActions.tabbar.stopTabLoadedAnimation({ pageId }));
 }
 
 function* onPageDidSucceedLoad() {
@@ -111,11 +104,10 @@ function* onPageDidNavigateInternal() {
 function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
   yield put(PagesModelActions.addPage({ parentId, url, background: false }));
 
-  // Add class to prevent the deselect animation of the parent tab when opening a child tab
-  // then remove class once deselect is finished.
-  yield put(PagesModelActions.tabbar.changeOptionalTabClass({ pageId: parentId, optionalClass: 'noanimate' }));
+  // Prevent the deselect animation of the parent tab when opening a child tab.
+  yield put(PagesModelActions.tabbar.preventAllTabAnimations({ pageId: parentId }));
   yield call(delay, 200);
-  yield put(PagesModelActions.tabbar.changeOptionalTabClass({ parentId, optionalClass: '' }));
+  yield put(PagesModelActions.tabbar.allowAllTabAnimations({ pageId: parentId }));
 }
 
 export default function* () {

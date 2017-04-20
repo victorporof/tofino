@@ -27,7 +27,8 @@ import TabContents from './tab/tab-contents';
   tooltipText: UIPagesSelectors.getComputedPageTooltipText(state, ownProps.pageId),
   tabState: UIPagesSelectors.getPageTabState(state, ownProps.pageId),
   tabOwner: !!DomainPagesSelectors.getPageOwnerId(state, ownProps.pageId),
-  optionalClass: UIPagesSelectors.getOptionalClass(state, ownProps.pageId),
+  tabAnimationsDisabled: UIPagesSelectors.getTabAnimationsDisabled(state, ownProps.pageId),
+  tabLoadAnimationRunning: UIPagesSelectors.getTabLoadAnimationRunning(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -52,7 +53,8 @@ export default class Tab extends PureComponent {
           ${this.props.selected ? 'selected' : ''} \
           ${this.props.tabState !== 'open' ? this.props.tabState : ''} \
           ${this.props.tabOwner ? 'has-owner' : ''} \
-          ${this.props.optionalClass}`
+          ${this.props.tabAnimationsDisabled ? 'noanimate' : ''} \
+          ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''}`
         }
         title={this.props.tooltipText}
         onClick={this.handleClick}
@@ -70,5 +72,6 @@ Tab.WrappedComponent.propTypes = {
   tooltipText: PropTypes.string.isRequired,
   tabState: PropTypes.string.isRequired,
   tabOwner: PropTypes.bool.isRequired,
-  optionalClass: PropTypes.string.isRequired,
+  tabAnimationsDisabled: PropTypes.bool.isRequired,
+  tabLoadAnimationRunning: PropTypes.bool.isRequired,
 };

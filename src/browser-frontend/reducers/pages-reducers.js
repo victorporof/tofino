@@ -12,6 +12,7 @@ specific language governing permissions and limitations under the License.
 
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
+import isUUID from 'is-uuid';
 
 import Model from '../model';
 import * as Endpoints from '../constants/endpoints';
@@ -44,6 +45,10 @@ function addPage(state, { payload: { url, parentId, background } = {} }) {
 }
 
 function removePage(state, { payload: { pageId, withoutSelectingNextLogicalPage } }) {
+  if (!isUUID.v4(pageId)) {
+    throw new Error('Can\'t remove page with malformed id.');
+  }
+
   return state.withMutations((mut) => {
     const pageIndex = state.ui.pages.displayOrder.findIndex(id => id === pageId);
     const pageCount = state.ui.pages.displayOrder.count();

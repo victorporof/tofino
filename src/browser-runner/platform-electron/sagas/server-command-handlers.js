@@ -28,11 +28,12 @@ function* createWindow({ meta: client, payload: { winId, url, width, height, sty
     }[style],
   });
 
-  win.on('close', (e) => {
-    if (!win.actuallyClose) {
-      e.preventDefault();
-    }
-  });
+  // Don't do this until Victor can fix it.
+  // win.on('close', (e) => {
+  //   if (!win.actuallyClose) {
+  //     e.preventDefault();
+  //   }
+  // });
 
   BROWSER_WINDOWS.set(winId, win);
 

@@ -14,6 +14,7 @@ import Immutable from 'immutable';
 
 const TAB_STATES = {
   INITIAL: 'initial',
+  TABLOADED: 'tab-loaded',
   OPEN: 'open',
   CLOSED: 'closed',
   SELECTEDCLOSED: 'selected-closed',

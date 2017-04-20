@@ -35,5 +35,4 @@ install:
   - npm install -g node-gyp
   - npm install --global --production windows-build-tools
   - npm prune
-  - npm install --progress false --depth 0
-  - npm install --progress false --depth 0
+  - npm install --arch=ia32 --progress false --depth 0

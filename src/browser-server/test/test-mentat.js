@@ -5,6 +5,13 @@ import expect from 'expect';
 import MentatConnection from '../mentat';
 
 describe('mentat', () => {
+  if (MentatConnection.IS_STUBBED) {
+    it('is skipped because no native module was built', () => {
+      expect(1).toEqual(1);
+    });
+    return;
+  }
+
   it('should transact', () => {
     const schema = `[
       {:db/ident :movie/title

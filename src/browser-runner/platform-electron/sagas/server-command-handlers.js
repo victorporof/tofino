@@ -28,6 +28,12 @@ function* createWindow({ meta: client, payload: { winId, url, width, height, sty
     }[style],
   });
 
+  win.on('close', (e) => {
+    if (!win.actuallyClose) {
+      e.preventDefault();
+    }
+  });
+
   BROWSER_WINDOWS.set(winId, win);
 
   yield call([win, win.loadURL], url);
@@ -44,6 +50,7 @@ function* closeWindow({ payload: { winId } }) {
   if (!win) {
     throw new Error(`Unknown browser window: ${winId}.`);
   }
+  win.actuallyClose = true;
   yield call([win, win.close]);
 }
 

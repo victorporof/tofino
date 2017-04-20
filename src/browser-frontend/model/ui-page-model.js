@@ -14,6 +14,7 @@ import Immutable from 'immutable';
 
 const TAB_STATES = {
   INITIAL: 'initial',
+  TABLOADED: 'tab-loaded',
   OPEN: 'open',
   CLOSED: 'closed',
   SELECTEDCLOSED: 'selected-closed',
@@ -22,6 +23,7 @@ const TAB_STATES = {
 const UIPageModel = Immutable.Record({
   tabState: TAB_STATES.INITIAL,
   locationInputBarValue: '',
+  optionalClass: '',
 });
 
 UIPageModel.TAB_STATES = TAB_STATES;

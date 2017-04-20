@@ -54,6 +54,8 @@ gulp.task('mocha', () => {
     .pipe(debug({ title: `Running ${colors.cyan('mocha')}:` }))
     .pipe(mocha({
       compilers: 'js:babel-register',
+      require: 'src/test/unit/head.js',
+      recursive: true,
     }));
 });
 

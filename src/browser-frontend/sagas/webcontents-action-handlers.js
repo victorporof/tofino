@@ -16,7 +16,6 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 import WebContents from '../../shared/widgets/web-contents';
 import WebContentsActions from '../actions/webcontents-actions';
 import PagesModelActions from '../actions/pages-model-actions';
-import UIPageModel from '../model/ui-page-model';
 import DomainPageMetaModel from '../model/domain-page-meta-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 

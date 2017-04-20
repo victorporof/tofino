@@ -32,7 +32,11 @@ function startTabLoadedAnimation(state, { payload: { pageId } }) {
 }
 
 function stopTabLoadedAnimation(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationRunning'], false);
+  return state.withMutations((mut) => {
+    const playCount = state.ui.pages.visuals.get(pageId).tabLoadAnimationPlayCount;
+    mut.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationRunning'], false);
+    mut.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationPlayCount'], playCount + 1);
+  });
 }
 
 export default handleActions({

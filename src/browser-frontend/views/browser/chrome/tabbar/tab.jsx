@@ -21,6 +21,7 @@ import * as DomainPagesSelectors from '../../../../selectors/domain-pages-select
 
 import Styles from './tab.css';
 import TabContents from './tab/tab-contents';
+import PreloadImage from '../../../../../shared/widgets/preload-image';
 
 @connect((state, ownProps) => ({
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
@@ -29,6 +30,7 @@ import TabContents from './tab/tab-contents';
   tabOwner: !!DomainPagesSelectors.getPageOwnerId(state, ownProps.pageId),
   tabAnimationsDisabled: UIPagesSelectors.getTabAnimationsDisabled(state, ownProps.pageId),
   tabLoadAnimationRunning: UIPagesSelectors.getTabLoadAnimationRunning(state, ownProps.pageId),
+  tabLoadAnimationPlayCount: UIPagesSelectors.getTabLoadAnimationPlayCount(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -46,6 +48,10 @@ export default class Tab extends PureComponent {
   }
 
   render() {
+    const activeTabLoadAnimation =
+      `url('assets/wipe-blue.gif?${this.props.pageId}-${this.props.tabLoadAnimationPlayCount}')`;
+    const inactiveTabLoadAnimation =
+      `url('assets/wipe-grey.gif?${this.props.pageId}-${this.props.tabLoadAnimationPlayCount}')`;
     return (
       <a
         tabIndex={0}
@@ -58,7 +64,18 @@ export default class Tab extends PureComponent {
         }
         title={this.props.tooltipText}
         onClick={this.handleClick}
+        style={{
+          ...(this.props.tabLoadAnimationRunning ? {
+            ...(this.props.selected ? {
+              backgroundImage: activeTabLoadAnimation,
+            } : {
+              backgroundImage: inactiveTabLoadAnimation,
+            }),
+          } : {}),
+        }}
       >
+        <PreloadImage src={activeTabLoadAnimation} />
+        <PreloadImage src={inactiveTabLoadAnimation} />
         <TabContents pageId={this.props.pageId} />
       </a>
     );
@@ -74,4 +91,5 @@ Tab.WrappedComponent.propTypes = {
   tabOwner: PropTypes.bool.isRequired,
   tabAnimationsDisabled: PropTypes.bool.isRequired,
   tabLoadAnimationRunning: PropTypes.bool.isRequired,
+  tabLoadAnimationPlayCount: PropTypes.number.isRequired,
 };

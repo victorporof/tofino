@@ -52,6 +52,10 @@ export function getTabLoadAnimationRunning(state, pageId) {
   return getPageVisuals(state, pageId).get('tabLoadAnimationRunning');
 }
 
+export function getTabLoadAnimationPlayCount(state, pageId) {
+  return getPageVisuals(state, pageId).get('tabLoadAnimationPlayCount');
+}
+
 // UI page computed properties getters.
 
 export function getComputedPageDisplayTitle(state, pageId) {

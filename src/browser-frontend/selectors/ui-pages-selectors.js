@@ -44,8 +44,16 @@ export function getPageTabState(state, pageId) {
   return getPageVisuals(state, pageId).get('tabState');
 }
 
-export function getOptionalClass(state, pageId) {
-  return getPageVisuals(state, pageId).get('optionalClass');
+export function getTabAnimationsDisabled(state, pageId) {
+  return getPageVisuals(state, pageId).get('tabAnimationsDisabled');
+}
+
+export function getTabLoadAnimationRunning(state, pageId) {
+  return getPageVisuals(state, pageId).get('tabLoadAnimationRunning');
+}
+
+export function getTabLoadAnimationPlayCount(state, pageId) {
+  return getPageVisuals(state, pageId).get('tabLoadAnimationPlayCount');
 }
 
 // UI page computed properties getters.

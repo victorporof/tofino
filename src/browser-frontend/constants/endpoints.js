@@ -11,14 +11,17 @@ specific language governing permissions and limitations under the License.
 */
 
 import url from 'url';
+import querystring from 'querystring';
 
 // Support loading a file over chrome URI for qbrt by allowing these to be passed
-// as search params
-const params = new URLSearchParams(location.search);
-export const SERVER_API_VERSION = params.get('apiVersion') ||
-                                  location.pathname.match(/\/(v[0-9]+)\//).pop();
-export const SERVER_HOSTNAME = params.get('hostname') || location.hostname;
-export const SERVER_PORT = params.get('port') || location.port;
+// as search params. Don't use `URLSearchParams` because this file may end up
+// loaded in a mocha test environment, failing even with `jsdom` globals.
+
+const QUERY = querystring.parse(url.parse(location.href).query);
+
+export const SERVER_API_VERSION = QUERY.apiVersion || location.pathname.split('/')[1];
+export const SERVER_HOSTNAME = QUERY.hostname || location.hostname;
+export const SERVER_PORT = QUERY.port || location.port;
 
 export const SERVER_WS_ROUTE = url.format({
   protocol: 'ws:',

@@ -15,8 +15,8 @@ import Immutable from 'immutable';
 const TAB_STATES = {
   INITIAL: 'initial',
   OPEN: 'open',
-  CLOSED: 'closed',
-  SELECTEDCLOSED: 'selected-closed',
+  BACKGROUND_CLOSED: 'background-closed',
+  FOREGROUND_CLOSED: 'foreground-closed',
 };
 
 const UIPageModel = Immutable.Record({

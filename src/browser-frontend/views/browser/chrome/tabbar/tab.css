@@ -31,7 +31,7 @@ specific language governing permissions and limitations under the License.
   user-select: none;
 }
 
-.tab:not(.selected):not(.selected-closed):hover {
+.tab:not(.selected):not(.foreground-closed):hover {
   background: var(--theme-tab-hover-background);
   color: var(--theme-tab-hover-color);
 }
@@ -75,7 +75,7 @@ specific language governing permissions and limitations under the License.
   height: var(--theme-tab-open-height);
 }
 
-.tab.closed {
+.tab.background-closed {
   width: var(--theme-tab-closed-width);
   opacity: var(--theme-tab-closed-opacity);
   transition:
@@ -83,7 +83,7 @@ specific language governing permissions and limitations under the License.
     opacity 0.1s var(--animation-curve);
 }
 
-.tab.selected-closed {
+.tab.foreground-closed {
   width: var(--theme-tab-closed-width);
   height: var(--theme-tab-closed-height);
   background-position: var(--theme-tab-active-background-position);

@@ -1,65 +1,86 @@
-platform:
-  - x86
-
-os: Previous Visual Studio 2015
-
 environment:
-  nodejs_version: "6.1"
+  global:
+    # This will be used as part of the zipfile name
+    # TODO change the project name
+    PROJECT_NAME: rust-everywhere
+  # TODO feel free to delete targets/channels you don't need
+  matrix:
+    # Stable channel
+    - TARGET: i686-pc-windows-gnu
+      CHANNEL: stable
+    - TARGET: i686-pc-windows-msvc
+      CHANNEL: stable
+    - TARGET: x86_64-pc-windows-gnu
+      CHANNEL: stable
+    - TARGET: x86_64-pc-windows-msvc
+      CHANNEL: stable
+    # Beta channel
+    - TARGET: i686-pc-windows-gnu
+      CHANNEL: beta
+    - TARGET: i686-pc-windows-msvc
+      CHANNEL: beta
+    - TARGET: x86_64-pc-windows-gnu
+      CHANNEL: beta
+    - TARGET: x86_64-pc-windows-msvc
+      CHANNEL: beta
+    # Nightly channel
+    - TARGET: i686-pc-windows-gnu
+      CHANNEL: nightly
+    - TARGET: i686-pc-windows-msvc
+      CHANNEL: nightly
+    - TARGET: x86_64-pc-windows-gnu
+      CHANNEL: nightly
+    - TARGET: x86_64-pc-windows-msvc
+      CHANNEL: nightly
 
-skip_commits:
-  message: /\[ci skip\]/
-
-branches:
-  except:
-    - /^greenkeeper-.*$/
-
-pull_requests:
-  do_not_increment_build_number: true
-
-cache:
-  - node_modules
-
+# Install Rust and Cargo
+# (Based on from https://github.com/rust-lang/libc/blob/master/appveyor.yml)
 install:
-  - ps: Install-Product node $env:nodejs_version $env:PLATFORM
-  - node --version
-  - npm --version
-  - set npm_config_arch=%PLATFORM:x86=ia32%
-  - npm prune
-  - npm install --progress false --depth 0
-  - npm install --progress false --depth 0
-  - cd app
-  - npm dedupe
-  - cd ..
+  - curl -sSf -o rustup-init.exe https://win.rustup.rs
+  - rustup-init.exe --default-host %TARGET% --default-toolchain %CHANNEL% -y
+  - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
+  - rustc -Vv
+  - cargo -V
 
-build: off
+# 'cargo test' takes care of building for us, so disable Appveyor's build stage. This prevents
+# the "directory does not contain a project or solution file" error.
+# source: https://github.com/starkat99/appveyor-rust/blob/master/appveyor.yml#L113
+build: false
 
+# Equivalent to Travis' `script` phase
+# TODO modify this phase as you see fit
 test_script:
-  - npm run test-ci
-  - npm run package
+  - cargo build --verbose
+  - cargo run
+  - cargo test
 
 before_deploy:
-  - ps: Get-ChildItem dist\RELEASES | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-  - ps: Get-ChildItem dist\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-  - ps: Get-ChildItem dist\*.exe | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-  - ps: Get-ChildItem dist\*.zip | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  # Generate artifacts for release
+  - cargo build --release
+  - mkdir staging
+  # TODO update this part to copy the artifacts that make sense for your project
+  - copy target\release\hello.exe staging
+  - cd staging
+    # release zipfile will look like 'rust-everywhere-v1.2.3-x86_64-pc-windows-msvc'
+  - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip *
+  - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%.zip
 
 deploy:
-  - provider: S3
-    access_key_id:
-      secure: xsHB6zN4IRGJy9uUocU3+6/nZPa408ARYut11Wg30CA=
-    secret_access_key:
-      secure: 8L4sC5l97dY13Jnv/6Gd8Fe//FpnOuMQWu7st2LNLRhX4LjQ9uSLfObqRT0HsBqw
-    bucket:
-      secure: a/ijSslVXIxT1KRgwK6oWBJiOYD2DS5KCC5JpEDtXaU=
-    set_public: true
-    folder: mozilla/tofino/builds/$(appveyor_repo_branch)
-    artifact: /^.*\.(zip|exe)$/
-  - provider: GitHub
-    description: 'Draft release'
-    draft: true
-    auth_token:
-      secure: hJqkl2Amid9oaQZO9z0jedpQ3lNObygSTGPHDqOE+EEtnqQa0DkRDVJ3/i8i1YYg
-    artifact: /^(RELEASES|.*\.(nupkg|exe))$/
-    force_update: true
-    on:
-      appveyor_repo_tag: true
+  description: 'Windows release'
+  # All the zipped artifacts will be deployed
+  artifact: /.*\.zip/
+  # TODO Regenerate this auth_token for your project, this one won't work for you. Here's how:
+  # - Go to 'https://github.com/settings/tokens/new' and generate a Token with only the
+  # `public_repo` scope enabled
+  # - Then go to 'https://ci.appveyor.com/tools/encrypt' and enter the newly generated token.
+  # - Enter the "encrypted value" below
+  auth_token:
+    secure: xv0gNKR4j8Zyr3yFkqBADMdkR/6CMOp5ixVFc1uf8SHOndhTXHns4dPpQJKS6MWx
+  provider: GitHub
+  # deploy when a new tag is pushed and only on the stable channel
+  on:
+    # channel to use to produce the release artifacts
+    # NOTE make sure you only release *once* per target
+    # TODO you may want to pick a different channel
+    CHANNEL: stable
+    appveyor_repo_tag: true

@@ -81,8 +81,6 @@
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
   --theme-tab-background-size: 100% 200%;
   --theme-tab-background-repeat: no-repeat;
-  --theme-active-tab-background-loaded: url('../assets/wipe-blue.gif');
-  --theme-inactive-tab-background-loaded: url('../assets/wipe-grey.gif');
 
   /* Navbar */
 

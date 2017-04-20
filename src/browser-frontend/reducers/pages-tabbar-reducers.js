@@ -19,11 +19,30 @@ function setTabState(state, { payload: { pageId, tabState } }) {
   return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabState'], tabState);
 }
 
-function changeOptionalTabClass(state, { payload: { pageId, optionalClass } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'optionalClass'], optionalClass);
+function preventAllTabAnimations(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabAnimationsDisabled'], true);
+}
+
+function allowAllTabAnimations(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabAnimationsDisabled'], false);
+}
+
+function startTabLoadedAnimation(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationRunning'], true);
+}
+
+function stopTabLoadedAnimation(state, { payload: { pageId } }) {
+  return state.withMutations((mut) => {
+    const playCount = state.ui.pages.visuals.get(pageId).tabLoadAnimationPlayCount;
+    mut.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationRunning'], false);
+    mut.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationPlayCount'], playCount + 1);
+  });
 }
 
 export default handleActions({
   [PagesModelActions.tabbar.setTabState]: setTabState,
-  [PagesModelActions.tabbar.changeOptionalTabClass]: changeOptionalTabClass,
+  [PagesModelActions.tabbar.preventAllTabAnimations]: preventAllTabAnimations,
+  [PagesModelActions.tabbar.allowAllTabAnimations]: allowAllTabAnimations,
+  [PagesModelActions.tabbar.startTabLoadedAnimation]: startTabLoadedAnimation,
+  [PagesModelActions.tabbar.stopTabLoadedAnimation]: stopTabLoadedAnimation,
 }, new Model());

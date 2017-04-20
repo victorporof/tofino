@@ -20,8 +20,8 @@ import { getSelectedPageId } from '../selectors/ui-pages-selectors';
 function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
   const selectedPageId = yield select(getSelectedPageId);
   const tabState = selectedPageId === pageId
-  ? UIPageModel.TAB_STATES.SELECTEDCLOSED
-  : UIPageModel.TAB_STATES.CLOSED;
+    ? UIPageModel.TAB_STATES.FOREGROUND_CLOSED
+    : UIPageModel.TAB_STATES.BACKGROUND_CLOSED;
 
   yield put(PagesModelActions.tabbar.setTabState({
     pageId,

@@ -10,23 +10,23 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import Immutable from 'immutable';
+import React, { PropTypes } from 'react';
 
-const TAB_STATES = {
-  INITIAL: 'initial',
-  OPEN: 'open',
-  BACKGROUND_CLOSED: 'background-closed',
-  FOREGROUND_CLOSED: 'foreground-closed',
+import WidgetComponent from './helpers/widget-component';
+
+export default class PreloadImage extends WidgetComponent {
+  render() {
+    return (
+      <span
+        style={{
+          backgroundImage: this.props.src,
+        }}
+      />
+    );
+  }
+}
+
+PreloadImage.propTypes = {
+  src: PropTypes.string.isRequired,
 };
 
-const UIPageModel = Immutable.Record({
-  tabState: TAB_STATES.INITIAL,
-  tabAnimationsDisabled: false,
-  tabLoadAnimationRunning: false,
-  tabLoadAnimationPlayCount: 0,
-  locationInputBarValue: '',
-});
-
-UIPageModel.TAB_STATES = TAB_STATES;
-
-export default UIPageModel;

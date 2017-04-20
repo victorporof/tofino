@@ -26,8 +26,11 @@ export default createActions({
   SELECT_NEXT_LOGICAL_PAGE: identity,
   TABBAR: {
     SET_TAB_STATE: identity,
+    PREVENT_ALL_TAB_ANIMATIONS: identity,
+    ALLOW_ALL_TAB_ANIMATIONS: identity,
+    START_TAB_LOADED_ANIMATION: identity,
+    STOP_TAB_LOADED_ANIMATION: identity,
     CLOSE_TAB_ANIMATED: identity,
-    CHANGE_OPTIONAL_TAB_CLASS: identity,
   },
   NAVBAR: {
     SET_LOCATION_INPUT_BAR_VALUE: identity,

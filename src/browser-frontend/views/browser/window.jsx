@@ -17,10 +17,9 @@ import Mousetrap from 'mousetrap';
 
 import { client } from '../../global';
 import PagesModelActions from '../../actions/pages-model-actions';
-import * as SharedPropTypes from '../../model/shared-prop-types';
-import SharedActions from '../../../shared/actions/shared-actions';
-import * as UIPagesSelectors from '../../selectors/ui-pages-selectors';
-
+// import * as SharedPropTypes from '../../model/shared-prop-types';
+// import SharedActions from '../../../shared/actions/shared-actions';
+// import * as UIPagesSelectors from '../../selectors/ui-pages-selectors';
 
 import Styles from './window.css';
 import Chrome from './chrome';
@@ -38,15 +37,15 @@ export default class Window extends PureComponent {
     this.mousetrap.bind('mod+t', () => {
       this.props.dispatch(PagesModelActions.addPage());
     });
-    this.mousetrap.bind('mod+q', () => {
-      this.props.client.send(SharedActions.events.fromFrontend.toServer.app.window.requestedClose());
-    });
-    this.mousetrap.bind('mod+w', () => {
-      this.props.dispatch((dispatch, getState) => {
-        const pageId = UIPagesSelectors.getSelectedPageId(getState());
-        this.props.dispatch(PagesModelActions.removePage({ pageId }));
-      });
-    });
+    // this.mousetrap.bind('mod+q', () => {
+    //   this.props.client.send(SharedActions.events.fromFrontend.toServer.app.window.requestedClose());
+    // });
+    // this.mousetrap.bind('mod+w', () => {
+    //   this.props.dispatch((dispatch, getState) => {
+    //     const pageId = UIPagesSelectors.getSelectedPageId(getState());
+    //     this.props.dispatch(PagesModelActions.removePage({ pageId }));
+    //   });
+    // });
     this.mousetrap.bind('up up down down left right left right b a', () => {
       const url = 'http://chilloutandwatchsomecatgifs.com/';
       this.props.dispatch(PagesModelActions.addPage({ url }));
@@ -64,6 +63,6 @@ export default class Window extends PureComponent {
 }
 
 Window.WrappedComponent.propTypes = {
-  client: SharedPropTypes.Client.isRequired,
+  // client: SharedPropTypes.Client.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

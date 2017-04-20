@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License.
   box-sizing: border-box;
   flex: 1;
   padding: 0 10px;
-  padding-top: 10px;
+  padding-top: var(--theme-tabbar-top-padding);
   background: var(--theme-tabbar-background);
 }
 

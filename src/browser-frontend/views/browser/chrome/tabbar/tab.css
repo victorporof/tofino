@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 .tab {
+  position: relative;
   overflow: hidden;
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
@@ -23,7 +24,10 @@ specific language governing permissions and limitations under the License.
   box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
   color: var(--theme-tab-inactive-color);
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
-  transition: width 0.05s var(--animation-curve), background-position 0.2s var(--animation-curve), height 0.2s var(--animation-curve);
+  transition:
+    width 0.05s var(--animation-curve),
+    height 0.2s var(--animation-curve),
+    background-position 0.2s var(--animation-curve);
   user-select: none;
 }
 
@@ -41,13 +45,42 @@ specific language governing permissions and limitations under the License.
 .tab.initial {
   width: var(--theme-tab-initial-width);
   height: var(--theme-tab-initial-height);
+}
+
+.tab.has-owner {
+  left: 0;
+  transition:
+    left 0.2s var(--animation-curve),
+    width 0.05s var(--animation-curve),
+    height 0.2s var(--animation-curve),
+    background-position 0.2s var(--animation-curve);
+}
+
+.tab.has-owner > * {
+  opacity: var(--theme-tab-open-opacity);
+  transform: translate(0, 0);
+  transition:
+    opacity 0.2s 0.2s var(--animation-curve),
+    transform 0.2s 0.2s var(--animation-curve);
+}
+
+.tab.has-owner.initial > * {
   opacity: var(--theme-tab-initial-opacity);
+  transform: translate(0, var(--theme-tab-open-height));
+}
+
+.tab.has-owner.initial {
+  left: calc(0px - var(--theme-tab-open-width)); /* stylelint-disable-line */
+  width: var(--theme-tab-open-width);
+  height: var(--theme-tab-open-height);
 }
 
 .tab.closed {
   width: var(--theme-tab-closed-width);
   opacity: var(--theme-tab-closed-opacity);
-  transition: width 0.2s var(--animation-curve), opacity 0.1s var(--animation-curve);
+  transition:
+    width 0.2s var(--animation-curve),
+    opacity 0.1s var(--animation-curve);
 }
 
 .tab.selected-closed {
@@ -55,7 +88,13 @@ specific language governing permissions and limitations under the License.
   height: var(--theme-tab-closed-height);
   background-position: var(--theme-tab-active-background-position);
   color: var(--theme-tab-active-color);
-  transition: width 0.05s  0.15s var(--animation-curve), height 0.2s var(--animation-curve);
+  transition:
+    width 0.05s 0.15s var(--animation-curve),
+    height 0.2s var(--animation-curve);
+}
+
+.tab.noanimate {
+  transition: none !important;
 }
 
 .tab.tab-loaded {

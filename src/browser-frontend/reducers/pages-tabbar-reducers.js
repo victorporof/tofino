@@ -19,6 +19,11 @@ function setTabState(state, { payload: { pageId, tabState } }) {
   return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabState'], tabState);
 }
 
+function changeOptionalTabClass(state, { payload: { pageId, optionalClass } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'optionalClass'], optionalClass);
+}
+
 export default handleActions({
   [PagesModelActions.tabbar.setTabState]: setTabState,
+  [PagesModelActions.tabbar.changeOptionalTabClass]: changeOptionalTabClass,
 }, new Model());

@@ -47,3 +47,7 @@ export function getPageFavicon(state, pageId) {
 export function getPageBookmarkedState(state, pageId) {
   return getPageMeta(state, pageId).get('bookmarked');
 }
+
+export function getPageOwnerId(state, pageId) {
+  return getPageMeta(state, pageId).get('tabOwner');
+}

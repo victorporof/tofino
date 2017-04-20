@@ -28,6 +28,7 @@ const DomainPageMetaModel = Immutable.Record({
   title: UNKNOWN_TITLE,
   favicon: UNKNOWN_FAVICON,
   bookmarked: false,
+  tabOwner: null,
 });
 
 DomainPageMetaModel.UNKNOWN_TITLE = UNKNOWN_TITLE;

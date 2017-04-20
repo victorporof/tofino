@@ -24,12 +24,14 @@ function addPage(state, { payload: { url, parentId, background } = {} }) {
     const pageId = uuid();
     const pageUrl = url || Endpoints.DEFAULT_PAGE_URL;
 
+    const tabOwner = parentId;
     const pageDomainState = new DomainPageModel({ id: pageId, url: pageUrl });
     const pageUIState = new UIPageModel({
       locationInputBarValue: pageUrl,
     });
     mut.updateIn(['domain', 'pages'], m => m.set(pageId, pageDomainState));
     mut.updateIn(['ui', 'pages', 'visuals'], m => m.set(pageId, pageUIState));
+    mut.setIn(['domain', 'pages', pageId, 'meta', 'tabOwner'], tabOwner);
 
     const pageCount = state.ui.pages.displayOrder.count();
     const pageIndex = parentId ? state.ui.pages.displayOrder.findIndex(id => id === parentId) + 1 : pageCount;

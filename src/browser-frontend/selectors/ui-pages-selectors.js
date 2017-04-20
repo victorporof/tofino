@@ -44,6 +44,10 @@ export function getPageTabState(state, pageId) {
   return getPageVisuals(state, pageId).get('tabState');
 }
 
+export function getOptionalClass(state, pageId) {
+  return getPageVisuals(state, pageId).get('optionalClass');
+}
+
 // UI page computed properties getters.
 
 export function getComputedPageDisplayTitle(state, pageId) {

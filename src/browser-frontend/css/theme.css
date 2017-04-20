@@ -81,6 +81,8 @@
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
   --theme-tab-background-size: 100% 200%;
   --theme-tab-background-repeat: no-repeat;
+  --theme-active-tab-background-loaded: url('../assets/wipe-blue.gif');
+  --theme-inactive-tab-background-loaded: url('../assets/wipe-grey.gif');
 
   /* Navbar */
 
@@ -148,4 +150,9 @@
   /* Misc */
 
   --theme-separator-color: rgba(0, 0, 0, 0.2);
+
+  /* Loading Spinner */
+
+  --theme-tab-connecting: url('../assets/Ball-Comp-Grey.gif');
+  --theme-tab-loading: url('../assets/Ball-Comp-Blue.gif');
 }

@@ -96,3 +96,13 @@ specific language governing permissions and limitations under the License.
 .tab.noanimate {
   transition: none !important;
 }
+
+.tab.tab-loaded {
+  background-image: var(--theme-inactive-tab-background-loaded);
+  background-position: var(--theme-tab-inactive-background-position);
+}
+
+.tab.selected.tab-loaded {
+  background-image: var(--theme-active-tab-background-loaded);
+  background-position: var(--theme-tab-active-background-position);
+}

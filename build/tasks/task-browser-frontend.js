@@ -28,6 +28,12 @@ gulp.task('browser-frontend:copy-html', () =>
     .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
     .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST)));
 
+gulp.task('browser-frontend:copy-gifs', () =>
+  gulp.src(`${Paths.BROWSER_FRONTEND_SRC}/**/*.gif`)
+    .pipe(changed(Paths.BROWSER_FRONTEND_DST))
+    .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
+    .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST)));
+
 gulp.task('browser-frontend:copy-to-qbrt-shell', () =>
   gulp.src(`${Paths.BROWSER_FRONTEND_DST}/**/*`)
     .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST))
@@ -62,6 +68,7 @@ gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {
 
 gulp.task('browser-frontend:build', gulp.series(
   'browser-frontend:copy-html',
+  'browser-frontend:copy-gifs',
   'browser-frontend:webpack',
   'browser-frontend:copy-to-qbrt-shell',
 ));

@@ -42,40 +42,44 @@ export default class Page extends PureComponent {
     this._webContents = e;
   }
 
-  handleDidStartLoading = () => {
-    this.props.dispatch(WebContentsActions.events.pageDidStartLoading({ pageId: this.props.pageId }));
+  handleDidStartLoading = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidStartLoading({ pageId: this.props.pageId, ...args }));
   }
 
-  handleDidStopLoading = () => {
-    this.props.dispatch(WebContentsActions.events.pageDidStopLoading({ pageId: this.props.pageId }));
+  handleDidStopLoading = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidStopLoading({ pageId: this.props.pageId, ...args }));
   }
 
-  handleDidSucceedLoad = () => {
-    this.props.dispatch(WebContentsActions.events.pageDidSucceedLoad({ pageId: this.props.pageId }));
+  handleDidSucceedLoad = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidSucceedLoad({ pageId: this.props.pageId, ...args }));
   }
 
-  handleDidFailLoad = () => {
-    this.props.dispatch(WebContentsActions.events.pageDidFailLoad({ pageId: this.props.pageId }));
+  handleDidFailLoad = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidFailLoad({ pageId: this.props.pageId, ...args }));
   }
 
-  handlePageTitleSet = ({ title }) => {
-    this.props.dispatch(WebContentsActions.events.pageTitleSet({ pageId: this.props.pageId, title }));
+  handlePageDomReady = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDomReady({ pageId: this.props.pageId, ...args }));
   }
 
-  handlePageFaviconsSet = ({ favicons }) => {
-    this.props.dispatch(WebContentsActions.events.pageFaviconsSet({ pageId: this.props.pageId, favicons }));
+  handlePageTitleSet = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageTitleSet({ pageId: this.props.pageId, ...args }));
   }
 
-  handleDidNavigate = ({ url }) => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigate({ pageId: this.props.pageId, url }));
+  handlePageFaviconsSet = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageFaviconsSet({ pageId: this.props.pageId, ...args }));
   }
 
-  handleDidNavigateInternal = () => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigateInternal({ pageId: this.props.pageId }));
+  handleDidNavigate = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidNavigate({ pageId: this.props.pageId, ...args }));
   }
 
-  handleDidNavigateToNewWindow = ({ url }) => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigateToNewWindow({ parentId: this.props.pageId, url }));
+  handleDidNavigateInternal = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidNavigateInternal({ pageId: this.props.pageId, ...args }));
+  }
+
+  handleDidNavigateToNewWindow = (args) => {
+    this.props.dispatch(WebContentsActions.events.pageDidNavigateToNewWindow({ parentId: this.props.pageId, ...args }));
   }
 
   render() {
@@ -99,6 +103,7 @@ export default class Page extends PureComponent {
         onDidStopLoading={this.handleDidStopLoading}
         onDidSucceedLoad={this.handleDidSucceedLoad}
         onDidFailLoad={this.handleDidFailLoad}
+        onPageDomReady={this.handlePageDomReady}
         onPageTitleSet={this.handlePageTitleSet}
         onPageFaviconsSet={this.handlePageFaviconsSet}
         onDidNavigate={this.handleDidNavigate}

@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License.
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import * as Helpers from './helpers';
+import Connection from '../connection';
 import SharedActions from '../../shared/actions/shared-actions';
 import RunnerConnectionsModelActions from '../actions/runner-connections-model-actions';
 import WindowsModelActions from '../actions/windows-model-actions';
@@ -71,6 +72,14 @@ function* onDevToolsClosed({ meta: runnerConn, payload: { winId } }) {
   yield put(WindowsModelActions.window.setDevToolsClosed({ runnerConnId, winId }));
 }
 
+function* onKeyShortcutPressed({ payload: { shortcut, info } }) {
+  const frontendConnId = info.frontendConnId;
+  const frontendConn = Connection.getWithId(frontendConnId);
+
+  const action = SharedActions.events.fromServer.toFrontend.app.window.keyShortcuts.pressed({ shortcut });
+  yield call([frontendConn, frontendConn.send], action);
+}
+
 export default function* () {
   yield [
     takeEvery(SharedActions.events.fromRunner.toServer.client.hello, onClientHello),
@@ -79,5 +88,6 @@ export default function* () {
     takeEvery(SharedActions.events.fromRunner.toServer.app.window.closed, onWindowClosed),
     takeEvery(SharedActions.events.fromRunner.toServer.app.window.devtools.opened, onDevToolsOpened),
     takeEvery(SharedActions.events.fromRunner.toServer.app.window.devtools.closed, onDevToolsClosed),
+    takeEvery(SharedActions.events.fromRunner.toServer.app.window.keyShortcuts.pressed, onKeyShortcutPressed),
   ];
 }

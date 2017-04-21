@@ -12,6 +12,7 @@ specific language governing permissions and limitations under the License.
 
 import { takeEvery, call, cps } from 'redux-saga/effects';
 import electron from 'electron';
+import localshortcut from 'electron-localshortcut';
 
 import SharedActions from '../../../shared/actions/shared-actions';
 
@@ -27,13 +28,6 @@ function* createWindow({ meta: client, payload: { winId, url, width, height, sty
       onlyTitleBarHiddenAndWindowControlsInset: { titleBarStyle: 'hidden-inset' },
     }[style],
   });
-
-  // Don't do this until Victor can fix it.
-  // win.on('close', (e) => {
-  //   if (!win.actuallyClose) {
-  //     e.preventDefault();
-  //   }
-  // });
 
   BROWSER_WINDOWS.set(winId, win);
 
@@ -51,7 +45,6 @@ function* closeWindow({ payload: { winId } }) {
   if (!win) {
     throw new Error(`Unknown browser window: ${winId}.`);
   }
-  win.actuallyClose = true;
   yield call([win, win.close]);
 }
 
@@ -86,6 +79,25 @@ function* openDevTools({ meta: client, payload: { winId, detach } }) {
   yield call([client, client.send], SharedActions.events.fromRunner.toServer.app.window.devtools.closed({ winId }));
 }
 
+function* registerKeyShortcuts({ meta: client, payload: { winId, shortcuts, ...args } }) {
+  const win = BROWSER_WINDOWS.get(winId);
+  if (!win) {
+    throw new Error(`Unknown browser window: ${winId}.`);
+  }
+
+  const listener = (shortcut) => {
+    client.send(SharedActions.events.fromRunner.toServer.app.window.keyShortcuts.pressed({
+      shortcut,
+      ...args,
+    }));
+  };
+
+  for (const shortcut of shortcuts) {
+    yield call([localshortcut, localshortcut.unregister], win, shortcut.keys);
+    yield call([localshortcut, localshortcut.register], win, shortcut.keys, () => listener(shortcut));
+  }
+}
+
 function* quit() {
   yield call([electron.app, electron.app.quit]);
 }
@@ -97,6 +109,7 @@ export default function* () {
     takeEvery(SharedActions.commands.fromServer.toRunner.app.window.minimize, minimizeWindow),
     takeEvery(SharedActions.commands.fromServer.toRunner.app.window.maximize, maximizeWindow),
     takeEvery(SharedActions.commands.fromServer.toRunner.app.window.devtools.open, openDevTools),
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.keyShortcuts.register, registerKeyShortcuts),
     takeEvery(SharedActions.commands.fromServer.toRunner.platform.quit, quit),
   ];
 }

@@ -17,9 +17,8 @@ import Mousetrap from 'mousetrap';
 
 import { client } from '../../global';
 import PagesModelActions from '../../actions/pages-model-actions';
-// import * as SharedPropTypes from '../../model/shared-prop-types';
-// import SharedActions from '../../../shared/actions/shared-actions';
-// import * as UIPagesSelectors from '../../selectors/ui-pages-selectors';
+import * as SharedPropTypes from '../../model/shared-prop-types';
+import SharedActions from '../../../shared/actions/shared-actions';
 
 import Styles from './window.css';
 import Chrome from './chrome';
@@ -33,19 +32,20 @@ import Content from './content';
 })
 export default class Window extends PureComponent {
   componentDidMount() {
+    // Some keyboard shortcuts need to be registered at the platform level,
+    // because they clash with OS-level shortcuts (e.g. Cmd+W on macOS
+    // hides windows, but we want it to close tabs instead.). The platform
+    // is tasked with overriding these shortcuts and providing us control.
+    this.props.client.send(SharedActions.commands.fromFrontend.toServer.app.window.keyShortcuts.register([
+      { keys: 'CommandOrControl+Q' },
+      { keys: 'CommandOrControl+W' },
+    ]));
+
+    // For everything else, listening to key events in the frontend is fine.
     this.mousetrap = Mousetrap();
     this.mousetrap.bind('mod+t', () => {
       this.props.dispatch(PagesModelActions.addPage());
     });
-    // this.mousetrap.bind('mod+q', () => {
-    //   this.props.client.send(SharedActions.events.fromFrontend.toServer.app.window.requestedClose());
-    // });
-    // this.mousetrap.bind('mod+w', () => {
-    //   this.props.dispatch((dispatch, getState) => {
-    //     const pageId = UIPagesSelectors.getSelectedPageId(getState());
-    //     this.props.dispatch(PagesModelActions.removePage({ pageId }));
-    //   });
-    // });
     this.mousetrap.bind('up up down down left right left right b a', () => {
       const url = 'http://chilloutandwatchsomecatgifs.com/';
       this.props.dispatch(PagesModelActions.addPage({ url }));
@@ -63,6 +63,6 @@ export default class Window extends PureComponent {
 }
 
 Window.WrappedComponent.propTypes = {
-  // client: SharedPropTypes.Client.isRequired,
+  client: SharedPropTypes.Client.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

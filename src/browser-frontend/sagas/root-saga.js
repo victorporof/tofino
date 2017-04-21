@@ -10,11 +10,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import serverEventHandlers from './server-event-handlers';
 import webContentsActionHandlers from './webcontents-action-handlers';
 import tabsActionHandlers from './tabs-action-handlers';
 
 export default function* () {
   yield [
+    serverEventHandlers(),
     webContentsActionHandlers(),
     tabsActionHandlers(),
   ];

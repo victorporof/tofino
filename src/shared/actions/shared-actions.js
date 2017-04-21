@@ -29,6 +29,20 @@ export default createActions({
               OPENED: identity,
               CLOSED: identity,
             },
+            KEY_SHORTCUTS: {
+              PRESSED: identity,
+            },
+          },
+        },
+      },
+    },
+    FROM_SERVER: {
+      TO_FRONTEND: {
+        APP: {
+          WINDOW: {
+            KEY_SHORTCUTS: {
+              PRESSED: identity,
+            },
           },
         },
       },
@@ -43,6 +57,7 @@ export default createActions({
             REQUESTED_MINIMIZE: identity,
             REQUESTED_MAXIMIZE: identity,
             REQUESTED_CLOSE: identity,
+            REQUESTED_QUIT: identity,
           },
         },
       },
@@ -60,10 +75,24 @@ export default createActions({
             DEVTOOLS: {
               OPEN: identity,
             },
+            KEY_SHORTCUTS: {
+              REGISTER: identity,
+            },
           },
         },
         PLATFORM: {
           QUIT: identity,
+        },
+      },
+    },
+    FROM_FRONTEND: {
+      TO_SERVER: {
+        APP: {
+          WINDOW: {
+            KEY_SHORTCUTS: {
+              REGISTER: identity,
+            },
+          },
         },
       },
     },

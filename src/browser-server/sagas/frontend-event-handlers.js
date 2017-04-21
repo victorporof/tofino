@@ -46,11 +46,20 @@ function* onRequestedMaximizeWindow({ meta: frontendConn }) {
   yield call([runnerConn, runnerConn.send], SharedActions.commands.fromServer.toRunner.app.window.maximize({ winId }));
 }
 
+function* onRequestedQuit({ meta: frontendConn }) {
+  const frontendConnId = frontendConn.id;
+  const { runnerConnId } = yield select(FrontendConnectionsSelectors.getFrontendClientMetaData, frontendConnId);
+
+  const runnerConn = Connection.getWithId(runnerConnId);
+  yield call([runnerConn, runnerConn.send], SharedActions.commands.fromServer.toRunner.platform.quit());
+}
+
 export default function* () {
   yield [
     takeEvery(SharedActions.events.fromFrontend.toServer.client.hello, onClientHello),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedClose, onRequestedCloseWindow),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedMinimize, onRequestedMinimizeWindow),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedMaximize, onRequestedMaximizeWindow),
+    takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedQuit, onRequestedQuit),
   ];
 }

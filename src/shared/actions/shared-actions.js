@@ -59,6 +59,9 @@ export default createActions({
             REQUESTED_CLOSE: identity,
             REQUESTED_QUIT: identity,
           },
+          PAGE: {
+            VISITED: identity,
+          },
         },
       },
     },

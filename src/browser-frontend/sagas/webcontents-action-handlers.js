@@ -60,7 +60,11 @@ function* onPageDidStopLoading({ payload: { pageId } }) {
   // Show the tab loaded flash.
   yield put(PagesModelActions.tabbar.startTabLoadedAnimation({ pageId }));
   yield call(delay, 400);
-  yield put(PagesModelActions.tabbar.stopTabLoadedAnimation({ pageId }));
+
+  // If the page still exists at this point, hide the tab loaded flash.
+  if (yield select(DomainPagesSelectors.getPageById, pageId)) {
+    yield put(PagesModelActions.tabbar.stopTabLoadedAnimation({ pageId }));
+  }
 }
 
 function* onPageDidSucceedLoad() {
@@ -106,7 +110,11 @@ function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
   // Prevent the deselect animation of the parent tab when opening a child tab.
   yield put(PagesModelActions.tabbar.preventAllTabAnimations({ pageId: parentId }));
   yield call(delay, 200);
-  yield put(PagesModelActions.tabbar.allowAllTabAnimations({ pageId: parentId }));
+
+  // If the page still exists at this point, allow animations again.
+  if (yield select(DomainPagesSelectors.getPageById, parentId)) {
+    yield put(PagesModelActions.tabbar.allowAllTabAnimations({ pageId: parentId }));
+  }
 }
 
 export default function* () {

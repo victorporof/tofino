@@ -1,13 +1,21 @@
 os:
   - linux
   - osx
-language:
-  node_js
-node_js:
-  - "7.7.0"
+language: rust
+sudo: required
+dist: trusty
+
+before_install:
+  - source $HOME/.nvm/nvm.sh
+  - nvm install 7.7
+  - nvm use 7.7
+  - npm install
+
+script:
+  - npm run test
+  - npm run package
+
 branches:
   only:
     - bfg-browser
-  script:
-    - npm run test
-    - npm run package
+    - mentat-test

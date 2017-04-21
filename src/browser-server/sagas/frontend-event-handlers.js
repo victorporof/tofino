@@ -65,6 +65,16 @@ function onPageVisited({ payload: { url, title, favicons } }) {
   // TODO
 }
 
+function onPageStarred({ payload: { url } }) {
+  logger.log('Starred', url);
+  // TODO
+}
+
+function onPageUnstarred({ payload: { url } }) {
+  logger.log('Unstarred', url);
+  // TODO
+}
+
 export default function* () {
   yield [
     takeEvery(SharedActions.events.fromFrontend.toServer.client.hello, onClientHello),
@@ -73,5 +83,7 @@ export default function* () {
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedMaximize, onRequestedMaximizeWindow),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedQuit, onRequestedQuit),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.page.visited, onPageVisited),
+    takeEvery(SharedActions.events.fromFrontend.toServer.app.page.starred, onPageStarred),
+    takeEvery(SharedActions.events.fromFrontend.toServer.app.page.unstarred, onPageUnstarred),
   ];
 }

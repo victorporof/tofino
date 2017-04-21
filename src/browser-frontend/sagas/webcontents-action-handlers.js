@@ -104,8 +104,12 @@ function* onPageDidNavigate({ payload: { pageId, url } }) {
   }));
 }
 
-function* onPageDidNavigateInternal() {
-  // TODO
+function* onPageDidNavigateInternal({ payload: { pageId, url, isMainFrame } }) {
+  if (isMainFrame) {
+    // Update relevant domain and ui state when internal top-level page
+    // navigations occur (e.g. location hash changes).
+    yield* onPageDidNavigate({ payload: { pageId, url } });
+  }
 }
 
 function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {

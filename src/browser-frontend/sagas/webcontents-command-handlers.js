@@ -10,28 +10,50 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import { takeEvery, call } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 
 import WebContents from '../../shared/widgets/web-contents';
 import WebContentsActions from '../actions/webcontents-actions';
+import PagesModelActions from '../actions/pages-model-actions';
+import DomainPageMetaModel from '../model/domain-page-meta-model';
 
 function* navigatePageTo({ payload: { pageId, url } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  yield put(PagesModelActions.resetPageData({ pageId }));
+  yield put(PagesModelActions.setPageLoadState({
+    pageId,
+    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+  }));
   yield call(webContents.impl.navigateTo, url);
 }
 
 function* navigatePageBack({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  yield put(PagesModelActions.resetPageData({ pageId }));
+  yield put(PagesModelActions.setPageLoadState({
+    pageId,
+    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+  }));
   yield call(webContents.impl.goBack);
 }
 
 function* navigatePageForward({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  yield put(PagesModelActions.resetPageData({ pageId }));
+  yield put(PagesModelActions.setPageLoadState({
+    pageId,
+    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+  }));
   yield call(webContents.impl.goForward);
 }
 
 function* navigatePageRefresh({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  yield put(PagesModelActions.resetPageData({ pageId }));
+  yield put(PagesModelActions.setPageLoadState({
+    pageId,
+    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+  }));
   yield call(webContents.impl.reload);
 }
 

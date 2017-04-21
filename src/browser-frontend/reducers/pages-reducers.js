@@ -10,6 +10,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import Immutable from 'immutable';
+
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
 import isUUID from 'is-uuid';
@@ -109,8 +111,8 @@ function setPageTitle(state, { payload: { pageId, title } }) {
   return state.setIn(['domain', 'pages', pageId, 'meta', 'title'], title);
 }
 
-function setPageFavicon(state, { payload: { pageId, favicon } }) {
-  return state.setIn(['domain', 'pages', pageId, 'meta', 'favicon'], favicon);
+function setPageFavicons(state, { payload: { pageId, favicons } }) {
+  return state.setIn(['domain', 'pages', pageId, 'meta', 'favicons'], Immutable.List(favicons));
 }
 
 function setPageBookmarked(state, { payload: { pageId } }) {
@@ -129,7 +131,7 @@ export default handleActions({
   [PagesModelActions.setPageUrl]: setPageUrl,
   [PagesModelActions.setPageLoadState]: setPageLoadState,
   [PagesModelActions.setPageTitle]: setPageTitle,
-  [PagesModelActions.setPageFavicon]: setPageFavicon,
+  [PagesModelActions.setPageFavicons]: setPageFavicons,
   [PagesModelActions.setPageBookmarked]: setPageBookmarked,
   [PagesModelActions.setPageUnbookmarked]: setPageUnbookmarked,
 }, new Model());

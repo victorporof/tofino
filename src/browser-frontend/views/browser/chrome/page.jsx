@@ -62,8 +62,8 @@ export default class Page extends PureComponent {
     this.props.dispatch(WebContentsActions.events.pageTitleSet({ pageId: this.props.pageId, title }));
   }
 
-  handlePageFaviconSet = ({ favicon }) => {
-    this.props.dispatch(WebContentsActions.events.pageFaviconSet({ pageId: this.props.pageId, favicon }));
+  handlePageFaviconsSet = ({ favicons }) => {
+    this.props.dispatch(WebContentsActions.events.pageFaviconsSet({ pageId: this.props.pageId, favicons }));
   }
 
   handleDidNavigate = ({ url }) => {
@@ -100,7 +100,7 @@ export default class Page extends PureComponent {
         onDidSucceedLoad={this.handleDidSucceedLoad}
         onDidFailLoad={this.handleDidFailLoad}
         onPageTitleSet={this.handlePageTitleSet}
-        onPageFaviconSet={this.handlePageFaviconSet}
+        onPageFaviconsSet={this.handlePageFaviconsSet}
         onDidNavigate={this.handleDidNavigate}
         onDidNavigateInternal={this.handleDidNavigateInternal}
         onDidNavigateToNewWindow={this.handleDidNavigateToNewWindow}

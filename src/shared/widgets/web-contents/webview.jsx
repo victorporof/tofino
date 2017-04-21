@@ -36,7 +36,7 @@ export default class WebView extends PureComponent {
       this.props.onPageTitleSet({ title: e.title });
     });
     this._webview.addEventListener('page-favicon-updated', (e) => {
-      this.props.onPageFaviconSet({ favicon: e.favicons[0] });
+      this.props.onPageFaviconsSet({ favicons: e.favicons });
     });
     this._webview.addEventListener('did-navigate', (e) => {
       this.props.onDidNavigate({ url: e.url });

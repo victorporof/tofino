@@ -16,6 +16,7 @@ import identity from 'lodash/identity';
 export default createActions({
   ADD_PAGE: identity,
   REMOVE_PAGE: identity,
+  RESET_PAGE_DATA: identity,
   SET_PAGE_URL: identity,
   SET_PAGE_LOAD_STATE: identity,
   SET_PAGE_TITLE: identity,

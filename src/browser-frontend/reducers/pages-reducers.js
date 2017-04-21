@@ -99,6 +99,10 @@ function setSelectedPage(state, { payload: { pageId } }) {
   return state.setIn(['ui', 'pages', 'selectedId'], pageId);
 }
 
+function resetPageData(state, { payload: { pageId } }) {
+  return state.deleteIn(['domain', 'pages', pageId, 'meta']);
+}
+
 function setPageUrl(state, { payload: { pageId, url } }) {
   return state.setIn(['domain', 'pages', pageId, 'url'], url);
 }
@@ -128,6 +132,7 @@ export default handleActions({
   [PagesModelActions.removePage]: removePage,
   [PagesModelActions.selectNextLogicalPage]: selectNextLogicalPage,
   [PagesModelActions.setSelectedPage]: setSelectedPage,
+  [PagesModelActions.resetPageData]: resetPageData,
   [PagesModelActions.setPageUrl]: setPageUrl,
   [PagesModelActions.setPageLoadState]: setPageLoadState,
   [PagesModelActions.setPageTitle]: setPageTitle,

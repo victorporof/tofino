@@ -13,31 +13,10 @@ specific language governing permissions and limitations under the License.
 import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
-import WebContents from '../../shared/widgets/web-contents';
 import WebContentsActions from '../actions/webcontents-actions';
 import PagesModelActions from '../actions/pages-model-actions';
 import DomainPageMetaModel from '../model/domain-page-meta-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
-
-function* navigatePageTo({ payload: { pageId, url } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.navigateTo, url);
-}
-
-function* navigatePageBack({ payload: { pageId } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.goBack);
-}
-
-function* navigatePageForward({ payload: { pageId } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.goForward);
-}
-
-function* navigatePageRefresh({ payload: { pageId } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.reload);
-}
 
 function* onPageDidMount({ payload: { pageId } }) {
   const url = yield select(DomainPagesSelectors.getPageUrl, pageId);
@@ -127,10 +106,6 @@ function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
 
 export default function* () {
   yield [
-    takeEvery(WebContentsActions.commands.navigatePageTo, navigatePageTo),
-    takeEvery(WebContentsActions.commands.navigatePageBack, navigatePageBack),
-    takeEvery(WebContentsActions.commands.navigatePageForward, navigatePageForward),
-    takeEvery(WebContentsActions.commands.navigatePageRefresh, navigatePageRefresh),
     takeEvery(WebContentsActions.events.pageDidMount, onPageDidMount),
     takeEvery(WebContentsActions.events.pageDidStartLoading, onPageDidStartLoading),
     takeEvery(WebContentsActions.events.pageDidStopLoading, onPageDidStopLoading),

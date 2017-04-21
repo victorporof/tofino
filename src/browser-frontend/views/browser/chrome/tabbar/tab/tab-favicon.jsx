@@ -23,7 +23,7 @@ import FittedImage from '../../../../../../shared/widgets/fitted-image';
 
 @connect((state, ownProps) => ({
   loadState: DomainPagesSelectors.getPageLoadState(state, ownProps.pageId),
-  favicon: DomainPagesSelectors.getPageFavicon(state, ownProps.pageId),
+  favicon: DomainPagesSelectors.getPageFavicons(state, ownProps.pageId).get(0),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -48,7 +48,7 @@ export default class TabFavicon extends PureComponent {
         mode="contain"
       />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
-      if (this.props.favicon !== DomainPageMetaModel.UNKNOWN_FAVICON) {
+      if (this.props.favicon !== undefined) {
         contents = (<FittedImage
           src={`url(${this.props.favicon})`}
           width="16px"
@@ -73,5 +73,9 @@ export default class TabFavicon extends PureComponent {
 TabFavicon.WrappedComponent.propTypes = {
   pageId: PropTypes.string.isRequired, // eslint-disable-line
   loadState: PropTypes.string.isRequired,
-  favicon: PropTypes.string.isRequired,
+  favicon: PropTypes.string,
+};
+
+TabFavicon.WrappedComponent.defaultProps = {
+  favicon: undefined,
 };

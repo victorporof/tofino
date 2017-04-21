@@ -19,7 +19,7 @@ export default createActions({
   SET_PAGE_URL: identity,
   SET_PAGE_LOAD_STATE: identity,
   SET_PAGE_TITLE: identity,
-  SET_PAGE_FAVICON: identity,
+  SET_PAGE_FAVICONS: identity,
   SET_PAGE_BOOKMARKED: identity,
   SET_PAGE_UNBOOKMARKED: identity,
   SET_SELECTED_PAGE: identity,

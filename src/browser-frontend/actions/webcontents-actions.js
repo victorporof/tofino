@@ -27,7 +27,7 @@ export default createActions({
     PAGE_DID_SUCCEED_LOAD: identity,
     PAGE_DID_FAIL_LOAD: identity,
     PAGE_TITLE_SET: identity,
-    PAGE_FAVICON_SET: identity,
+    PAGE_FAVICONS_SET: identity,
     PAGE_DID_NAVIGATE: identity,
     PAGE_DID_NAVIGATE_INTERNAL: identity,
     PAGE_DID_NAVIGATE_TO_NEW_WINDOW: identity,

@@ -82,10 +82,10 @@ function* onPageTitleSet({ payload: { pageId, title } }) {
   }));
 }
 
-function* onPageFaviconSet({ payload: { pageId, favicon } }) {
-  yield put(PagesModelActions.setPageFavicon({
+function* onPageFaviconsSet({ payload: { pageId, favicons } }) {
+  yield put(PagesModelActions.setPageFavicons({
     pageId,
-    favicon,
+    favicons,
   }));
 }
 
@@ -129,7 +129,7 @@ export default function* () {
     takeEvery(WebContentsActions.events.pageDidSucceedLoad, onPageDidSucceedLoad),
     takeEvery(WebContentsActions.events.pageDidFailLoad, onPageDidFailLoad),
     takeEvery(WebContentsActions.events.pageTitleSet, onPageTitleSet),
-    takeEvery(WebContentsActions.events.pageFaviconSet, onPageFaviconSet),
+    takeEvery(WebContentsActions.events.pageFaviconsSet, onPageFaviconsSet),
     takeEvery(WebContentsActions.events.pageDidNavigate, onPageDidNavigate),
     takeEvery(WebContentsActions.events.pageDidNavigateInternal, onPageDidNavigateInternal),
     takeEvery(WebContentsActions.events.pageDidNavigateToNewWindow, onPageDidNavigateToNewWindow),

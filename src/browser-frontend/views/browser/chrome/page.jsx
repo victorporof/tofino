@@ -23,8 +23,8 @@ import WebView from '../../../../shared/widgets/web-contents/webview';
 import IframeDummyBrowser from '../../../../shared/widgets/web-contents/iframe-dummy-browser';
 import IframeMozBrowser from '../../../../shared/widgets/web-contents/iframe-mozbrowser';
 
-@connect(() => ({
-  platform: Meta.PLATFORM,
+@connect((state, ownProps) => ({
+  platform: Meta.PLATFORM || ownProps.platform,
 }))
 @CSSModules(Styles, {
   allowMultiple: true,

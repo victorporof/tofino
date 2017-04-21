@@ -10,23 +10,17 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-/* global module */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 
-import './css/global.css';
-import './css/theme.css';
-
-import { store, client } from './global';
 import * as Meta from './constants/meta';
 import SharedActions from '../shared/actions/shared-actions';
 import PagesModelActions from './actions/pages-model-actions';
 import Window from './views/browser/window';
 
-const setupWs = async () => {
+export const setupWs = async (client) => {
   await client.listen();
   await client.send(SharedActions.events.fromFrontend.toServer.client.hello({
     clientMetaData: {
@@ -36,8 +30,8 @@ const setupWs = async () => {
   }));
 };
 
-const setupFrontend = () => {
-  const container = document.querySelector('.container');
+export const setupFrontend = (store, document, selector) => {
+  const container = document.querySelector(selector);
   const app = (
     <AppContainer>
       <Provider store={store}>
@@ -48,14 +42,6 @@ const setupFrontend = () => {
   ReactDOM.render(app, container);
 };
 
-const setupInitialState = () => {
+export const setupInitialState = (store) => {
   store.dispatch(PagesModelActions.addPage());
 };
-
-setupWs();
-setupFrontend();
-setupInitialState();
-
-if (module.hot) {
-  module.hot.accept('./views/browser/window', () => setupFrontend());
-}

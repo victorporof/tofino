@@ -43,7 +43,7 @@ describe('modules', () => {
       // Used for mocha test configuration in `build/tasks/task-test.js`.
       'babel-register',
 
-      // Used for the `babel-plugin-transform-runtime` in `babelrc` config file.
+      // Used for the `babel-plugin-transform-runtime` in `.babelrc` config file.
       'babel-runtime',
 
       // Entry paths for `build/webpack/config.browser-frontend.js` config file.
@@ -56,7 +56,15 @@ describe('modules', () => {
       // Peer dependencies for `url-loader`.
       'file-loader',
 
-      // Directly spawned
+      // Peer dependency for `jsdom-global`.
+      // See https://github.com/airbnb/enzyme/blob/master/docs/api/mount.md
+      'jsdom',
+
+      // Needed by enzyme.
+      // See https://github.com/airbnb/enzyme#installation
+      'react-addons-test-utils',
+
+      // Directly spawned.
       'qbrt',
     ];
 
@@ -96,7 +104,7 @@ describe('modules', () => {
     ];
 
     const unimported = [
-      // Used for the `babel-plugin-transform-runtime` in `babelrc` config file.
+      // Used for the `babel-plugin-transform-runtime` in `.babelrc` config file.
       'babel-runtime',
 
       // Entry paths for `build/webpack/config.browser-frontend.js` config file.

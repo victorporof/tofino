@@ -14,6 +14,7 @@ import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import WebContentsActions from '../actions/webcontents-actions';
+import ProfileActions from '../actions/profile-actions';
 import PagesModelActions from '../actions/pages-model-actions';
 import DomainPageMetaModel from '../model/domain-page-meta-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
@@ -54,8 +55,13 @@ function* onPageDidFailLoad() {
   // TOOD
 }
 
-function* onPageDomReady() {
-  // TOOD
+function* onPageDomReady({ payload: { pageId } }) {
+  // Store page visit in profile history during the `onPageDomReady` event,
+  // instead of `onPageDidNavigate`, because we prefer having title and favicons
+  // available. Note that we can't do it in the `onPageTitleSet` event, nor the
+  // `onPageFaviconsSet` event, because not all pages have titles or favicons,
+  // in which case those listeners never get called.
+  yield put(ProfileActions.notifyPageVisited({ pageId }));
 }
 
 function* onPageTitleSet({ payload: { pageId, title } }) {
@@ -88,6 +94,9 @@ function* onPageDidNavigateInternal({ payload: { pageId, url, isMainFrame } }) {
     // Update relevant domain and ui state when internal top-level page
     // navigations occur (e.g. location hash changes).
     yield* onPageDidNavigate({ payload: { pageId, url } });
+
+    // Store page visit in profile history on internal navigations as well.
+    yield put(ProfileActions.notifyPageVisited({ pageId }));
   }
 }
 

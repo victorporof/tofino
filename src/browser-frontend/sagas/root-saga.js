@@ -14,6 +14,7 @@ import serverEventHandlers from './server-event-handlers';
 import keyboardShortcutsActionHandlers from './keyboard-shortcuts-action-handlers';
 import webContentsEventHandlers from './webcontents-event-handlers';
 import webContentsCommandHandlers from './webcontents-command-handlers';
+import profileActionHandlers from './profile-action-handlers';
 import tabsActionHandlers from './tabs-action-handlers';
 
 export default function* () {
@@ -22,6 +23,7 @@ export default function* () {
     keyboardShortcutsActionHandlers(),
     webContentsEventHandlers(),
     webContentsCommandHandlers(),
+    profileActionHandlers(),
     tabsActionHandlers(),
   ];
 }

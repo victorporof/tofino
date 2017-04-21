@@ -32,6 +32,9 @@ export default class WebView extends PureComponent {
     this._webview.addEventListener('did-fail-load', () => {
       this.props.onDidFailLoad();
     });
+    this._webview.addEventListener('dom-ready', () => {
+      this.props.onPageDomReady({ url: this._webview.getURL() });
+    });
     this._webview.addEventListener('page-title-set', (e) => {
       this.props.onPageTitleSet({ title: e.title });
     });
@@ -41,8 +44,8 @@ export default class WebView extends PureComponent {
     this._webview.addEventListener('did-navigate', (e) => {
       this.props.onDidNavigate({ url: e.url });
     });
-    this._webview.addEventListener('did-navigate-in-page', () => {
-      this.props.onDidNavigateInternal();
+    this._webview.addEventListener('did-navigate-in-page', (e) => {
+      this.props.onDidNavigateInternal({ url: e.url, isMainFrame: e.isMainFrame });
     });
     this._webview.addEventListener('new-window', (e) => {
       this.props.onDidNavigateToNewWindow({ url: e.url });

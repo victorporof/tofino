@@ -75,6 +75,10 @@ function* onPageDidFailLoad() {
   // TOOD
 }
 
+function* onPageDomReady() {
+  // TOOD
+}
+
 function* onPageTitleSet({ payload: { pageId, title } }) {
   yield put(PagesModelActions.setPageTitle({
     pageId,
@@ -128,6 +132,7 @@ export default function* () {
     takeEvery(WebContentsActions.events.pageDidStopLoading, onPageDidStopLoading),
     takeEvery(WebContentsActions.events.pageDidSucceedLoad, onPageDidSucceedLoad),
     takeEvery(WebContentsActions.events.pageDidFailLoad, onPageDidFailLoad),
+    takeEvery(WebContentsActions.events.pageDomReady, onPageDomReady),
     takeEvery(WebContentsActions.events.pageTitleSet, onPageTitleSet),
     takeEvery(WebContentsActions.events.pageFaviconsSet, onPageFaviconsSet),
     takeEvery(WebContentsActions.events.pageDidNavigate, onPageDidNavigate),

@@ -46,6 +46,7 @@ export default class Input extends WidgetComponent {
         ref={this.setInputRef}
         type={this.props.type}
         value={this.props.value}
+        placeholder={this.props.placeholder}
         styleName={`input ${this.props.disabled ? 'disabled' : 'enabled'}`}
         className={`${this.props.className} mousetrap`}
         onChange={this.props.disabled ? null : this.props.onChange}
@@ -62,11 +63,13 @@ Input.propTypes = {
   onKeyDown: PropTypes.func,
   disabled: PropTypes.bool,
   focused: PropTypes.bool,
+  placeholder: PropTypes.string,
   className: PropTypes.string,
 };
 
 Input.defaultProps = {
   focused: false,
+  placeholder: '',
   disabled: false,
   className: '',
   onKeyDown: null,

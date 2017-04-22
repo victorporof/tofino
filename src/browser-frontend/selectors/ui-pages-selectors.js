@@ -76,6 +76,18 @@ export function getComputedPageDisplayTitle(state, pageId) {
   return title;
 }
 
+export function getComputedPageFaviconCssUrl(state, pageId) {
+  const url = PagesSelectors.getPageUrl(state, pageId);
+  if (url === Endpoints.BLANK_PAGE) {
+    return 'var(--theme-app-icon-32)';
+  }
+  const favicon = PagesSelectors.getPageFavicons(state, pageId).get(0);
+  if (favicon) {
+    return `url(${favicon})`;
+  }
+  return undefined;
+}
+
 export function getComputedPageTooltipText(state, pageId) {
   const title = PagesSelectors.getPageTitle(state, pageId);
   const url = PagesSelectors.getPageUrl(state, pageId);

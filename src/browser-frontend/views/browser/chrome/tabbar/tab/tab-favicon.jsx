@@ -15,6 +15,7 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 
+import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 import * as DomainPagesSelectors from '../../../../../selectors/domain-pages-selectors';
 import DomainPageMetaModel from '../../../../../model/domain-page-meta-model';
 
@@ -23,7 +24,7 @@ import FittedImage from '../../../../../../shared/widgets/fitted-image';
 
 @connect((state, ownProps) => ({
   loadState: DomainPagesSelectors.getPageLoadState(state, ownProps.pageId),
-  favicon: DomainPagesSelectors.getPageFavicons(state, ownProps.pageId).get(0),
+  faviconCssUrl: UIPagesSelectors.getComputedPageFaviconCssUrl(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -48,18 +49,24 @@ export default class TabFavicon extends PureComponent {
         mode="contain"
       />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
-      if (this.props.favicon !== undefined) {
+      if (this.props.faviconCssUrl !== undefined) {
         contents = (<FittedImage
-          src={`url(${this.props.favicon})`}
+          src={this.props.faviconCssUrl}
           width="16px"
           height="16px"
-          styleName="favicon"
+          styleName="img-icon"
         />);
       } else {
-        contents = <FontAwesome name="globe" />;
+        contents = (<FontAwesome
+          name="globe"
+          styleName="fa-icon"
+        />);
       }
     } else {
-      contents = <FontAwesome name="exclamation-triangle" />;
+      contents = (<FontAwesome
+        name="exclamation-triangle"
+        styleName="fa-icon"
+      />);
     }
 
     return (
@@ -73,9 +80,9 @@ export default class TabFavicon extends PureComponent {
 TabFavicon.WrappedComponent.propTypes = {
   pageId: PropTypes.string.isRequired, // eslint-disable-line
   loadState: PropTypes.string.isRequired,
-  favicon: PropTypes.string,
+  faviconCssUrl: PropTypes.string,
 };
 
 TabFavicon.WrappedComponent.defaultProps = {
-  favicon: undefined,
+  faviconCssUrl: undefined,
 };

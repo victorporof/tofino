@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License.
 import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
+import * as Endpoints from '../constants/endpoints';
 import WebContentsActions from '../actions/webcontents-actions';
 import ProfileActions from '../actions/profile-actions';
 import PagesModelActions from '../actions/pages-model-actions';
@@ -37,7 +38,12 @@ function* onPageDidStopLoading({ payload: { pageId } }) {
     loadState: DomainPageMetaModel.LOAD_STATES.LOADED,
   }));
 
-  // Show the tab loaded flash.
+  const url = yield select(DomainPagesSelectors.getPageUrl, pageId);
+  if (url === Endpoints.BLANK_PAGE) {
+    return;
+  }
+
+  // Show the tab loaded flash, but not on about:blank pages.
   yield put(PagesModelActions.tabbar.startTabLoadedAnimation({ pageId }));
   yield call(delay, 400);
 

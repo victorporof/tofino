@@ -10,6 +10,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import throttle from 'lodash/throttle';
+
 import logger from './logger';
 
 import { configureStore } from '../shared/store/configure';
@@ -18,5 +20,5 @@ import Client from '../shared/util/client';
 import RootReducer from './reducers/root-reducer';
 import RootSaga from './sagas/root-saga';
 
-export const store = configureStore({ reducers: RootReducer, sagas: RootSaga });
+export const store = configureStore({ reducers: RootReducer, sagas: RootSaga, throttle: fn => throttle(fn, 1) });
 export const client = new Client({ endpoint: Endpoints.SERVER_WS_ROUTE, store, logger });

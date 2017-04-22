@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import Mousetrap from 'mousetrap';
 
 import { client } from '../../global';
-import PagesModelActions from '../../actions/pages-model-actions';
+import KeyboardShortcutsActions from '../../actions/keyboard-shortcuts-actions';
 import * as SharedPropTypes from '../../model/shared-prop-types';
 import SharedActions from '../../../shared/actions/shared-actions';
 
@@ -42,13 +42,24 @@ export default class Window extends PureComponent {
     ]));
 
     // For everything else, listening to key events in the frontend is fine.
+    // We should listen to the above "special" key events normally too, so that
+    // all shortcuts work headless as well (when opening the frontend in a tab).
     this.mousetrap = Mousetrap();
-    this.mousetrap.bind('mod+t', () => {
-      this.props.dispatch(PagesModelActions.addPage());
+    this.mousetrap.bind('mod+q', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedAccelQ());
     });
-    this.mousetrap.bind('up up down down left right left right b a', () => {
-      const url = 'http://chilloutandwatchsomecatgifs.com/';
-      this.props.dispatch(PagesModelActions.addPage({ url }));
+    this.mousetrap.bind('mod+w', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedAccelW());
+    });
+    this.mousetrap.bind('mod+t', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedAccelT());
+    });
+    this.mousetrap.bind('up up down down left right left right b a', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedCatGifsEasterEgg());
     });
   }
 

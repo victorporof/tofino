@@ -11,7 +11,8 @@ specific language governing permissions and limitations under the License.
 */
 
 import isBrowser from 'is-browser';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { batchedSubscribe } from 'redux-batched-subscribe';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
@@ -32,7 +33,12 @@ export const configureStore = ({ reducers = identityReducer, sagas = identitySag
     }));
   }
 
-  const store = createStore(reducers, applyMiddleware(...middleware));
+  const enhancer = compose(
+    applyMiddleware(...middleware),
+    batchedSubscribe(notify => notify()),
+  );
+
+  const store = createStore(reducers, enhancer);
   sagaMiddleware.run(sagas);
 
   return store;

@@ -10,33 +10,20 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 
 import SharedActions from '../../shared/actions/shared-actions';
-import PagesModelActions from '../actions/pages-model-actions';
-import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
-import * as UIPagesSelectors from '../selectors/ui-pages-selectors';
+import KeyboardShortcutsActions from '../actions/keyboard-shortcuts-actions';
 
-function* handleAccelQ({ meta: client }) {
-  yield call([client, client.send], SharedActions.events.fromFrontend.toServer.app.window.requestedQuit());
-}
-
-function* handleAccelW({ meta: client }) {
-  const count = (yield select(DomainPagesSelectors.getPages)).count();
-  if (count === 1) {
-    client.send(SharedActions.events.fromFrontend.toServer.app.window.requestedClose());
-    return;
-  }
-
-  const selectedPageId = yield select(UIPagesSelectors.getSelectedPageId);
-  yield put(PagesModelActions.removePage({ pageId: selectedPageId }));
-}
-
-function* onKeyShortcutPressed({ meta: client, payload: { shortcut } }) {
+// Some keyboard shortcuts need to be registered at the platform level,
+// because they clash with OS-level shortcuts (e.g. Cmd+W on macOS
+// hides windows, but we want it to close tabs instead.). The platform
+// is tasked with overriding these shortcuts and providing us control.
+function* onKeyShortcutPressed({ payload: { shortcut } }) {
   if (shortcut.keys === 'CommandOrControl+Q') {
-    yield* handleAccelQ({ meta: client });
+    yield put(KeyboardShortcutsActions.pressedAccelQ());
   } else if (shortcut.keys === 'CommandOrControl+W') {
-    yield* handleAccelW({ meta: client });
+    yield put(KeyboardShortcutsActions.pressedAccelW());
   }
 }
 

@@ -33,7 +33,7 @@ export default class WebView extends PureComponent {
       this.props.onDidFailLoad();
     });
     this._webview.addEventListener('dom-ready', () => {
-      this.props.onPageDomReady({ url: this._webview.getURL() });
+      this.props.onPageDomReady();
     });
     this._webview.addEventListener('page-title-set', (e) => {
       this.props.onPageTitleSet({ title: e.title });

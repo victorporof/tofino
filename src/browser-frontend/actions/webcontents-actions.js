@@ -21,7 +21,10 @@ export default createActions({
     NAVIGATE_PAGE_REFRESH: identity,
   },
   EVENTS: {
+    // Page component lifecycle actions.
     PAGE_DID_MOUNT: identity,
+    PAGE_DID_CHANGE_IMPL: identity,
+    // Page actions emitted on web contents implementation events.
     PAGE_DID_START_LOADING: identity,
     PAGE_DID_STOP_LOADING: identity,
     PAGE_DID_SUCCEED_LOAD: identity,

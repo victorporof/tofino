@@ -31,13 +31,7 @@ export const SERVER_WS_ROUTE = url.format({
   pathname: `${SERVER_API_VERSION}/frontend`,
 });
 
-export const NEW_TAB_PAGE_URL = url.format({
-  protocol: 'http:',
-  slashes: true,
-  hostname: SERVER_HOSTNAME,
-  port: SERVER_PORT,
-  pathname: `${SERVER_API_VERSION}/chrome/new-tab`,
-});
+export const BLANK_PAGE = 'about:blank';
 
-// FIXME
-export const DEFAULT_PAGE_URL = 'https://duckduckgo.com/';
+export const NEW_PAGE_URL = BLANK_PAGE;
+export const HOME_PAGE_URL = 'https://duckduckgo.com/';

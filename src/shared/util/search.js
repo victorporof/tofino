@@ -15,6 +15,10 @@ export function getSearchURL(query) {
 }
 
 export function fixURL(typed) {
+  if (typed.trim().startsWith('about:')) {
+    return typed;
+  }
+
   if (typed.includes('://') || typed.trim().startsWith('data:')) {
     return typed;
   }

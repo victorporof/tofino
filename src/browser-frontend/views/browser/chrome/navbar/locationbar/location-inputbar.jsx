@@ -52,6 +52,7 @@ export default class LocationInputBar extends PureComponent {
         type="text"
         value={this.props.value}
         focused={this.props.focused}
+        placeholder="Search or input website name"
         styleName="location-inputbar"
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}

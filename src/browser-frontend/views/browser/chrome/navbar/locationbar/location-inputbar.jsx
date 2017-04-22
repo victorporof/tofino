@@ -24,6 +24,7 @@ import Input from '../../../../../../shared/widgets/input';
 
 @connect((state, ownProps) => ({
   value: UIPagesSelectors.getPageLocationInputBarValue(state, ownProps.pageId),
+  focused: UIPagesSelectors.getComputedLocationInputbarWantsFocus(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -50,6 +51,7 @@ export default class LocationInputBar extends PureComponent {
       <Input
         type="text"
         value={this.props.value}
+        focused={this.props.focused}
         styleName="location-inputbar"
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}
@@ -62,4 +64,5 @@ LocationInputBar.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pageId: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  focused: PropTypes.bool.isRequired,
 };

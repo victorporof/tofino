@@ -81,3 +81,9 @@ export function getComputedPageTooltipText(state, pageId) {
   const url = PagesSelectors.getPageUrl(state, pageId);
   return title || url;
 }
+
+export function getComputedLocationInputbarWantsFocus(state, pageId) {
+  const url = PagesSelectors.getPageUrl(state, pageId);
+  const selected = getSelectedPageId(state) === pageId;
+  return url === Endpoints.BLANK_PAGE && selected;
+}

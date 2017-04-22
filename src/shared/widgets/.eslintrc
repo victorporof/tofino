@@ -1,0 +1,7 @@
+{
+  "rules": {
+    // Widgets are allowed to use component local state, as they don't have
+    // any global app state to rely on.
+    "react/no-set-state": ["off"]
+  }
+}

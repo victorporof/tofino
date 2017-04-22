@@ -30,7 +30,7 @@ export default class HomeButton extends PureComponent {
   handleClick = () => {
     this.props.dispatch(WebContentsActions.commands.navigatePageTo({
       pageId: this.props.pageId,
-      url: Endpoints.DEFAULT_PAGE_URL,
+      url: Endpoints.HOME_PAGE_URL,
     }));
   }
 

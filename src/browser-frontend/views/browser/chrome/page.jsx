@@ -16,16 +16,22 @@ import { connect } from 'react-redux';
 
 import WebContentsActions from '../../../actions/webcontents-actions';
 import * as Meta from '../../../constants/meta';
+import * as Endpoints from '../../../constants/endpoints';
+import * as DomainPagesSelectors from '../../../selectors/domain-pages-selectors';
 
 import Styles from './page.css';
 import WebContents from '../../../../shared/widgets/web-contents';
+import NoopBrowser from '../../../../shared/widgets/web-contents/noop-browser';
 import WebView from '../../../../shared/widgets/web-contents/webview';
 import IframeDummyBrowser from '../../../../shared/widgets/web-contents/iframe-dummy-browser';
 import IframeMozBrowser from '../../../../shared/widgets/web-contents/iframe-mozbrowser';
 
-@connect((state, ownProps) => ({
-  platform: Meta.PLATFORM || ownProps.platform,
-}))
+@connect((state, ownProps) => {
+  const url = DomainPagesSelectors.getPageUrl(state, ownProps.pageId);
+  return {
+    implType: (url === Endpoints.BLANK_PAGE ? 'noop' : Meta.PLATFORM) || ownProps.implType,
+  };
+})
 @CSSModules(Styles, {
   allowMultiple: true,
 })
@@ -36,6 +42,10 @@ export default class Page extends PureComponent {
 
   componentDidMount() {
     this.props.dispatch(WebContentsActions.events.pageDidMount({ pageId: this.props.pageId }));
+  }
+
+  componentDidUpdate() {
+    this.props.dispatch(WebContentsActions.events.pageDidChangeImpl({ pageId: this.props.pageId }));
   }
 
   setWebContentsRef = (e) => {
@@ -84,11 +94,13 @@ export default class Page extends PureComponent {
 
   render() {
     let impl;
-    if (this.props.platform === 'electron') {
+    if (this.props.implType === 'noop') {
+      impl = NoopBrowser;
+    } else if (this.props.implType === 'electron') {
       impl = WebView;
-    } else if (this.props.platform === 'dummy') {
+    } else if (this.props.implType === 'dummy') {
       impl = IframeDummyBrowser;
-    } else if (this.props.platform === 'qbrt') {
+    } else if (this.props.implType === 'qbrt') {
       impl = IframeMozBrowser;
     } else {
       throw new Error('Unknown browser runner platform.');
@@ -117,5 +129,5 @@ export default class Page extends PureComponent {
 Page.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pageId: PropTypes.string.isRequired,
-  platform: PropTypes.string.isRequired,
+  implType: PropTypes.string.isRequired,
 };

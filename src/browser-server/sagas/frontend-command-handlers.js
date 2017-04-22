@@ -23,7 +23,6 @@ function* registerKeyShortcuts({ meta: frontendConn, payload: shortcuts }) {
   const action = SharedActions.commands.fromServer.toRunner.app.window.keyShortcuts.register({
     winId,
     shortcuts,
-    info: { frontendConnId },
   });
 
   const runnerConn = Connection.getWithId(runnerConnId);

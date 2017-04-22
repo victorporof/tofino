@@ -79,7 +79,7 @@ function* openDevTools({ meta: client, payload: { winId, detach } }) {
   yield call([client, client.send], SharedActions.events.fromRunner.toServer.app.window.devtools.closed({ winId }));
 }
 
-function* registerKeyShortcuts({ meta: client, payload: { winId, shortcuts, ...args } }) {
+function* registerKeyShortcuts({ meta: client, payload: { winId, shortcuts } }) {
   const win = BROWSER_WINDOWS.get(winId);
   if (!win) {
     throw new Error(`Unknown browser window: ${winId}.`);
@@ -87,8 +87,8 @@ function* registerKeyShortcuts({ meta: client, payload: { winId, shortcuts, ...a
 
   const listener = (shortcut) => {
     client.send(SharedActions.events.fromRunner.toServer.app.window.keyShortcuts.pressed({
+      winId,
       shortcut,
-      ...args,
     }));
   };
 

@@ -34,6 +34,8 @@
     "import/prefer-default-export": ["off"],
     // We prefer extending PureComponent instead of writing stateless functions.
     "react/prefer-stateless-function": ["off"],
+    // We prefer writing stateless PureComponents.
+    "react/no-set-state": ["error"],
     // React recommended rules allows arrow functions in component props. This
     // is bad for PureComponents trying to avoid needless rerenders.
     "react/jsx-no-bind": ["error", {

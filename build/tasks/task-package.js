@@ -6,16 +6,23 @@ import path from 'path';
 import gulp from 'gulp';
 import debug from 'gulp-debug';
 import file from 'gulp-file';
+import zip from 'gulp-zip';
+import globby from 'globby';
 import packager from 'electron-packager';
 import yargs from 'yargs';
 import fs from 'fs-promise';
+import streamToPromise from 'stream-to-promise';
 import pick from 'lodash/pick';
+import git from 'git-rev-sync';
+import df from 'dateformat';
+import colors from 'colour';
 
 import logger from '../logger';
 
 import { spawn } from '../../src/shared/util/spawn';
 import * as Paths from '../../src/shared/paths';
 import * as BuildInfo from '../../src/shared/build-info';
+import Manifest from '../../package.json';
 
 gulp.task('package:write-build-type', () =>
   file(BuildInfo.BUILD_TYPE_FILENAME, '"packaged"', { src: true })
@@ -23,9 +30,8 @@ gulp.task('package:write-build-type', () =>
     .pipe(gulp.dest(Paths.BUILD_TARGET_DIR)));
 
 gulp.task('package:write-manifest', () => {
-  const src = path.join(Paths.ROOT_DIR, 'package.json');
   const dst = path.join(Paths.BUILD_TARGET_DIR, 'package.json');
-  const config = pick(fs.readJsonSync(src), ['name', 'version', 'dependencies']);
+  const config = pick(Manifest, ['name', 'version', 'dependencies']);
   config.main = path.relative(Paths.BUILD_TARGET_DIR, Paths.ELECTRON_RUNNER_DST_MAIN);
   return fs.writeJson(dst, config);
 });
@@ -48,16 +54,33 @@ gulp.task('package:bundle-electron-app', (cb) => {
   packager({
     platform: yargs.argv.platform || process.platform,
     dir: Paths.BUILD_TARGET_DIR,
-    out: Paths.DIST_DIR,
+    out: path.join(Paths.DIST_DIR, 'binaries'),
     overwrite: true,
   }, cb);
 });
 
+gulp.task('package:zip', async () => {
+  const src = `${Paths.DIST_DIR}/binaries/*`;
+  const dst = Paths.DIST_DIR;
+  const getArchiveName = bundleBasename => `${bundleBasename}-${df(Date.now(), 'yymmdd')}-${git.short()}.zip`;
+
+  return Promise.all((await globby(src)).map((folder) => {
+    logger.log(colors.cyan('Zipping'), colors.blue(folder));
+
+    return streamToPromise(
+      gulp.src(`${folder}/**/*`)
+        .pipe(zip(getArchiveName(path.basename(folder))))
+        .pipe(gulp.dest(dst)));
+  }));
+});
+
 gulp.task('package', gulp.series(
+  'clean',
   'build',
   'package:write-build-type',
   'package:write-manifest',
   'package:install-modules',
   'package:copy-node',
   'package:bundle-electron-app',
+  'package:zip',
 ));

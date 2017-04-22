@@ -20,6 +20,13 @@ gulp.task('browser-shared:babel', () =>
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(Paths.BROWSER_SHARED_DST)));
 
+gulp.task('browser-shared:copy-icons', () =>
+  gulp.src(`${Paths.BROWSER_SHARED_SRC}/branding/**/*`)
+    .pipe(changed(`${Paths.BROWSER_SHARED_DST}/branding`))
+    .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
+    .pipe(gulp.dest(`${Paths.BROWSER_SHARED_DST}/branding`)));
+
 gulp.task('browser-shared:build', gulp.series(
   'browser-shared:babel',
+  'browser-shared:copy-icons',
 ));

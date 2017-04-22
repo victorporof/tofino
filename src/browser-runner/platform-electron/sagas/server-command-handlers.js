@@ -19,10 +19,11 @@ import SharedActions from '../../../shared/actions/shared-actions';
 
 const BROWSER_WINDOWS = new Map();
 
-function* createWindow({ meta: client, payload: { winId, url, width, height, style } }) {
+function* createWindow({ meta: client, payload: { winId, url, icon, width, height, style } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
 
   const win = new electron.BrowserWindow({
+    icon,
     width,
     height,
     ...{

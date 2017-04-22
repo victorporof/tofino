@@ -15,6 +15,7 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 
+import * as Endpoints from '../../../../../constants/endpoints';
 import * as DomainPagesSelectors from '../../../../../selectors/domain-pages-selectors';
 import DomainPageMetaModel from '../../../../../model/domain-page-meta-model';
 
@@ -22,6 +23,7 @@ import Styles from './tab-favicon.css';
 import FittedImage from '../../../../../../shared/widgets/fitted-image';
 
 @connect((state, ownProps) => ({
+  url: DomainPagesSelectors.getPageUrl(state, ownProps.pageId),
   loadState: DomainPagesSelectors.getPageLoadState(state, ownProps.pageId),
   favicon: DomainPagesSelectors.getPageFavicons(state, ownProps.pageId).get(0),
 }))
@@ -48,7 +50,14 @@ export default class TabFavicon extends PureComponent {
         mode="contain"
       />);
     } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
-      if (this.props.favicon !== undefined) {
+      if (this.props.url === Endpoints.BLANK_PAGE) {
+        contents = (<FittedImage
+          src="var(--theme-app-icon-32)"
+          width="16px"
+          height="16px"
+          styleName="favicon"
+        />);
+      } else if (this.props.favicon !== undefined) {
         contents = (<FittedImage
           src={`url(${this.props.favicon})`}
           width="16px"
@@ -73,6 +82,7 @@ export default class TabFavicon extends PureComponent {
 TabFavicon.WrappedComponent.propTypes = {
   pageId: PropTypes.string.isRequired, // eslint-disable-line
   loadState: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   favicon: PropTypes.string,
 };
 

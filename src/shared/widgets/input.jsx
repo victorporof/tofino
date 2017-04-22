@@ -20,9 +20,30 @@ import Styles from './input.css';
   allowMultiple: true,
 })
 export default class Input extends WidgetComponent {
+  constructor(...args) {
+    super(...args);
+  }
+
+  componentDidMount() {
+    if (this.props.focused) {
+      this._input.focus();
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.focused) {
+      this._input.focus();
+    }
+  }
+
+  setInputRef = (e) => {
+    this._input = e;
+  }
+
   render() {
     return (
       <input
+        ref={this.setInputRef}
         type={this.props.type}
         value={this.props.value}
         styleName={`input ${this.props.disabled ? 'disabled' : 'enabled'}`}
@@ -40,10 +61,12 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func,
   disabled: PropTypes.bool,
+  focused: PropTypes.bool,
   className: PropTypes.string,
 };
 
 Input.defaultProps = {
+  focused: false,
   disabled: false,
   className: '',
   onKeyDown: null,

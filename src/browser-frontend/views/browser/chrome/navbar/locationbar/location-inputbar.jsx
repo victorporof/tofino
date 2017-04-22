@@ -15,7 +15,9 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import { fixURL } from '../../../../../../shared/util/search';
+import * as Endpoints from '../../../../../constants/endpoints';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
+import * as DomainPagesSelectors from '../../../../../selectors/domain-pages-selectors';
 import PagesModelActions from '../../../../../actions/pages-model-actions';
 import WebContentsActions from '../../../../../actions/webcontents-actions';
 
@@ -24,6 +26,9 @@ import Input from '../../../../../../shared/widgets/input';
 
 @connect((state, ownProps) => ({
   value: UIPagesSelectors.getPageLocationInputBarValue(state, ownProps.pageId),
+  focused:
+    DomainPagesSelectors.getPageUrl(state, ownProps.pageId) === Endpoints.BLANK_PAGE &&
+    UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -50,6 +55,7 @@ export default class LocationInputBar extends PureComponent {
       <Input
         type="text"
         value={this.props.value}
+        focused={this.props.focused}
         styleName="location-inputbar"
         onChange={this.handleChange}
         onKeyDown={this.handleKeyDown}
@@ -62,4 +68,5 @@ LocationInputBar.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pageId: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  focused: PropTypes.bool.isRequired,
 };

@@ -26,7 +26,7 @@ describe('rendering components', () => {
       <Page
         store={store}
         pageId={UIPagesSelectors.getSelectedPageId(store.getState())}
-        platform="dummy"
+        implType="dummy"
         foo="bar"
       />,
     );
@@ -46,7 +46,7 @@ describe('rendering components', () => {
       <Page
         store={store}
         pageId={UIPagesSelectors.getSelectedPageId(store.getState())}
-        platform="dummy"
+        implType="dummy"
         foo="bar"
       />,
     );
@@ -68,7 +68,7 @@ describe('rendering components', () => {
       <Page.WrappedComponent
         dispatch={noop}
         pageId={UIPagesSelectors.getSelectedPageId(store.getState())}
-        platform="dummy"
+        implType="dummy"
       />,
     );
 
@@ -86,7 +86,7 @@ describe('rendering components', () => {
       <Page.WrappedComponent
         dispatch={noop}
         pageId={UIPagesSelectors.getSelectedPageId(store.getState())}
-        platform="dummy"
+        implType="dummy"
       />,
     );
 
@@ -94,7 +94,7 @@ describe('rendering components', () => {
     expect(wrapper).toBeA('Page');
 
     expect(wrapper).toHaveProp('pageId', UIPagesSelectors.getSelectedPageId(store.getState()));
-    expect(wrapper).toHaveProp('platform', 'dummy');
+    expect(wrapper).toHaveProp('implType', 'dummy');
   });
 
   it('throws when required `connect` props are not supplied', () => {
@@ -107,13 +107,26 @@ describe('rendering components', () => {
     }
   });
 
-  it('throws when required component props are not supplied', () => {
+  it('throws when required component props are not supplied (1)', () => {
     try {
       shallow(<Page store={store} />);
       expect().fail();
     } catch (e) {
       expect(e.message).toMatch(
-        /^Warning: Failed prop type: The prop `pageId` is marked as required in `Page`, but its value is `undefined`/);
+        /^Cannot read property \'get\' of undefined/); // eslint-disable-line
+    }
+  });
+
+  it('throws when required component props are not supplied (2)', () => {
+    try {
+      shallow(<Page
+        store={store}
+        pageId={UIPagesSelectors.getSelectedPageId(store.getState())}
+      />);
+      expect().fail();
+    } catch (e) {
+      expect(e.message).toMatch(
+        /^Warning: Failed prop type: The prop `implType` is marked as required in `Page`, but its value is `undefined`/); // eslint-disable-line
     }
   });
 });

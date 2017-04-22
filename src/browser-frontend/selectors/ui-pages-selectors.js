@@ -10,6 +10,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import * as Endpoints from '../constants/endpoints';
 import DomainPageMetaModel from '../model/domain-page-meta-model';
 import * as RootSelectors from './root-selectors';
 import * as PagesSelectors from './domain-pages-selectors';
@@ -63,6 +64,10 @@ export function getComputedPageDisplayTitle(state, pageId) {
   if (loadState === DomainPageMetaModel.LOAD_STATES.INITIAL ||
       loadState === DomainPageMetaModel.LOAD_STATES.CONNECTING) {
     return 'Connecting…';
+  }
+  const url = PagesSelectors.getPageUrl(state, pageId);
+  if (url === Endpoints.BLANK_PAGE) {
+    return 'New Tab';
   }
   const title = PagesSelectors.getPageTitle(state, pageId);
   if (title === DomainPageMetaModel.UNKNOWN_TITLE) {

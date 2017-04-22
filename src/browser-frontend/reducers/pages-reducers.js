@@ -25,13 +25,11 @@ import UIPageModel from '../model/ui-page-model';
 function addPage(state, { payload: { url, parentId, background } = {} }) {
   return state.withMutations((mut) => {
     const pageId = uuid();
-    const pageUrl = url || Endpoints.DEFAULT_PAGE_URL;
+    const pageUrl = url || Endpoints.NEW_PAGE_URL;
 
     const tabOwner = parentId;
     const pageDomainState = new DomainPageModel({ id: pageId, url: pageUrl });
-    const pageUIState = new UIPageModel({
-      locationInputBarValue: pageUrl,
-    });
+    const pageUIState = new UIPageModel({ locationInputBarValue: pageUrl });
     mut.updateIn(['domain', 'pages'], m => m.set(pageId, pageDomainState));
     mut.updateIn(['ui', 'pages', 'visuals'], m => m.set(pageId, pageUIState));
     mut.setIn(['domain', 'pages', pageId, 'meta', 'tabOwner'], tabOwner);

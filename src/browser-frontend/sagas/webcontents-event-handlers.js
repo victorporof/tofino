@@ -85,7 +85,7 @@ function* onPageDidNavigate({ payload: { pageId, url } }) {
   }));
   yield put(PagesModelActions.navbar.setLocationInputBarValue({
     pageId,
-    value: url,
+    value: url === Endpoints.BLANK_PAGE ? '' : url,
   }));
 }
 

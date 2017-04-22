@@ -20,6 +20,10 @@ import * as FrontendConnectionsSelectors from '../selectors/frontend-connections
 function* onClientHello({ meta: frontendConn, payload: { clientMetaData } }) {
   const frontendConnId = frontendConn.id;
   yield put(FrontendConnectionsModelActions.addFrontendConnection({ frontendConnId, clientMetaData }));
+
+  // Allow identifying and finding this connection by the frontend window id,
+  // not just the websocket connection's id.
+  frontendConn.setFrontendWinId(clientMetaData.winId);
 }
 
 function* onRequestedCloseWindow({ meta: frontendConn }) {

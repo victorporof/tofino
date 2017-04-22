@@ -53,6 +53,7 @@ gulp.task('package:copy-node', () => {
 gulp.task('package:bundle-electron-app', (cb) => {
   packager({
     platform: yargs.argv.platform || process.platform,
+    icon: path.join(Paths.BROWSER_SHARED_SRC, 'branding', 'app-icon'),
     dir: Paths.BUILD_TARGET_DIR,
     out: path.join(Paths.DIST_DIR, 'binaries'),
     overwrite: true,

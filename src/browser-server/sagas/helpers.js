@@ -14,6 +14,7 @@ import { call, select } from 'redux-saga/effects';
 import querystring from 'querystring';
 import uuid from 'uuid/v4';
 
+import { BROWSER_SHARED_DST } from '../../shared/paths';
 import { CHROME_URL } from '../constants/endpoints';
 import { DEFAULT_WIDTH, DEFAULT_HEIGHT } from '../constants/browser-window-defaults';
 
@@ -27,8 +28,21 @@ export function* createWindow({ meta: runnerConn }) {
   const winId = uuid();
   const frontendParams = querystring.stringify({ runnerConnId, winId, os, platform });
 
+  // Some browser runners want icons even when packaged. For example, electron
+  // needs an icon on Linux when creating browser windows:
+  // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#icon
+  let icon;
+  if (os === 'win32') {
+    icon = `${BROWSER_SHARED_DST}\\branding\\app-icon.ico`;
+  } else if (os === 'linux') {
+    icon = `${BROWSER_SHARED_DST}/branding/app-icon.ico`;
+  } else if (os === 'darwin') {
+    icon = `${BROWSER_SHARED_DST}/branding/app-icon.icns`;
+  }
+
   yield call([runnerConn, runnerConn.send], SharedActions.commands.fromServer.toRunner.app.window.create({
     winId,
+    icon,
     url: `${CHROME_URL}?${frontendParams}`,
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT,

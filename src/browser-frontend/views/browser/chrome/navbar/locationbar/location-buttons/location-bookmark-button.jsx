@@ -14,6 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import PagesModelActions from '../../../../../../actions/pages-model-actions';
+import ProfileActions from '../../../../../../actions/profile-actions';
 import * as DomainPagesSelectors from '../../../../../../selectors/domain-pages-selectors';
 
 import Button from '../../../../../../../shared/widgets/button';
@@ -26,8 +27,10 @@ export default class LocationBookmarkButton extends PureComponent {
   handleClick = () => {
     if (this.props.bookmarked) {
       this.props.dispatch(PagesModelActions.setPageUnbookmarked({ pageId: this.props.pageId }));
+      this.props.dispatch(ProfileActions.notifyPageUnstarred({ pageId: this.props.pageId }));
     } else {
       this.props.dispatch(PagesModelActions.setPageBookmarked({ pageId: this.props.pageId }));
+      this.props.dispatch(ProfileActions.notifyPageStarred({ pageId: this.props.pageId }));
     }
   }
 

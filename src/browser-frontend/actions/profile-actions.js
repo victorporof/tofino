@@ -15,4 +15,6 @@ import identity from 'lodash/identity';
 
 export default createActions({
   NOTIFY_PAGE_VISITED: identity,
+  NOTIFY_PAGE_STARRED: identity,
+  NOTIFY_PAGE_UNSTARRED: identity,
 });

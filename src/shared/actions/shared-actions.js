@@ -61,6 +61,8 @@ export default createActions({
           },
           PAGE: {
             VISITED: identity,
+            STARRED: identity,
+            UNSTARRED: identity,
           },
         },
       },

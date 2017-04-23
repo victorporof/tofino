@@ -25,8 +25,22 @@ function* notifyPageVisited({ payload: { pageId } }) {
   }));
 }
 
+function* notifyPageStarred({ payload: { pageId } }) {
+  yield call([client, client.send], SharedActions.events.fromFrontend.toServer.app.page.starred({
+    url: yield select(DomainPagesSelectors.getPageUrl, pageId),
+  }));
+}
+
+function* notifyPageUnstarred({ payload: { pageId } }) {
+  yield call([client, client.send], SharedActions.events.fromFrontend.toServer.app.page.unstarred({
+    url: yield select(DomainPagesSelectors.getPageUrl, pageId),
+  }));
+}
+
 export default function* () {
   yield [
     takeEvery(ProfileActions.notifyPageVisited, notifyPageVisited),
+    takeEvery(ProfileActions.notifyPageStarred, notifyPageStarred),
+    takeEvery(ProfileActions.notifyPageUnstarred, notifyPageUnstarred),
   ];
 }

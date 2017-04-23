@@ -22,32 +22,32 @@ export function getPageById(state, pageId) {
   return getPages(state).get(pageId);
 }
 
+export function getPageOwnerId(state, pageId) {
+  return getPageById(state, pageId).get('ownerId');
+}
+
 export function getPageUrl(state, pageId) {
   return getPageById(state, pageId).get('url');
 }
 
-export function getPageMeta(state, pageId) {
-  return getPageById(state, pageId).get('meta');
+export function getPageTransient(state, pageId) {
+  return getPageById(state, pageId).get('transient');
 }
 
-// Domain page meta properties getters.
+// Domain page transient properties getters.
 
 export function getPageLoadState(state, pageId) {
-  return getPageMeta(state, pageId).get('loadState');
+  return getPageTransient(state, pageId).get('loadState');
 }
 
 export function getPageTitle(state, pageId) {
-  return getPageMeta(state, pageId).get('title');
+  return getPageTransient(state, pageId).get('title');
 }
 
 export function getPageFavicons(state, pageId) {
-  return getPageMeta(state, pageId).get('favicons');
+  return getPageTransient(state, pageId).get('favicons');
 }
 
 export function getPageBookmarkedState(state, pageId) {
-  return getPageMeta(state, pageId).get('bookmarked');
-}
-
-export function getPageOwnerId(state, pageId) {
-  return getPageMeta(state, pageId).get('tabOwner');
+  return getPageTransient(state, pageId).get('bookmarked');
 }

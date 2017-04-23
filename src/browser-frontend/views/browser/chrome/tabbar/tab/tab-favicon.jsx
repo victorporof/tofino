@@ -17,7 +17,7 @@ import FontAwesome from 'react-fontawesome';
 
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 import * as DomainPagesSelectors from '../../../../../selectors/domain-pages-selectors';
-import DomainPageMetaModel from '../../../../../model/domain-page-meta-model';
+import DomainPageTransientModel from '../../../../../model/domain-page-transient-model';
 
 import Styles from './tab-favicon.css';
 import FittedImage from '../../../../../../shared/widgets/fitted-image';
@@ -33,22 +33,22 @@ export default class TabFavicon extends PureComponent {
   render() {
     let contents;
 
-    if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.INITIAL ||
-        this.props.loadState === DomainPageMetaModel.LOAD_STATES.CONNECTING) {
+    if (this.props.loadState === DomainPageTransientModel.LOAD_STATES.INITIAL ||
+        this.props.loadState === DomainPageTransientModel.LOAD_STATES.CONNECTING) {
       contents = (<FittedImage
         src="var(--theme-tab-connecting)"
         width="28px"
         height="16px"
         mode="contain"
       />);
-    } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADING) {
+    } else if (this.props.loadState === DomainPageTransientModel.LOAD_STATES.LOADING) {
       contents = (<FittedImage
         src="var(--theme-tab-loading)"
         width="28px"
         height="16px"
         mode="contain"
       />);
-    } else if (this.props.loadState === DomainPageMetaModel.LOAD_STATES.LOADED) {
+    } else if (this.props.loadState === DomainPageTransientModel.LOAD_STATES.LOADED) {
       if (this.props.faviconCssUrl !== undefined) {
         contents = (<FittedImage
           src={this.props.faviconCssUrl}

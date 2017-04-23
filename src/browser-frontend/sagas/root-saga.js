@@ -12,14 +12,18 @@ specific language governing permissions and limitations under the License.
 
 import serverEventHandlers from './server-event-handlers';
 import keyboardShortcutsActionHandlers from './keyboard-shortcuts-action-handlers';
-import webContentsActionHandlers from './webcontents-action-handlers';
+import webContentsEventHandlers from './webcontents-event-handlers';
+import webContentsCommandHandlers from './webcontents-command-handlers';
+import profileActionHandlers from './profile-action-handlers';
 import tabsActionHandlers from './tabs-action-handlers';
 
 export default function* () {
   yield [
     serverEventHandlers(),
     keyboardShortcutsActionHandlers(),
-    webContentsActionHandlers(),
+    webContentsEventHandlers(),
+    webContentsCommandHandlers(),
+    profileActionHandlers(),
     tabsActionHandlers(),
   ];
 }

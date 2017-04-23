@@ -12,6 +12,8 @@ specific language governing permissions and limitations under the License.
 
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
+import logger from '../logger';
+
 import Connection from '../connection';
 import SharedActions from '../../shared/actions/shared-actions';
 import FrontendConnectionsModelActions from '../actions/frontend-connections-model-actions';
@@ -58,6 +60,11 @@ function* onRequestedQuit({ meta: frontendConn }) {
   yield call([runnerConn, runnerConn.send], SharedActions.commands.fromServer.toRunner.platform.quit());
 }
 
+function onPageVisited({ payload: { url, title, favicons } }) {
+  logger.log('Visited', url, title, favicons);
+  // TODO
+}
+
 export default function* () {
   yield [
     takeEvery(SharedActions.events.fromFrontend.toServer.client.hello, onClientHello),
@@ -65,5 +72,6 @@ export default function* () {
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedMinimize, onRequestedMinimizeWindow),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedMaximize, onRequestedMaximizeWindow),
     takeEvery(SharedActions.events.fromFrontend.toServer.app.window.requestedQuit, onRequestedQuit),
+    takeEvery(SharedActions.events.fromFrontend.toServer.app.page.visited, onPageVisited),
   ];
 }

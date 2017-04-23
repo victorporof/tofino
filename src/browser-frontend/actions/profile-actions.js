@@ -14,23 +14,5 @@ import { createActions } from 'redux-actions';
 import identity from 'lodash/identity';
 
 export default createActions({
-  COMMANDS: {
-    NAVIGATE_PAGE_TO: identity,
-    NAVIGATE_PAGE_BACK: identity,
-    NAVIGATE_PAGE_FORWARD: identity,
-    NAVIGATE_PAGE_REFRESH: identity,
-  },
-  EVENTS: {
-    PAGE_DID_MOUNT: identity,
-    PAGE_DID_START_LOADING: identity,
-    PAGE_DID_STOP_LOADING: identity,
-    PAGE_DID_SUCCEED_LOAD: identity,
-    PAGE_DID_FAIL_LOAD: identity,
-    PAGE_DOM_READY: identity,
-    PAGE_TITLE_SET: identity,
-    PAGE_FAVICONS_SET: identity,
-    PAGE_DID_NAVIGATE: identity,
-    PAGE_DID_NAVIGATE_INTERNAL: identity,
-    PAGE_DID_NAVIGATE_TO_NEW_WINDOW: identity,
-  },
+  NOTIFY_PAGE_VISITED: identity,
 });

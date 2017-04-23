@@ -13,31 +13,11 @@ specific language governing permissions and limitations under the License.
 import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
-import WebContents from '../../shared/widgets/web-contents';
 import WebContentsActions from '../actions/webcontents-actions';
+import ProfileActions from '../actions/profile-actions';
 import PagesModelActions from '../actions/pages-model-actions';
 import DomainPageMetaModel from '../model/domain-page-meta-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
-
-function* navigatePageTo({ payload: { pageId, url } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.navigateTo, url);
-}
-
-function* navigatePageBack({ payload: { pageId } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.goBack);
-}
-
-function* navigatePageForward({ payload: { pageId } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.goForward);
-}
-
-function* navigatePageRefresh({ payload: { pageId } }) {
-  const webContents = WebContents.getWebContentsWithId(pageId);
-  yield call(webContents.impl.reload);
-}
 
 function* onPageDidMount({ payload: { pageId } }) {
   const url = yield select(DomainPagesSelectors.getPageUrl, pageId);
@@ -75,6 +55,15 @@ function* onPageDidFailLoad() {
   // TOOD
 }
 
+function* onPageDomReady({ payload: { pageId } }) {
+  // Store page visit in profile history during the `onPageDomReady` event,
+  // instead of `onPageDidNavigate`, because we prefer having title and favicons
+  // available. Note that we can't do it in the `onPageTitleSet` event, nor the
+  // `onPageFaviconsSet` event, because not all pages have titles or favicons,
+  // in which case those listeners never get called.
+  yield put(ProfileActions.notifyPageVisited({ pageId }));
+}
+
 function* onPageTitleSet({ payload: { pageId, title } }) {
   yield put(PagesModelActions.setPageTitle({
     pageId,
@@ -82,10 +71,10 @@ function* onPageTitleSet({ payload: { pageId, title } }) {
   }));
 }
 
-function* onPageFaviconSet({ payload: { pageId, favicon } }) {
-  yield put(PagesModelActions.setPageFavicon({
+function* onPageFaviconsSet({ payload: { pageId, favicons } }) {
+  yield put(PagesModelActions.setPageFavicons({
     pageId,
-    favicon,
+    favicons,
   }));
 }
 
@@ -100,8 +89,15 @@ function* onPageDidNavigate({ payload: { pageId, url } }) {
   }));
 }
 
-function* onPageDidNavigateInternal() {
-  // TODO
+function* onPageDidNavigateInternal({ payload: { pageId, url, isMainFrame } }) {
+  if (isMainFrame) {
+    // Update relevant domain and ui state when internal top-level page
+    // navigations occur (e.g. location hash changes).
+    yield* onPageDidNavigate({ payload: { pageId, url } });
+
+    // Store page visit in profile history on internal navigations as well.
+    yield put(ProfileActions.notifyPageVisited({ pageId }));
+  }
 }
 
 function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
@@ -119,17 +115,14 @@ function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
 
 export default function* () {
   yield [
-    takeEvery(WebContentsActions.commands.navigatePageTo, navigatePageTo),
-    takeEvery(WebContentsActions.commands.navigatePageBack, navigatePageBack),
-    takeEvery(WebContentsActions.commands.navigatePageForward, navigatePageForward),
-    takeEvery(WebContentsActions.commands.navigatePageRefresh, navigatePageRefresh),
     takeEvery(WebContentsActions.events.pageDidMount, onPageDidMount),
     takeEvery(WebContentsActions.events.pageDidStartLoading, onPageDidStartLoading),
     takeEvery(WebContentsActions.events.pageDidStopLoading, onPageDidStopLoading),
     takeEvery(WebContentsActions.events.pageDidSucceedLoad, onPageDidSucceedLoad),
     takeEvery(WebContentsActions.events.pageDidFailLoad, onPageDidFailLoad),
+    takeEvery(WebContentsActions.events.pageDomReady, onPageDomReady),
     takeEvery(WebContentsActions.events.pageTitleSet, onPageTitleSet),
-    takeEvery(WebContentsActions.events.pageFaviconSet, onPageFaviconSet),
+    takeEvery(WebContentsActions.events.pageFaviconsSet, onPageFaviconsSet),
     takeEvery(WebContentsActions.events.pageDidNavigate, onPageDidNavigate),
     takeEvery(WebContentsActions.events.pageDidNavigateInternal, onPageDidNavigateInternal),
     takeEvery(WebContentsActions.events.pageDidNavigateToNewWindow, onPageDidNavigateToNewWindow),

@@ -40,8 +40,8 @@ export function getPageTitle(state, pageId) {
   return getPageMeta(state, pageId).get('title');
 }
 
-export function getPageFavicon(state, pageId) {
-  return getPageMeta(state, pageId).get('favicon');
+export function getPageFavicons(state, pageId) {
+  return getPageMeta(state, pageId).get('favicons');
 }
 
 export function getPageBookmarkedState(state, pageId) {

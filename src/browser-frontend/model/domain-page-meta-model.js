@@ -13,7 +13,6 @@ specific language governing permissions and limitations under the License.
 import Immutable from 'immutable';
 
 const UNKNOWN_TITLE = '';
-const UNKNOWN_FAVICON = '';
 
 const LOAD_STATES = {
   INITIAL: 'initial',
@@ -26,13 +25,12 @@ const LOAD_STATES = {
 const DomainPageMetaModel = Immutable.Record({
   loadState: LOAD_STATES.INITIAL,
   title: UNKNOWN_TITLE,
-  favicon: UNKNOWN_FAVICON,
+  favicons: Immutable.List(),
   bookmarked: false,
   tabOwner: null,
 });
 
 DomainPageMetaModel.UNKNOWN_TITLE = UNKNOWN_TITLE;
-DomainPageMetaModel.UNKNOWN_FAVICON = UNKNOWN_FAVICON;
 DomainPageMetaModel.LOAD_STATES = LOAD_STATES;
 
 export default DomainPageMetaModel;

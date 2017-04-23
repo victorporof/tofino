@@ -14,6 +14,7 @@ import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import * as Endpoints from '../constants/endpoints';
+import * as Helpers from './helpers';
 import WebContentsActions from '../actions/webcontents-actions';
 import ProfileActions from '../actions/profile-actions';
 import PagesModelActions from '../actions/pages-model-actions';
@@ -85,6 +86,8 @@ function* onPageFaviconsSet({ payload: { pageId, favicons } }) {
 }
 
 function* onPageDidNavigate({ payload: { pageId, url } }) {
+  yield* Helpers.updateNavigationButtonsEnabledState({ payload: { pageId } });
+
   yield put(PagesModelActions.setPageUrl({
     pageId,
     url,

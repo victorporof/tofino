@@ -41,6 +41,18 @@ export function getPageLocationInputBarValue(state, pageId) {
   return getPageVisuals(state, pageId).get('locationInputBarValue');
 }
 
+export function getPageBackButtonEnabled(state, pageId) {
+  return getPageVisuals(state, pageId).get('backButtonEnabled');
+}
+
+export function getPageForwardButtonEnabled(state, pageId) {
+  return getPageVisuals(state, pageId).get('forwardButtonEnabled');
+}
+
+export function getPageReloadButtonEnabled(state, pageId) {
+  return getPageVisuals(state, pageId).get('reloadButtonEnabled');
+}
+
 export function getPageTabState(state, pageId) {
   return getPageVisuals(state, pageId).get('tabState');
 }

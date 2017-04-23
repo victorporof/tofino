@@ -25,6 +25,9 @@ const UIPageModel = Immutable.Record({
   tabLoadAnimationRunning: false,
   tabLoadAnimationPlayCount: 0,
   locationInputBarValue: '',
+  backButtonEnabled: false,
+  forwardButtonEnabled: false,
+  reloadButtonEnabled: false,
 });
 
 UIPageModel.TAB_STATES = TAB_STATES;

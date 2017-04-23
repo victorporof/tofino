@@ -15,12 +15,14 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import WebContentsActions from '../../../../../actions/webcontents-actions';
+import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 
 import Styles from './forward-button.css';
 import Button from '../../../../../../shared/widgets/button';
 import FittedImage from '../../../../../../shared/widgets/fitted-image';
 
-@connect(() => ({
+@connect((state, ownProps) => ({
+  disabled: !UIPagesSelectors.getPageForwardButtonEnabled(state, ownProps.pageId),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -37,6 +39,7 @@ export default class ForwardButton extends PureComponent {
       <Button
         title="Forward"
         styleName="forward-button"
+        disabled={this.props.disabled}
         onClick={this.handleClick}
       >
         <FittedImage
@@ -52,4 +55,5 @@ export default class ForwardButton extends PureComponent {
 ForwardButton.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pageId: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };

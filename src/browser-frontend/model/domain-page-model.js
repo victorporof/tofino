@@ -13,12 +13,13 @@ specific language governing permissions and limitations under the License.
 import Immutable from 'immutable';
 import isUUID from 'is-uuid';
 
-import DomainPageMetaModel from './domain-page-meta-model';
+import DomainPageTransientModel from './domain-page-transient-model';
 
 export default class DomainPageModel extends Immutable.Record({
   id: null,
+  ownerId: null,
   url: null,
-  meta: new DomainPageMetaModel(),
+  transient: new DomainPageTransientModel(),
 }) {
   constructor(properties) {
     if (!properties || !properties.id || !properties.url) {

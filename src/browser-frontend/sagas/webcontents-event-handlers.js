@@ -17,7 +17,7 @@ import * as Endpoints from '../constants/endpoints';
 import WebContentsActions from '../actions/webcontents-actions';
 import ProfileActions from '../actions/profile-actions';
 import PagesModelActions from '../actions/pages-model-actions';
-import DomainPageMetaModel from '../model/domain-page-meta-model';
+import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 
 function* onPageDidMount({ payload: { pageId } }) {
@@ -28,14 +28,14 @@ function* onPageDidMount({ payload: { pageId } }) {
 function* onPageDidStartLoading({ payload: { pageId } }) {
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.LOADING,
+    loadState: DomainPageTransientModel.LOAD_STATES.LOADING,
   }));
 }
 
 function* onPageDidStopLoading({ payload: { pageId } }) {
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.LOADED,
+    loadState: DomainPageTransientModel.LOAD_STATES.LOADED,
   }));
 
   const url = yield select(DomainPagesSelectors.getPageUrl, pageId);

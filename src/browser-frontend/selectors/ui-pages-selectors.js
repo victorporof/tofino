@@ -11,9 +11,9 @@ specific language governing permissions and limitations under the License.
 */
 
 import * as Endpoints from '../constants/endpoints';
-import DomainPageMetaModel from '../model/domain-page-meta-model';
+import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as RootSelectors from './root-selectors';
-import * as PagesSelectors from './domain-pages-selectors';
+import * as DomainPagesSelectors from './domain-pages-selectors';
 
 export function getPagesUI(state) {
   return RootSelectors.getAppUIState(state).get('pages');
@@ -60,28 +60,28 @@ export function getTabLoadAnimationPlayCount(state, pageId) {
 // UI page computed properties getters.
 
 export function getComputedPageDisplayTitle(state, pageId) {
-  const loadState = PagesSelectors.getPageLoadState(state, pageId);
-  if (loadState === DomainPageMetaModel.LOAD_STATES.INITIAL ||
-      loadState === DomainPageMetaModel.LOAD_STATES.CONNECTING) {
+  const loadState = DomainPagesSelectors.getPageLoadState(state, pageId);
+  if (loadState === DomainPageTransientModel.LOAD_STATES.INITIAL ||
+      loadState === DomainPageTransientModel.LOAD_STATES.CONNECTING) {
     return 'Connecting…';
   }
-  const url = PagesSelectors.getPageUrl(state, pageId);
+  const url = DomainPagesSelectors.getPageUrl(state, pageId);
   if (url === Endpoints.BLANK_PAGE) {
     return 'New Tab';
   }
-  const title = PagesSelectors.getPageTitle(state, pageId);
-  if (title === DomainPageMetaModel.UNKNOWN_TITLE) {
+  const title = DomainPagesSelectors.getPageTitle(state, pageId);
+  if (title === DomainPageTransientModel.UNKNOWN_TITLE) {
     return 'Loading…';
   }
   return title;
 }
 
 export function getComputedPageFaviconCssUrl(state, pageId) {
-  const url = PagesSelectors.getPageUrl(state, pageId);
+  const url = DomainPagesSelectors.getPageUrl(state, pageId);
   if (url === Endpoints.BLANK_PAGE) {
     return 'var(--theme-app-icon-32)';
   }
-  const favicon = PagesSelectors.getPageFavicons(state, pageId).get(0);
+  const favicon = DomainPagesSelectors.getPageFavicons(state, pageId).get(0);
   if (favicon) {
     return `url(${favicon})`;
   }
@@ -89,13 +89,13 @@ export function getComputedPageFaviconCssUrl(state, pageId) {
 }
 
 export function getComputedPageTooltipText(state, pageId) {
-  const title = PagesSelectors.getPageTitle(state, pageId);
-  const url = PagesSelectors.getPageUrl(state, pageId);
+  const title = DomainPagesSelectors.getPageTitle(state, pageId);
+  const url = DomainPagesSelectors.getPageUrl(state, pageId);
   return title || url;
 }
 
 export function getComputedLocationInputbarWantsFocus(state, pageId) {
-  const url = PagesSelectors.getPageUrl(state, pageId);
+  const url = DomainPagesSelectors.getPageUrl(state, pageId);
   const selected = getSelectedPageId(state) === pageId;
   return url === Endpoints.BLANK_PAGE && selected;
 }

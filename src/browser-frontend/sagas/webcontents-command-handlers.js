@@ -16,7 +16,7 @@ import * as Endpoints from '../constants/endpoints';
 import WebContents from '../../shared/widgets/web-contents';
 import WebContentsActions from '../actions/webcontents-actions';
 import PagesModelActions from '../actions/pages-model-actions';
-import DomainPageMetaModel from '../model/domain-page-meta-model';
+import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 
 function* navigatePageTo({ payload: { pageId, url } }) {
@@ -27,7 +27,7 @@ function* navigatePageTo({ payload: { pageId, url } }) {
   yield put(PagesModelActions.setPageUrl({ pageId, url }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+    loadState: DomainPageTransientModel.LOAD_STATES.CONNECTING,
   }));
 
   if ((prevUrl === Endpoints.BLANK_PAGE && url !== Endpoints.BLANK_PAGE) ||
@@ -43,7 +43,7 @@ function* navigatePageBack({ payload: { pageId } }) {
   yield put(PagesModelActions.resetPageData({ pageId }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+    loadState: DomainPageTransientModel.LOAD_STATES.CONNECTING,
   }));
   yield call(webContents.impl.goBack);
 }
@@ -53,7 +53,7 @@ function* navigatePageForward({ payload: { pageId } }) {
   yield put(PagesModelActions.resetPageData({ pageId }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+    loadState: DomainPageTransientModel.LOAD_STATES.CONNECTING,
   }));
   yield call(webContents.impl.goForward);
 }
@@ -63,7 +63,7 @@ function* navigatePageRefresh({ payload: { pageId } }) {
   yield put(PagesModelActions.resetPageData({ pageId }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.CONNECTING,
+    loadState: DomainPageTransientModel.LOAD_STATES.CONNECTING,
   }));
   yield call(webContents.impl.reload);
 }

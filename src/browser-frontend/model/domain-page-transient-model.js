@@ -22,15 +22,17 @@ const LOAD_STATES = {
   FAILED: 'failed',
 };
 
-const DomainPageMetaModel = Immutable.Record({
+/**
+ * Page state that gets cleared between navigations.
+ */
+const DomainPageTransientModel = Immutable.Record({
   loadState: LOAD_STATES.INITIAL,
   title: UNKNOWN_TITLE,
   favicons: Immutable.List(),
   bookmarked: false,
-  tabOwner: null,
 });
 
-DomainPageMetaModel.UNKNOWN_TITLE = UNKNOWN_TITLE;
-DomainPageMetaModel.LOAD_STATES = LOAD_STATES;
+DomainPageTransientModel.UNKNOWN_TITLE = UNKNOWN_TITLE;
+DomainPageTransientModel.LOAD_STATES = LOAD_STATES;
 
-export default DomainPageMetaModel;
+export default DomainPageTransientModel;

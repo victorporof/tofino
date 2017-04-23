@@ -10,19 +10,23 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-import WebContents from '.';
+import BrowserComponentAPI from './browser-component-api';
 
-export default class IframeDummyBrowser extends PureComponent {
+export default class IframeDummyBrowser extends BrowserComponentAPI {
   constructor(...args) {
     super(...args);
   }
 
   componentDidMount() {
     this._iframe.addEventListener('load', () => {
+      this.props.onDidStartLoading();
+      this.props.onDidNavigate({ url: this._iframe.src });
+      this.props.onPageDomReady();
+      this.props.onPageTitleSet({ title: this._iframe.src });
+      this.props.onDidSucceedLoad();
       this.props.onDidStopLoading();
-      this.props.onPageTitleSet({ title: 'Loaded' });
     });
   }
 
@@ -34,16 +38,11 @@ export default class IframeDummyBrowser extends PureComponent {
     this._iframe.setAttribute('src', url);
   }
 
-  goBack = () => {
-    throw new Error('Not implemented.');
-  }
-
-  goForward = () => {
-    throw new Error('Not implemented.');
-  }
+  canReload = () =>
+    true
 
   reload = () => {
-    throw new Error('Not implemented.');
+    this.navigateTo(this._iframe.src);
   }
 
   render() {
@@ -57,6 +56,3 @@ export default class IframeDummyBrowser extends PureComponent {
     );
   }
 }
-
-IframeDummyBrowser.propTypes = WebContents.implPropTypes;
-IframeDummyBrowser.defaultProps = WebContents.defaultProps;

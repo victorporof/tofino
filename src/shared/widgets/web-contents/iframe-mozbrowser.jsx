@@ -10,15 +10,15 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-import WebContents from '.';
+import BrowserComponentAPI from './browser-component-api';
 
 // Implement a mozbrowser, see following docs and examples:
 // https://developer.mozilla.org/en-US/docs/Web/API/Using_the_Browser_API
 // https://github.com/mdn/browser-api-demo/blob/master/main.js
 // https://github.com/mozilla/positron-electron/blob/3345aa05f8d55e0c91abbf52489b6c7e40a336d5/lib/renderer/web-view/web-view.js#L300-L360
-export default class IframeMozBrowser extends PureComponent {
+export default class IframeMozBrowser extends BrowserComponentAPI {
   constructor(...args) {
     super(...args);
   }
@@ -49,15 +49,20 @@ export default class IframeMozBrowser extends PureComponent {
     this._iframe.setAttribute('src', url);
   }
 
+  canGoBack = () =>
+    this._iframe.getCanGoBack();
+
+  canGoForward = () =>
+    this._iframe.getCanGoForward();
+
+  canReload = () =>
+    true
+
   goBack = () => {
-    // These aren't working. The mozbrowser API extensions don't seem to be
-    // attached.
     this._iframe.goBack();
   }
 
   goForward = () => {
-    // These aren't working. The mozbrowser API extensions don't seem to be
-    // attached.
     this._iframe.goForward();
   }
 
@@ -78,6 +83,3 @@ export default class IframeMozBrowser extends PureComponent {
     );
   }
 }
-
-IframeMozBrowser.propTypes = WebContents.implPropTypes;
-IframeMozBrowser.defaultProps = WebContents.defaultProps;

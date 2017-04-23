@@ -16,10 +16,9 @@ import { connect } from 'react-redux';
 import Mousetrap from 'mousetrap';
 
 import { client } from '../../global';
-import PagesModelActions from '../../actions/pages-model-actions';
-// import * as SharedPropTypes from '../../model/shared-prop-types';
-// import SharedActions from '../../../shared/actions/shared-actions';
-// import * as UIPagesSelectors from '../../selectors/ui-pages-selectors';
+import KeyboardShortcutsActions from '../../actions/keyboard-shortcuts-actions';
+import * as SharedPropTypes from '../../model/shared-prop-types';
+import SharedActions from '../../../shared/actions/shared-actions';
 
 import Styles from './window.css';
 import Chrome from './chrome';
@@ -33,22 +32,34 @@ import Content from './content';
 })
 export default class Window extends PureComponent {
   componentDidMount() {
+    // Some keyboard shortcuts need to be registered at the platform level,
+    // because they clash with OS-level shortcuts (e.g. Cmd+W on macOS
+    // hides windows, but we want it to close tabs instead.). The platform
+    // is responsible with overriding these shortcuts and providing us control.
+    this.props.client.send(SharedActions.commands.fromFrontend.toServer.app.window.keyShortcuts.register([
+      { keys: 'CommandOrControl+Q' },
+      { keys: 'CommandOrControl+W' },
+    ]));
+
+    // For everything else, listening to key events in the frontend is fine.
+    // We should listen to the above "special" key events normally too, so that
+    // all shortcuts work headless as well (when opening the frontend in a tab).
     this.mousetrap = Mousetrap();
-    this.mousetrap.bind('mod+t', () => {
-      this.props.dispatch(PagesModelActions.addPage());
+    this.mousetrap.bind('mod+q', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedAccelQ());
     });
-    // this.mousetrap.bind('mod+q', () => {
-    //   this.props.client.send(SharedActions.events.fromFrontend.toServer.app.window.requestedClose());
-    // });
-    // this.mousetrap.bind('mod+w', () => {
-    //   this.props.dispatch((dispatch, getState) => {
-    //     const pageId = UIPagesSelectors.getSelectedPageId(getState());
-    //     this.props.dispatch(PagesModelActions.removePage({ pageId }));
-    //   });
-    // });
-    this.mousetrap.bind('up up down down left right left right b a', () => {
-      const url = 'http://chilloutandwatchsomecatgifs.com/';
-      this.props.dispatch(PagesModelActions.addPage({ url }));
+    this.mousetrap.bind('mod+w', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedAccelW());
+    });
+    this.mousetrap.bind('mod+t', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedAccelT());
+    });
+    this.mousetrap.bind('up up down down left right left right b a', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedCatGifsEasterEgg());
     });
   }
 
@@ -63,6 +74,6 @@ export default class Window extends PureComponent {
 }
 
 Window.WrappedComponent.propTypes = {
-  // client: SharedPropTypes.Client.isRequired,
+  client: SharedPropTypes.Client.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

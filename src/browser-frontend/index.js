@@ -18,9 +18,13 @@ import './css/theme.css';
 import * as Global from './global';
 import { setupWs, setupFrontend, setupInitialState } from './setup';
 
-setupWs(Global.client);
-setupFrontend(Global.store, document, '.container');
-setupInitialState(Global.store);
+const main = async () => {
+  await setupWs(Global.client);
+  setupFrontend(Global.store, document, '.container');
+  setupInitialState(Global.store);
+};
+
+main();
 
 if (module.hot) {
   module.hot.accept('./views/browser/window', () => setupFrontend());

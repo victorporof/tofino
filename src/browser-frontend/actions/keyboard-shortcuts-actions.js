@@ -10,16 +10,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import serverEventHandlers from './server-event-handlers';
-import keyboardShortcutsActionHandlers from './keyboard-shortcuts-action-handlers';
-import webContentsActionHandlers from './webcontents-action-handlers';
-import tabsActionHandlers from './tabs-action-handlers';
+import { createActions } from 'redux-actions';
+import identity from 'lodash/identity';
 
-export default function* () {
-  yield [
-    serverEventHandlers(),
-    keyboardShortcutsActionHandlers(),
-    webContentsActionHandlers(),
-    tabsActionHandlers(),
-  ];
-}
+export default createActions({
+  PRESSED_ACCEL_Q: identity,
+  PRESSED_ACCEL_W: identity,
+  PRESSED_ACCEL_T: identity,
+  PRESSED_CAT_GIFS_EASTER_EGG: identity,
+});

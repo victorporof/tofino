@@ -12,10 +12,12 @@ specific language governing permissions and limitations under the License.
 
 import runnerEventHandlers from './runner-event-handlers';
 import frontendEventHandlers from './frontend-event-handlers';
+import frontendCommandHandlers from './frontend-command-handlers';
 
 export default function* () {
   yield [
     runnerEventHandlers(),
     frontendEventHandlers(),
+    frontendCommandHandlers(),
   ];
 }

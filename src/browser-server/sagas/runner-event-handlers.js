@@ -10,40 +10,21 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import querystring from 'querystring';
-
 import { takeEvery, call, put, select } from 'redux-saga/effects';
-import uuid from 'uuid/v4';
 
-import { CHROME_URL } from '../constants/endpoints';
-import { DEFAULT_WIDTH, DEFAULT_HEIGHT } from '../constants/browser-window-defaults';
+import * as Helpers from './helpers';
+import FrontendConnection from '../frontend-connection';
 import SharedActions from '../../shared/actions/shared-actions';
 import RunnerConnectionsModelActions from '../actions/runner-connections-model-actions';
 import WindowsModelActions from '../actions/windows-model-actions';
 import * as RunnerConnectionsSelectors from '../selectors/runner-connections-selectors';
 import * as WindowsSelectors from '../selectors/windows-selectors';
 
-function* createWindow({ meta: runnerConn }) {
-  const runnerConnId = runnerConn.id;
-  const { os, platform } = yield select(RunnerConnectionsSelectors.getRunnerClientMetaData, runnerConnId);
-
-  const winId = uuid();
-  const frontendParams = querystring.stringify({ runnerConnId, winId, os, platform });
-
-  yield call([runnerConn, runnerConn.send], SharedActions.commands.fromServer.toRunner.app.window.create({
-    winId,
-    url: `${CHROME_URL}?${frontendParams}`,
-    width: DEFAULT_WIDTH,
-    height: DEFAULT_HEIGHT,
-    style: os === 'darwin' ? 'onlyTitleBarHiddenAndWindowControlsInset' : 'chromeless',
-  }));
-}
-
 function* onClientHello({ meta: runnerConn, payload: { clientMetaData } }) {
   const runnerConnId = runnerConn.id;
   yield put(RunnerConnectionsModelActions.addRunnerConnection({ runnerConnId, clientMetaData }));
 
-  yield* createWindow({ meta: runnerConn });
+  yield* Helpers.createWindow({ meta: runnerConn });
 }
 
 function* onAppActivated({ meta: runnerConn }) {
@@ -51,7 +32,7 @@ function* onAppActivated({ meta: runnerConn }) {
   const count = (yield select(WindowsSelectors.getAllWindows, runnerConnId)).count();
 
   if (count === 0) {
-    yield* createWindow({ meta: runnerConn });
+    yield* Helpers.createWindow({ meta: runnerConn });
   }
 }
 
@@ -91,6 +72,13 @@ function* onDevToolsClosed({ meta: runnerConn, payload: { winId } }) {
   yield put(WindowsModelActions.window.setDevToolsClosed({ runnerConnId, winId }));
 }
 
+function* onKeyShortcutPressed({ payload: { winId, shortcut } }) {
+  const frontendConn = FrontendConnection.getWithFrontendWinId(winId);
+
+  const action = SharedActions.events.fromServer.toFrontend.app.window.keyShortcuts.pressed({ shortcut });
+  yield call([frontendConn, frontendConn.send], action);
+}
+
 export default function* () {
   yield [
     takeEvery(SharedActions.events.fromRunner.toServer.client.hello, onClientHello),
@@ -99,5 +87,6 @@ export default function* () {
     takeEvery(SharedActions.events.fromRunner.toServer.app.window.closed, onWindowClosed),
     takeEvery(SharedActions.events.fromRunner.toServer.app.window.devtools.opened, onDevToolsOpened),
     takeEvery(SharedActions.events.fromRunner.toServer.app.window.devtools.closed, onDevToolsClosed),
+    takeEvery(SharedActions.events.fromRunner.toServer.app.window.keyShortcuts.pressed, onKeyShortcutPressed),
   ];
 }

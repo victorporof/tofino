@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 import Immutable from 'immutable';
+import isUUID from 'is-uuid';
 
 import DomainPageMetaModel from './domain-page-meta-model';
 
@@ -22,6 +23,9 @@ export default class DomainPageModel extends Immutable.Record({
   constructor(properties) {
     if (!properties || !properties.id || !properties.url) {
       throw new Error('Required properties missing from page constructor.');
+    }
+    if (!isUUID.v4(properties.id)) {
+      throw new Error('Malformed page id');
     }
     super(properties);
   }

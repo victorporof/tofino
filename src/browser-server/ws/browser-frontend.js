@@ -14,7 +14,7 @@ import colors from 'colour';
 
 import logger from '../logger';
 
-import Connection from '../connection';
+import FrontendConnection from '../frontend-connection';
 import FrontendConnectionsModelActions from '../actions/frontend-connections-model-actions';
 
 async function onConnectionClosed(store, conn) {
@@ -23,7 +23,7 @@ async function onConnectionClosed(store, conn) {
 }
 
 async function onConnectionEstablished(wss, ws, store) {
-  const conn = new Connection({ server: wss, pipe: ws, store, logger });
+  const conn = new FrontendConnection({ server: wss, pipe: ws, store, logger });
   await conn.listen();
 
   logger.log(colors.green(`WebSocket connection to browser frontend established: ${conn.id}.`));

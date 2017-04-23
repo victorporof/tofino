@@ -13,4 +13,5 @@ specific language governing permissions and limitations under the License.
 .page {
   flex: 1;
   background: var(--theme-page-background);
+  composes: app-no-drag from '../../../../shared/widgets/helpers/common.css';
 }

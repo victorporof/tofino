@@ -40,6 +40,11 @@ function* navigatePageTo({ payload: { pageId, url } }) {
 
 function* navigatePageBack({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  const canGoBack = yield call(webContents.impl.canGoBack);
+  if (!canGoBack) {
+    return;
+  }
+
   yield put(PagesModelActions.resetPageData({ pageId }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,
@@ -50,6 +55,11 @@ function* navigatePageBack({ payload: { pageId } }) {
 
 function* navigatePageForward({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  const canGoForward = yield call(webContents.impl.canGoForward);
+  if (!canGoForward) {
+    return;
+  }
+
   yield put(PagesModelActions.resetPageData({ pageId }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,
@@ -60,6 +70,11 @@ function* navigatePageForward({ payload: { pageId } }) {
 
 function* navigatePageRefresh({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);
+  const canReload = yield call(webContents.impl.canReload);
+  if (!canReload) {
+    return;
+  }
+
   yield put(PagesModelActions.resetPageData({ pageId }));
   yield put(PagesModelActions.setPageLoadState({
     pageId,

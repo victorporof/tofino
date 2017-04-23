@@ -19,6 +19,36 @@ function setLocationInputBarValue(state, { payload: { pageId, value } }) {
   return state.setIn(['ui', 'pages', 'visuals', pageId, 'locationInputBarValue'], value);
 }
 
+function setBackButtonEnabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'backButtonEnabled'], true);
+}
+
+function setBackButtonDisabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'backButtonEnabled'], false);
+}
+
+function setForwardButtonEnabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'forwardButtonEnabled'], true);
+}
+
+function setForwardButtonDisabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'forwardButtonEnabled'], false);
+}
+
+function setReloadButtonEnabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'reloadButtonEnabled'], true);
+}
+
+function setReloadButtonDisabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'visuals', pageId, 'reloadButtonEnabled'], false);
+}
+
 export default handleActions({
   [PagesModelActions.navbar.setLocationInputBarValue]: setLocationInputBarValue,
+  [PagesModelActions.navbar.setBackButtonEnabled]: setBackButtonEnabled,
+  [PagesModelActions.navbar.setBackButtonDisabled]: setBackButtonDisabled,
+  [PagesModelActions.navbar.setForwardButtonEnabled]: setForwardButtonEnabled,
+  [PagesModelActions.navbar.setForwardButtonDisabled]: setForwardButtonDisabled,
+  [PagesModelActions.navbar.setReloadButtonEnabled]: setReloadButtonEnabled,
+  [PagesModelActions.navbar.setReloadButtonDisabled]: setReloadButtonDisabled,
 }, new Model());

@@ -14,4 +14,13 @@ specific language governing permissions and limitations under the License.
   width: var(--theme-navbar-height);
   height: var(--theme-navbar-height);
   justify-content: center;
+  opacity: var(--theme-navbar-button-enabled-opacity);
+}
+
+.button:hover {
+  opacity: var(--theme-navbar-button-enabled-hover-opacity);
+}
+
+.button[disabled] {
+  opacity: var(--theme-navbar-button-disabled-opacity);
 }

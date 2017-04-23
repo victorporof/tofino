@@ -35,5 +35,11 @@ export default createActions({
   },
   NAVBAR: {
     SET_LOCATION_INPUT_BAR_VALUE: identity,
+    SET_BACK_BUTTON_ENABLED: identity,
+    SET_BACK_BUTTON_DISABLED: identity,
+    SET_FORWARD_BUTTON_ENABLED: identity,
+    SET_FORWARD_BUTTON_DISABLED: identity,
+    SET_RELOAD_BUTTON_ENABLED: identity,
+    SET_RELOAD_BUTTON_DISABLED: identity,
   },
 });

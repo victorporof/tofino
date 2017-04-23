@@ -10,11 +10,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-import WebContents from '.';
+import BrowserComponentAPI from './browser-component-api';
 
-export default class NoopBrowser extends PureComponent {
+export default class NoopBrowser extends BrowserComponentAPI {
   constructor(...args) {
     super(...args);
   }
@@ -27,22 +27,7 @@ export default class NoopBrowser extends PureComponent {
     this.props.onDidStopLoading();
   }
 
-  goBack = () => {
-    throw new Error('Not implemented.');
-  }
-
-  goForward = () => {
-    throw new Error('Not implemented.');
-  }
-
-  reload = () => {
-    throw new Error('Not implemented.');
-  }
-
   render() {
     return <div className={this.props.className} />;
   }
 }
-
-NoopBrowser.propTypes = WebContents.implPropTypes;
-NoopBrowser.defaultProps = WebContents.defaultProps;

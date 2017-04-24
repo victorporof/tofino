@@ -19,6 +19,7 @@ import MenuButton from './toolbar-buttons/menu-button';
 import SidebarButton from './toolbar-buttons/sidebar-button';
 import LibraryButton from './toolbar-buttons/library-button';
 import ExtensionsButton from './toolbar-buttons/extensions-button';
+import PerfButton from './toolbar-buttons/perf-button';
 
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -27,6 +28,7 @@ export default class ToolbarButtons extends PureComponent {
   render() {
     return (
       <div styleName="toolbar-buttons">
+        <PerfButton />
         <ExtensionsButton />
         <LibraryButton />
         <SidebarButton />

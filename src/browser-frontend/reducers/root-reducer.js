@@ -12,12 +12,14 @@ specific language governing permissions and limitations under the License.
 
 import reduceReducers from 'reduce-reducers';
 
+import developerReducers from './developer-reducers';
 import pagesReducers from './pages-reducers';
 import pagesNavBarReducers from './pages-navbar-reducers';
 import pagesTabBarReducers from './pages-tabbar-reducers';
 import menusReducers from './menus-reducers';
 
 export default reduceReducers(
+  developerReducers,
   pagesReducers,
   pagesNavBarReducers,
   pagesTabBarReducers,

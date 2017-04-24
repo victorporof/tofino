@@ -10,6 +10,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
+import developerActionHandlers from './developer-action-handlers';
 import serverEventHandlers from './server-event-handlers';
 import keyboardShortcutsActionHandlers from './keyboard-shortcuts-action-handlers';
 import webContentsEventHandlers from './webcontents-event-handlers';
@@ -19,6 +20,7 @@ import tabsActionHandlers from './tabs-action-handlers';
 
 export default function* () {
   yield [
+    developerActionHandlers(),
     serverEventHandlers(),
     keyboardShortcutsActionHandlers(),
     webContentsEventHandlers(),

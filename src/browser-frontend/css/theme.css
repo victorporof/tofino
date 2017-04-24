@@ -90,6 +90,7 @@
 
   --theme-navbar-height: 40px;
   --theme-navbar-background: #eee;
+  --theme-navbar-color: #000;
   --theme-navbar-button-disabled-opacity: 0.2;
   --theme-navbar-button-enabled-opacity: 0.8;
   --theme-navbar-button-enabled-hover-opacity: 1;

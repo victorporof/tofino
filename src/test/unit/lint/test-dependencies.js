@@ -115,18 +115,27 @@ describe('modules', () => {
       'less',
     ];
 
+    const ignored = [
+      // Only imported in development environments.
+      'react-addons-perf',
+    ];
+
     const sources = await globby(globs);
     const modules = await regexFiles(sources, IMPORTS_REGEX, REQUIRES_REGEX);
 
     // Stripping out the native node modules should leave only the third-party
     // dependencies used throughout the source code. Including the unimported
     // modules should result in exactly the packages listed in package.json.
-    const used = [...modules.filter(m => !isBuiltinModule(m)), ...unimported].sort();
+    const used = [...modules.filter(m => !isBuiltinModule(m) && ignored.indexOf(m) === -1), ...unimported].sort();
     expect(used).toEqual(packages);
 
     // Make sure no garbage is accumulated in the `unimported` array.
     expect(intersection(unimported, modules)).toEqual([]);
     expect(intersection(unimported, packages)).toEqual(unimported);
+
+    // Make sure no garbage is accumulated in the `ignored` array.
+    expect(intersection(ignored, modules)).toEqual(ignored);
+    expect(intersection(ignored, packages)).toEqual([]);
   });
 
   it('shoudln\'t use the `fs` built-in node module instead of `fs-promise`', async () => {

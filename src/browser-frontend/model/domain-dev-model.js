@@ -10,8 +10,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-.navbar {
-  height: var(--theme-navbar-height);
-  background: var(--theme-navbar-background);
-  color: var(--theme-navbar-color);
-}
+import Immutable from 'immutable';
+
+export default Immutable.Record({
+  perfRecording: false,
+});

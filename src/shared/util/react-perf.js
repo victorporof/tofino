@@ -10,8 +10,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-.navbar {
-  height: var(--theme-navbar-height);
-  background: var(--theme-navbar-background);
-  color: var(--theme-navbar-color);
+if (process.env.NODE_ENV === 'development') {
+  module.exports = require('react-addons-perf'); // eslint-disable-line
+} else {
+  module.exports = {
+    start() {},
+    stop() {},
+    printWasted() {},
+    getLastMeasurements() {},
+  };
 }

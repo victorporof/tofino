@@ -10,8 +10,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-.navbar {
-  height: var(--theme-navbar-height);
-  background: var(--theme-navbar-background);
-  color: var(--theme-navbar-color);
-}
+import { createActions } from 'redux-actions';
+import identity from 'lodash/identity';
+
+export default createActions({
+  SET_PERF_RECORDING_RUNNING: identity,
+  SET_PERF_RECORDING_NOT_RUNNING: identity,
+});

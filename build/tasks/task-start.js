@@ -44,6 +44,13 @@ gulp.task('start', async () => {
     ]);
   }
 
+  if (yargs.argv.platform === 'servo') {
+    return Promise.all([
+      spawn('node', Paths.SERVO_RUNNER_DST_MAIN, args, { logger }),
+      spawn('node', Paths.BROWSER_SERVER_DST_MAIN, args, { logger }),
+    ]);
+  }
+
   if (yargs.argv.platform === 'dummy') {
     const runnerArgs = [
       ...args,

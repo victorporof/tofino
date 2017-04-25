@@ -106,6 +106,21 @@ export const QBRT_RUNNER_SHELL_SRC = IS_PACKAGED_BUILD ? undefined : path.join(B
 export const QBRT_RUNNER_SHELL_DST = path.join(BROWSER_RUNNER_DST, QBRT_SHELL_DIRNAME);
 
 /**
+ * Servo runner.
+ */
+export const SERVO_PLATFORM_DIRNAME = 'platform-servo';
+export const SERVO_RUNNER_ENTRY_FILENAME = path.join(SERVO_PLATFORM_DIRNAME, 'index.js');
+export const SERVO_RUNNER_DST_MAIN = path.join(BROWSER_RUNNER_DST, SERVO_RUNNER_ENTRY_FILENAME);
+
+export const SERVO_LIB_DIRNAME = path.join(SERVO_PLATFORM_DIRNAME, '.servo');
+export const SERVO_RUNNER_LIB_SRC = IS_PACKAGED_BUILD ? undefined : path.join(BROWSER_RUNNER_SRC, SERVO_LIB_DIRNAME);
+// TODO: Notice we're not copying the servo lib directory when building, but
+// directly using the one in the runner's source directory. We should figure
+// out a way to properly import it, like we do with qbrt, instead of having
+// to clone everything ourselves. Packaging is another different story.
+export const SERVO_RUNNER_LIB_DST = SERVO_RUNNER_LIB_SRC;
+
+/**
  * Browser server paths.
  */
 export const BROWSER_SERVER_DIRNAME = 'browser-server';

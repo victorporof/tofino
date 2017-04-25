@@ -10,23 +10,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-/* global module */
+import serverCommandHandlers from './server-command-handlers';
 
-import './css/global.css';
-import './css/theme.css';
-
-import * as Global from './global';
-import { setupWs, setupFrontend, setupInitialState } from './setup';
-
-const main = async () => {
-  // This doesn't work.
-  // await setupWs(Global.client);
-  setupFrontend(Global.store, document, '.container');
-  setupInitialState(Global.store);
-};
-
-main();
-
-if (module.hot) {
-  module.hot.accept('./views/browser/window', () => setupFrontend());
+export default function* () {
+  yield [
+    serverCommandHandlers(),
+  ];
 }

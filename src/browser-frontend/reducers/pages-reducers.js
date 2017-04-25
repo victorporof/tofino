@@ -25,16 +25,12 @@ import UIPageModel from '../model/ui-page-model';
 function addPage(state, { payload: { url, parentId, background } = {} }) {
   return state.withMutations((mut) => {
     const pageId = uuid();
-    const pageUrl = url || Endpoints.DEFAULT_PAGE_URL;
+    const pageUrl = url || Endpoints.NEW_PAGE_URL;
 
-    const tabOwner = parentId;
-    const pageDomainState = new DomainPageModel({ id: pageId, url: pageUrl });
-    const pageUIState = new UIPageModel({
-      locationInputBarValue: pageUrl,
-    });
+    const pageDomainState = new DomainPageModel({ id: pageId, ownerId: parentId, url: pageUrl });
+    const pageUIState = new UIPageModel({ locationInputBarValue: pageUrl });
     mut.updateIn(['domain', 'pages'], m => m.set(pageId, pageDomainState));
     mut.updateIn(['ui', 'pages', 'visuals'], m => m.set(pageId, pageUIState));
-    mut.setIn(['domain', 'pages', pageId, 'meta', 'tabOwner'], tabOwner);
 
     const pageCount = state.ui.pages.displayOrder.count();
     const pageIndex = parentId ? state.ui.pages.displayOrder.findIndex(id => id === parentId) + 1 : pageCount;
@@ -100,7 +96,7 @@ function setSelectedPage(state, { payload: { pageId } }) {
 }
 
 function resetPageData(state, { payload: { pageId } }) {
-  return state.deleteIn(['domain', 'pages', pageId, 'meta']);
+  return state.deleteIn(['domain', 'pages', pageId, 'transient']);
 }
 
 function setPageUrl(state, { payload: { pageId, url } }) {
@@ -108,23 +104,23 @@ function setPageUrl(state, { payload: { pageId, url } }) {
 }
 
 function setPageLoadState(state, { payload: { pageId, loadState } }) {
-  return state.setIn(['domain', 'pages', pageId, 'meta', 'loadState'], loadState);
+  return state.setIn(['domain', 'pages', pageId, 'transient', 'loadState'], loadState);
 }
 
 function setPageTitle(state, { payload: { pageId, title } }) {
-  return state.setIn(['domain', 'pages', pageId, 'meta', 'title'], title);
+  return state.setIn(['domain', 'pages', pageId, 'transient', 'title'], title);
 }
 
 function setPageFavicons(state, { payload: { pageId, favicons } }) {
-  return state.setIn(['domain', 'pages', pageId, 'meta', 'favicons'], Immutable.List(favicons));
+  return state.setIn(['domain', 'pages', pageId, 'transient', 'favicons'], Immutable.List(favicons));
 }
 
 function setPageBookmarked(state, { payload: { pageId } }) {
-  return state.setIn(['domain', 'pages', pageId, 'meta', 'bookmarked'], true);
+  return state.setIn(['domain', 'pages', pageId, 'transient', 'bookmarked'], true);
 }
 
 function setPageUnbookmarked(state, { payload: { pageId } }) {
-  return state.setIn(['domain', 'pages', pageId, 'meta', 'bookmarked'], false);
+  return state.setIn(['domain', 'pages', pageId, 'transient', 'bookmarked'], false);
 }
 
 export default handleActions({

@@ -13,10 +13,11 @@ specific language governing permissions and limitations under the License.
 import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
+import * as Endpoints from '../constants/endpoints';
 import WebContentsActions from '../actions/webcontents-actions';
 import ProfileActions from '../actions/profile-actions';
 import PagesModelActions from '../actions/pages-model-actions';
-import DomainPageMetaModel from '../model/domain-page-meta-model';
+import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 
 function* onPageDidMount({ payload: { pageId } }) {
@@ -27,17 +28,22 @@ function* onPageDidMount({ payload: { pageId } }) {
 function* onPageDidStartLoading({ payload: { pageId } }) {
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.LOADING,
+    loadState: DomainPageTransientModel.LOAD_STATES.LOADING,
   }));
 }
 
 function* onPageDidStopLoading({ payload: { pageId } }) {
   yield put(PagesModelActions.setPageLoadState({
     pageId,
-    loadState: DomainPageMetaModel.LOAD_STATES.LOADED,
+    loadState: DomainPageTransientModel.LOAD_STATES.LOADED,
   }));
 
-  // Show the tab loaded flash.
+  const url = yield select(DomainPagesSelectors.getPageUrl, pageId);
+  if (url === Endpoints.BLANK_PAGE) {
+    return;
+  }
+
+  // Show the tab loaded flash, but not on about:blank pages.
   yield put(PagesModelActions.tabbar.startTabLoadedAnimation({ pageId }));
   yield call(delay, 400);
 
@@ -85,7 +91,7 @@ function* onPageDidNavigate({ payload: { pageId, url } }) {
   }));
   yield put(PagesModelActions.navbar.setLocationInputBarValue({
     pageId,
-    value: url,
+    value: url === Endpoints.BLANK_PAGE ? '' : url,
   }));
 }
 

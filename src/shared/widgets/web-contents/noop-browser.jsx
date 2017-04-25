@@ -10,22 +10,24 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-export function getSearchURL(query) {
-  return `https://www.duckduckgo.com/?q=${encodeURIComponent(query)}`;
-}
+import React from 'react';
 
-export function fixURL(typed) {
-  if (typed.trim().startsWith('about:')) {
-    return typed;
+import BrowserComponentAPI from './browser-component-api';
+
+export default class NoopBrowser extends BrowserComponentAPI {
+  constructor(...args) {
+    super(...args);
   }
 
-  if (typed.includes('://') || typed.trim().startsWith('data:')) {
-    return typed;
+  navigateTo = (url) => {
+    this.props.onDidStartLoading();
+    this.props.onDidNavigate({ url });
+    this.props.onPageDomReady();
+    this.props.onDidSucceedLoad();
+    this.props.onDidStopLoading();
   }
 
-  if (!typed.includes(' ') && typed.includes('.')) {
-    return `http://${typed}`;
+  render() {
+    return <div className={this.props.className} />;
   }
-
-  return getSearchURL(typed);
 }

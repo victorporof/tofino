@@ -10,11 +10,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-import WebContents from '.';
+import BrowserComponentAPI from './browser-component-api';
 
-export default class WebView extends PureComponent {
+export default class WebView extends BrowserComponentAPI {
   constructor(...args) {
     super(...args);
   }
@@ -33,7 +33,7 @@ export default class WebView extends PureComponent {
       this.props.onDidFailLoad();
     });
     this._webview.addEventListener('dom-ready', () => {
-      this.props.onPageDomReady({ url: this._webview.getURL() });
+      this.props.onPageDomReady();
     });
     this._webview.addEventListener('page-title-set', (e) => {
       this.props.onPageTitleSet({ title: e.title });
@@ -60,6 +60,15 @@ export default class WebView extends PureComponent {
     this._webview.setAttribute('src', url);
   }
 
+  canGoBack = () =>
+    this._webview.canGoBack();
+
+  canGoForward = () =>
+    this._webview.canGoForward();
+
+  canReload = () =>
+    true
+
   goBack = () => {
     this._webview.goBack();
   }
@@ -82,6 +91,3 @@ export default class WebView extends PureComponent {
     );
   }
 }
-
-WebView.propTypes = WebContents.implPropTypes;
-WebView.defaultProps = WebContents.defaultProps;

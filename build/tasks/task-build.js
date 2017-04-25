@@ -11,7 +11,7 @@ import * as BuildInfo from '../../src/shared/build-info';
 gulp.task('build:write-build-type', () =>
   file(BuildInfo.BUILD_TYPE_FILENAME, '"local"', { src: true })
     .pipe(debug({ title: 'Creating' }))
-    .pipe(gulp.dest(Paths.BUILD_TARGET_DIR)));
+    .pipe(gulp.dest(Paths.RESOURCES_DIR)));
 
 gulp.task('build', gulp.series(
   'build:write-build-type',

@@ -27,17 +27,17 @@ import Manifest from '../../package.json';
 gulp.task('package:write-build-type', () =>
   file(BuildInfo.BUILD_TYPE_FILENAME, '"packaged"', { src: true })
     .pipe(debug({ title: 'Creating' }))
-    .pipe(gulp.dest(Paths.BUILD_TARGET_DIR)));
+    .pipe(gulp.dest(Paths.RESOURCES_DIR)));
 
 gulp.task('package:write-manifest', () => {
-  const dst = path.join(Paths.BUILD_TARGET_DIR, 'package.json');
+  const dst = path.join(Paths.RESOURCES_DIR, 'package.json');
   const config = pick(Manifest, ['name', 'version', 'dependencies']);
-  config.main = path.relative(Paths.BUILD_TARGET_DIR, Paths.ELECTRON_RUNNER_DST_MAIN);
+  config.main = path.relative(Paths.RESOURCES_DIR, Paths.ELECTRON_RUNNER_DST_MAIN);
   return fs.writeJson(dst, config);
 });
 
 gulp.task('package:install-modules', () => {
-  const cwd = Paths.BUILD_TARGET_DIR;
+  const cwd = Paths.RESOURCES_DIR;
   const npm = process.platform === 'win32'
     ? 'npm.cmd'
     : 'npm';
@@ -46,14 +46,14 @@ gulp.task('package:install-modules', () => {
 
 gulp.task('package:copy-node', () => {
   const src = process.execPath;
-  const dst = path.join(Paths.BUILD_TARGET_DIR, path.basename(src));
+  const dst = path.join(Paths.RESOURCES_DIR, path.basename(src));
   return fs.copy(src, dst);
 });
 
 gulp.task('package:bundle-electron-app', (cb) => {
   packager({
     platform: yargs.argv.platform || process.platform,
-    dir: Paths.BUILD_TARGET_DIR,
+    dir: Paths.RESOURCES_DIR,
     out: path.join(Paths.DIST_DIR, 'binaries'),
     overwrite: true,
   }, cb);

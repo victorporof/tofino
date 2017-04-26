@@ -19,7 +19,7 @@ import RunnerConnectionsModelActions from '../actions/runner-connections-model-a
 import * as RunnerConnectionsSelectors from '../selectors/runner-connections-selectors';
 
 async function onConnectionClosed(store, conn) {
-  logger.log(colors.green(`WebSocket connection to browser runner closed: ${conn.id}.`));
+  logger.log(colors.success(`WebSocket connection to browser runner closed: ${conn.id}.`));
   store.dispatch(RunnerConnectionsModelActions.removeRunnerConnection({ runnerConnId: conn.id }));
 
   const count = RunnerConnectionsSelectors.getAllRunnerConnections(store.getState()).count();
@@ -27,7 +27,7 @@ async function onConnectionClosed(store, conn) {
     return;
   }
 
-  logger.log(colors.green('No more clients connected, goodbye.'));
+  logger.log(colors.success('No more clients connected, goodbye.'));
   process.exit();
 }
 
@@ -35,7 +35,7 @@ async function onConnectionEstablished(wss, ws, store) {
   const conn = new Connection({ server: wss, pipe: ws, store, logger });
   await conn.listen();
 
-  logger.log(colors.green(`WebSocket connection to browser runner established: ${conn.id}.`));
+  logger.log(colors.success(`WebSocket connection to browser runner established: ${conn.id}.`));
   ws.on('disconnect', () => onConnectionClosed(store, conn));
 }
 

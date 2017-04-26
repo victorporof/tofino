@@ -32,7 +32,7 @@ async function start() {
       platform: 'dummy',
     },
   }));
-  logger.log(colors.green('Browser runner (dummy) ready.'));
+  logger.log(colors.success('Browser runner (dummy) ready.'));
 }
 
 start();

@@ -14,11 +14,14 @@ import { takeEvery, call, cps } from 'redux-saga/effects';
 import electron from 'electron';
 import localshortcut from 'electron-localshortcut';
 
+import logger from '../../logger';
 import SharedActions from '../../../shared/actions/shared-actions';
 
 const BROWSER_WINDOWS = new Map();
 
 function* createWindow({ meta: client, payload: { winId, url, width, height, style } }) {
+  logger.log(`Chrome frontend hosted at ${url}`);
+
   const win = new electron.BrowserWindow({
     width,
     height,

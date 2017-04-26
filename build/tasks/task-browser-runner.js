@@ -14,7 +14,7 @@ import * as Paths from '../../src/shared/paths';
 gulp.task('browser-runner:babel', () =>
   gulp.src(`${Paths.BROWSER_RUNNER_SRC}/**/*.@(js|jsx)`)
     .pipe(changed(Paths.BROWSER_RUNNER_DST, { extension: '.js' }))
-    .pipe(debug({ title: `Running ${colors.cyan('babel')}` }))
+    .pipe(debug({ title: `Running ${colors.command('babel')}` }))
     .pipe(sourcemaps.init())
     .pipe(babel(fs.readJsonSync('.babelrc')))
     .pipe(sourcemaps.write())
@@ -23,7 +23,7 @@ gulp.task('browser-runner:babel', () =>
 gulp.task('qbrt-runner:copy-shell', () =>
   gulp.src(`${Paths.QBRT_RUNNER_SHELL_SRC}/**/*`)
     .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST))
-    .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
+    .pipe(debug({ title: `Running ${colors.command('cp')}` }))
     .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST)));
 
 gulp.task('browser-runner:build', gulp.series(

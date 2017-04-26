@@ -43,6 +43,6 @@ setupBrowserFrontendWsNamespace({ pathname: Endpoints.BROWSER_FRONTEND_WS_ROUTE,
 
 server.listen(Endpoints.PORT, Endpoints.HOSTNAME, () => {
   logger.log(
-    colors.green('Browser server ready'),
-    colors.gray(`hosting at ${Endpoints.HOSTNAME}, listening on port ${Endpoints.PORT}.`));
+    colors.success('Browser server ready'),
+    colors.normal(`hosting at ${Endpoints.HOSTNAME}, listening on port ${Endpoints.PORT}.`));
 });

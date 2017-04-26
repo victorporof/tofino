@@ -18,7 +18,7 @@ import FrontendConnection from '../frontend-connection';
 import FrontendConnectionsModelActions from '../actions/frontend-connections-model-actions';
 
 async function onConnectionClosed(store, conn) {
-  logger.log(colors.green(`WebSocket connection to browser frontend closed: ${conn.id}.`));
+  logger.log(colors.success(`WebSocket connection to browser frontend closed: ${conn.id}.`));
   store.dispatch(FrontendConnectionsModelActions.removeFrontendConnection({ frontendConnId: conn.id }));
 }
 
@@ -26,7 +26,7 @@ async function onConnectionEstablished(wss, ws, store) {
   const conn = new FrontendConnection({ server: wss, pipe: ws, store, logger });
   await conn.listen();
 
-  logger.log(colors.green(`WebSocket connection to browser frontend established: ${conn.id}.`));
+  logger.log(colors.success(`WebSocket connection to browser frontend established: ${conn.id}.`));
   ws.on('disconnect', () => onConnectionClosed(store, conn));
 }
 

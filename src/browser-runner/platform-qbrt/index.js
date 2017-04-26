@@ -32,7 +32,7 @@ async function start() {
       platform: 'qbrt',
     },
   }));
-  logger.log(colors.green('Browser runner (qbrt) ready.'));
+  logger.log(colors.success('Browser runner (qbrt) ready.'));
 }
 
 start();

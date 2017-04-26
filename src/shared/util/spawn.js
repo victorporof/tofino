@@ -17,16 +17,31 @@ import { IS_PACKAGED_BUILD } from '../build-info';
 
 export const spawn = (command, main, args, { logger }, options = {}) => new Promise((resolve, reject) => {
   logger.log('Spawning',
-    colors.cyan(command),
-    colors.blue(main),
-    colors.yellow(args.join(' ')));
+    colors.command(command),
+    colors.path(main),
+    colors.arg(args.join(' ')));
+
+  if (options.cwd) {
+    logger.log(`Running in ${colors.command('cwd')} ${colors.path(options.cwd)}`);
+  }
 
   const stdio = process.platform === 'win32' && IS_PACKAGED_BUILD
     ? 'ignore'
     : 'inherit';
+
   const child = cp.spawn(command, [main, ...args], { stdio, ...options });
-  child.on('error', reject);
-  child.on('exit', resolve);
+
+  child.on('error', (err) => {
+    logger.error(err);
+    reject(err);
+  });
+
+  child.on('exit', (code) => {
+    logger.log(
+      `Process ${colors.command(command)} ${colors.path(main)}`,
+      `exited with code ${colors.arg(code)}`);
+    resolve();
+  });
 
   return child;
 });

@@ -26,7 +26,7 @@ gulp.task('eslint', () => {
     ...ignoreGlobs.trim().split('\n').map(i => `!${i}`),
   ];
   return gulp.src(glob)
-    .pipe(debug({ title: `Running ${colors.cyan(`eslint${yargs.argv.fix ? ' --fix' : ''}`)}:` }))
+    .pipe(debug({ title: `Running ${colors.command(`eslint${yargs.argv.fix ? colors.arg(' --fix') : ''}`)}:` }))
     .pipe(eslint({ fix: yargs.argv.fix }))
     .pipe(eslint.format())
     .pipe(gulpif(f => f.eslint != null && f.eslint.fixed, gulp.dest(Paths.ROOT_DIR)))
@@ -39,7 +39,7 @@ gulp.task('stylelint', () => {
   }
   const glob = `${Paths.SRC_DIR}/**/*.css`;
   return gulp.src(glob)
-    .pipe(debug({ title: `Running ${colors.cyan('stylelint')}:` }))
+    .pipe(debug({ title: `Running ${colors.command('stylelint')}:` }))
     .pipe(stylelint({
       reporters: [{
         formatter: 'string',
@@ -51,7 +51,7 @@ gulp.task('stylelint', () => {
 gulp.task('mocha', () => {
   const glob = yargs.argv.unit || `${Paths.SRC_DIR}/**/test/**/*.@(js|jsx)`;
   return gulp.src(glob)
-    .pipe(debug({ title: `Running ${colors.cyan('mocha')}:` }))
+    .pipe(debug({ title: `Running ${colors.command('mocha')}:` }))
     .pipe(mocha({
       compilers: 'js:babel-register',
       require: 'src/test/unit/head.js',

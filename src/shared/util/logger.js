@@ -19,6 +19,23 @@ import compact from 'lodash/compact';
 
 colors.mode = 'console';
 
+colors.setTheme({
+  // Levels.
+  log: 'gray',
+  warn: ['yellow', 'bold'],
+  error: ['red', 'bold'],
+
+  // Misc.
+  normal: 'gray',
+  command: ['cyan', 'italic'],
+  path: 'blue',
+  arg: 'yellow',
+  success: 'green',
+  received: 'cyan',
+  sent: 'blue',
+  duration: 'magenta',
+});
+
 export default class Logger {
   constructor(name, writer, options = {}) {
     this._name = name;
@@ -27,21 +44,35 @@ export default class Logger {
   }
 
   log(...args) {
-    if (!this._options.always && process.env.LOGGING !== 'on') {
-      return;
-    }
-    this._write('log', df(Date.now(), '[HH:MM:ss:l]'), colors.bold(this._name), ...args);
+    this._write('log', ...args);
+  }
+
+  warn(...args) {
+    this._write('warn', ...args);
+  }
+
+  error(...args) {
+    this._write('error', ...args);
   }
 
   _write(level, ...args) {
+    if (!this._options.always && process.env.LOGGING !== 'on') {
+      return;
+    }
+
+    const messages = [
+      colors[level](df(Date.now(), '[HH:MM:ss]'), colors.bold(this._name)),
+      ...args,
+    ];
+
     if (isBrowser) {
-      const [str, styles] = unzip(args.map((arg) => {
-        const [data, style] = ansi.parse(arg);
-        return [data || arg, style];
+      const [rawStrings, cssStyles] = unzip(messages.map((formatted) => {
+        const [raw, css] = ansi.parse(formatted);
+        return [raw || formatted, css];
       }));
-      this._writer[level](str.join(' '), ...compact(styles));
+      this._writer[level](rawStrings.join(' '), ...compact(cssStyles));
     } else {
-      this._writer[level](...args);
+      this._writer[level](...messages);
     }
   }
 }

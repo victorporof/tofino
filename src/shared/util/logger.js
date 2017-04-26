@@ -19,6 +19,23 @@ import compact from 'lodash/compact';
 
 colors.mode = 'console';
 
+colors.setTheme({
+  // Levels.
+  log: 'gray',
+  warn: ['yellow', 'bold'],
+  error: ['red', 'bold'],
+
+  // Misc.
+  normal: 'gray',
+  command: ['cyan', 'italic'],
+  path: 'blue',
+  arg: 'yellow',
+  success: 'green',
+  received: 'cyan',
+  sent: 'blue',
+  duration: 'magenta',
+});
+
 export default class Logger {
   constructor(name, writer, options = {}) {
     this._name = name;
@@ -44,8 +61,7 @@ export default class Logger {
     }
 
     const messages = [
-      colors.reset(df(Date.now(), '[HH:MM:ss:l]')),
-      colors.bold(this._name),
+      colors[level](df(Date.now(), '[HH:MM:ss]'), colors.bold(this._name)),
       ...args,
     ];
 

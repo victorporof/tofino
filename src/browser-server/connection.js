@@ -27,7 +27,7 @@ export default class Connection {
   listen() {
     this._pipe.on('message', (msg) => {
       const { type, payload } = JSON.parse(msg);
-      this._logger.log(colors.green('⇠'), colors.cyan(msg));
+      this._logger.log(colors.success('⇠'), colors.received(msg));
       this._store.dispatch(createAction(type, () => payload, () => this)());
     });
   }
@@ -35,7 +35,7 @@ export default class Connection {
   send(msg) {
     const str = JSON.stringify(msg);
     this._pipe.emit('message', str);
-    this._logger.log(colors.green('⇢'), colors.blue(str));
+    this._logger.log(colors.success('⇢'), colors.sent(str));
   }
 
   get id() {

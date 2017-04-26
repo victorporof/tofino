@@ -32,7 +32,7 @@ export default class Client {
     const pipe = await this._connected;
     pipe.on('message', (msg) => {
       const { type, payload } = JSON.parse(msg);
-      this._logger.log(colors.green('⇠'), colors.cyan(msg));
+      this._logger.log(colors.success('⇠'), colors.received(msg));
       this._store.dispatch(createAction(type, () => payload, () => this)());
     });
   }
@@ -41,6 +41,6 @@ export default class Client {
     const str = JSON.stringify(msg);
     const pipe = await this._connected;
     pipe.emit('message', str);
-    this._logger.log(colors.green('⇢'), colors.blue(str));
+    this._logger.log(colors.success('⇢'), colors.sent(str));
   }
 }

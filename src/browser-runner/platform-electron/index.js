@@ -34,7 +34,6 @@ if (IS_PACKAGED_BUILD) {
 }
 
 app.on('ready', async () => {
-  logger.log(colors.green('Browser runner (electron) ready.'));
   await client.listen();
   await client.send(SharedActions.events.fromRunner.toServer.client.hello({
     clientMetaData: {
@@ -42,6 +41,7 @@ app.on('ready', async () => {
       platform: 'electron',
     },
   }));
+  logger.log(colors.success('Browser runner (electron) ready.'));
 });
 
 app.on('activate', async () => {

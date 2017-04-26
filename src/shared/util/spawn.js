@@ -17,12 +17,12 @@ import { IS_PACKAGED_BUILD } from '../build-info';
 
 export const spawn = (command, main, args, { logger }, options = {}) => new Promise((resolve, reject) => {
   logger.log('Spawning',
-    colors.cyan(command),
-    colors.blue(main),
-    colors.yellow(args.join(' ')));
+    colors.command(command),
+    colors.path(main),
+    colors.arg(args.join(' ')));
 
   if (options.cwd) {
-    logger.log('Running in cwd', colors.blue(options.cwd));
+    logger.log(`Running in ${colors.command('cwd')} ${colors.path(options.cwd)}`);
   }
 
   const stdio = process.platform === 'win32' && IS_PACKAGED_BUILD
@@ -38,8 +38,8 @@ export const spawn = (command, main, args, { logger }, options = {}) => new Prom
 
   child.on('exit', (code) => {
     logger.log(
-      `Process ${colors.cyan(command)} ${colors.blue(main)}`,
-      `exited with code ${colors.yellow(code)}`);
+      `Process ${colors.command(command)} ${colors.path(main)}`,
+      `exited with code ${colors.arg(code)}`);
     resolve();
   });
 

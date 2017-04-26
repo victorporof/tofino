@@ -14,7 +14,7 @@ import * as Paths from '../../src/shared/paths';
 gulp.task('browser-server:babel', () =>
   gulp.src(`${Paths.BROWSER_SERVER_SRC}/**/*.@(js|jsx)`)
     .pipe(changed(Paths.BROWSER_SERVER_DST, { extension: '.js' }))
-    .pipe(debug({ title: `Running ${colors.cyan('babel')}` }))
+    .pipe(debug({ title: `Running ${colors.command('babel')}` }))
     .pipe(sourcemaps.init())
     .pipe(babel(fs.readJsonSync('.babelrc')))
     .pipe(sourcemaps.write())

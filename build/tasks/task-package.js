@@ -65,7 +65,7 @@ gulp.task('package:zip', async () => {
   const getArchiveName = bundleBasename => `${bundleBasename}-${df(Date.now(), 'yymmdd')}-${git.short()}.zip`;
 
   return Promise.all((await globby(src)).map((folder) => {
-    logger.log(colors.cyan('Zipping'), colors.blue(folder));
+    logger.log(`Running ${colors.command('zip')} ${colors.path(folder)}`);
 
     return streamToPromise(
       gulp.src(`${folder}/**/*`)

@@ -25,18 +25,19 @@ let gWebpackDevServer;
 gulp.task('browser-frontend:copy-html', () =>
   gulp.src(`${Paths.BROWSER_FRONTEND_SRC}/**/*.html`)
     .pipe(changed(Paths.BROWSER_FRONTEND_DST))
-    .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
+    .pipe(debug({ title: `Running ${colors.command('cp')}` }))
     .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST)));
 
 gulp.task('browser-frontend:copy-gifs', () =>
   gulp.src(`${Paths.BROWSER_FRONTEND_SRC}/**/*.gif`)
     .pipe(changed(Paths.BROWSER_FRONTEND_DST))
-    .pipe(debug({ title: `Running ${colors.cyan('cp')}` }))
+    .pipe(debug({ title: `Running ${colors.command('cp')}` }))
     .pipe(gulp.dest(Paths.BROWSER_FRONTEND_DST)));
 
 gulp.task('browser-frontend:copy-to-qbrt-shell', () =>
   gulp.src(`${Paths.BROWSER_FRONTEND_DST}/**/*`)
     .pipe(changed(Paths.QBRT_RUNNER_SHELL_DST))
+    .pipe(debug({ title: `Running ${colors.command('cp')}` }))
     .pipe(gulp.dest(Paths.QBRT_RUNNER_SHELL_DST)));
 
 gulp.task('browser-frontend:webpack', () => new Promise((resolve, reject) => {

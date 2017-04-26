@@ -31,7 +31,7 @@ describe('mentat', () => {
     const input = `[:find ?e
                 :where
                 [?e :movie/title "Die Hard" _]]`;
-    const result = MentatConnection.query(input);
-    expect(result.resultsLength).toEqual(1);
+    const response = MentatConnection.query(input);
+    expect(response.results.length).toEqual(1);
   });
 });

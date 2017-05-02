@@ -38,6 +38,34 @@ function* handleAccelT() {
   yield put(PagesModelActions.addPage());
 }
 
+function* handleCtrlTab() {
+  const selectedPageId = yield select(UIPagesSelectors.getSelectedPageId);
+  const pages = yield select(UIPagesSelectors.getPageIdsInDisplayOrder);
+  const pageIndex = pages.findIndex(id => id === selectedPageId);
+  let newIndex = pageIndex + 1;
+  if (newIndex >= pages.count()) {
+    newIndex = 0;
+  }
+  if (pageIndex === newIndex) {
+    return;
+  }
+  yield put(PagesModelActions.setSelectedPage({ pageId: pages.get(newIndex) }));
+}
+
+function* handleCtrlShiftTab() {
+  const selectedPageId = yield select(UIPagesSelectors.getSelectedPageId);
+  const pages = yield select(UIPagesSelectors.getPageIdsInDisplayOrder);
+  const pageIndex = pages.findIndex(id => id === selectedPageId);
+  let newIndex = pageIndex - 1;
+  if (newIndex < 0) {
+    newIndex = pages.count() - 1;
+  }
+  if (pageIndex === newIndex) {
+    return;
+  }
+  yield put(PagesModelActions.setSelectedPage({ pageId: pages.get(newIndex) }));
+}
+
 function* handleCatGifsEasterEgg() {
   const url = 'http://chilloutandwatchsomecatgifs.com/';
   yield put(PagesModelActions.addPage({ url }));
@@ -48,6 +76,8 @@ export default function* () {
     takeEvery(KeyboardShortcutsActions.pressedAccelQ, handleAccelQ),
     takeEvery(KeyboardShortcutsActions.pressedAccelW, handleAccelW),
     takeEvery(KeyboardShortcutsActions.pressedAccelT, handleAccelT),
+    takeEvery(KeyboardShortcutsActions.pressedCtrlTab, handleCtrlTab),
+    takeEvery(KeyboardShortcutsActions.pressedCtrlShiftTab, handleCtrlShiftTab),
     takeEvery(KeyboardShortcutsActions.pressedCatGifsEasterEgg, handleCatGifsEasterEgg),
   ];
 }

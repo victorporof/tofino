@@ -57,6 +57,14 @@ export default class Window extends PureComponent {
       e.preventDefault();
       this.props.dispatch(KeyboardShortcutsActions.pressedAccelT());
     });
+    this.mousetrap.bind('ctrl+tab', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedCtrlTab());
+    });
+    this.mousetrap.bind('ctrl+shift+tab', (e) => {
+      e.preventDefault();
+      this.props.dispatch(KeyboardShortcutsActions.pressedCtrlShiftTab());
+    });
     this.mousetrap.bind('up up down down left right left right b a', (e) => {
       e.preventDefault();
       this.props.dispatch(KeyboardShortcutsActions.pressedCatGifsEasterEgg());

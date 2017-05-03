@@ -39,31 +39,17 @@ function* handleAccelT() {
 }
 
 function* handleCtrlTab() {
-  const selectedPageId = yield select(UIPagesSelectors.getSelectedPageId);
-  const pages = yield select(UIPagesSelectors.getPageIdsInDisplayOrder);
-  const pageIndex = pages.findIndex(id => id === selectedPageId);
-  let newIndex = pageIndex + 1;
-  if (newIndex >= pages.count()) {
-    newIndex = 0;
+  const pageId = yield select(UIPagesSelectors.getNextSelectedPage);
+  if (pageId) {
+    yield put(PagesModelActions.setSelectedPage({ pageId }));
   }
-  if (pageIndex === newIndex) {
-    return;
-  }
-  yield put(PagesModelActions.setSelectedPage({ pageId: pages.get(newIndex) }));
 }
 
 function* handleCtrlShiftTab() {
-  const selectedPageId = yield select(UIPagesSelectors.getSelectedPageId);
-  const pages = yield select(UIPagesSelectors.getPageIdsInDisplayOrder);
-  const pageIndex = pages.findIndex(id => id === selectedPageId);
-  let newIndex = pageIndex - 1;
-  if (newIndex < 0) {
-    newIndex = pages.count() - 1;
+  const pageId = yield select(UIPagesSelectors.getPreviousSelectedPage);
+  if (pageId) {
+    yield put(PagesModelActions.setSelectedPage({ pageId }));
   }
-  if (pageIndex === newIndex) {
-    return;
-  }
-  yield put(PagesModelActions.setSelectedPage({ pageId: pages.get(newIndex) }));
 }
 
 function* handleCatGifsEasterEgg() {

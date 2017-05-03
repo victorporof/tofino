@@ -16,6 +16,7 @@ specific language governing permissions and limitations under the License.
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
   align-items: center;
+  border-top: var(--theme-tab-inactive-border-top);
   margin-top: auto;
   background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, var(--theme-tab-active-background) 50%);
   background-position: var(--theme-tab-inactive-background-position);
@@ -24,9 +25,11 @@ specific language governing permissions and limitations under the License.
   box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
   color: var(--theme-tab-inactive-color);
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
+  cursor: default;
   transition:
     width 0.05s var(--animation-curve),
     height 0.2s var(--animation-curve),
+    border-top 0.2s var(--animation-curve),
     background-position 0.2s var(--animation-curve);
   user-select: none;
 }
@@ -37,6 +40,7 @@ specific language governing permissions and limitations under the License.
 }
 
 .tab.selected {
+  border-top: var(--theme-tab-active-border-top);
   background-position: var(--theme-tab-active-background-position);
   box-shadow: none; /* stylelint-disable-line sh-waqar/declaration-use-variable */
   color: var(--theme-tab-active-color);

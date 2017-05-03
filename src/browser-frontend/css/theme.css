@@ -44,18 +44,25 @@
 
   --theme-window-background: #2a2e4e;
   --theme-window-color: #fff;
+  --theme-window-border: 1px solid #0a75d3;
 
   /* Window Management Controls */
 
+  --theme-window-controls-background-position: center center;
+  --theme-window-controls-background-repeat: no-repeat;
   --theme-window-controls-background-size: 16px 16px;
+  --theme-window-controls-hover: hsla(240, 9%, 98%, 0.1);
+  --theme-window-controls-active: hsla(240, 9%, 98%, 0.2);
+  --theme-window-controls-close-hover: #ff0039;
+  --theme-window-controls-close-active: #d70022;
   --theme-window-controls-close: url('../assets/window-controls/glyph-window-close.svg');
   --theme-window-controls-minimize: url('../assets/window-controls/glyph-window-minimize.svg');
   --theme-window-controls-maximize: url('../assets/window-controls/glyph-window-maximize.svg');
 
   /* Tabbar */
 
-  --theme-tabbar-height: 40px;
-  --theme-tabbar-top-padding: 10px;
+  --theme-tabbar-height: 32px;
+  --theme-tabbar-top-padding: 0;
   --theme-tabbar-background: transparent;
   --theme-new-tab-button-image: url('../assets/New - 16.svg');
   --theme-new-tab-button-background: transparent;
@@ -77,9 +84,11 @@
   --theme-tab-hover-color: #fff;
   --theme-tab-active-background: #f0f0f2;
   --theme-tab-active-color: #000;
+  --theme-tab-active-border-top: 2px solid #0a8dff;
   --theme-tab-active-background-position: 0 100%;
   --theme-tab-inactive-background: transparent;
   --theme-tab-inactive-color: #fff;
+  --theme-tab-inactive-border-top: 2px solid transparent;
   --theme-tab-inactive-background-position: 0 0;
   --theme-tab-separator-color: rgba(255, 255, 255, 0.2);
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
@@ -94,6 +103,8 @@
   --theme-navbar-button-disabled-opacity: 0.2;
   --theme-navbar-button-enabled-opacity: 0.8;
   --theme-navbar-button-enabled-hover-opacity: 1;
+  --theme-navbar-button-border-radius: 2px;
+  --theme-navbar-button-hover-background: hsla(240, 5%, 5%, 0.1);
 
   /* Navbar: Navigation Buttons */
 

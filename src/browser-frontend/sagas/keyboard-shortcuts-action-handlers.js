@@ -38,6 +38,20 @@ function* handleAccelT() {
   yield put(PagesModelActions.addPage());
 }
 
+function* handleCtrlTab() {
+  const pageId = yield select(UIPagesSelectors.getNextSelectedPage);
+  if (pageId) {
+    yield put(PagesModelActions.setSelectedPage({ pageId }));
+  }
+}
+
+function* handleCtrlShiftTab() {
+  const pageId = yield select(UIPagesSelectors.getPreviousSelectedPage);
+  if (pageId) {
+    yield put(PagesModelActions.setSelectedPage({ pageId }));
+  }
+}
+
 function* handleCatGifsEasterEgg() {
   const url = 'http://chilloutandwatchsomecatgifs.com/';
   yield put(PagesModelActions.addPage({ url }));
@@ -48,6 +62,8 @@ export default function* () {
     takeEvery(KeyboardShortcutsActions.pressedAccelQ, handleAccelQ),
     takeEvery(KeyboardShortcutsActions.pressedAccelW, handleAccelW),
     takeEvery(KeyboardShortcutsActions.pressedAccelT, handleAccelT),
+    takeEvery(KeyboardShortcutsActions.pressedCtrlTab, handleCtrlTab),
+    takeEvery(KeyboardShortcutsActions.pressedCtrlShiftTab, handleCtrlShiftTab),
     takeEvery(KeyboardShortcutsActions.pressedCatGifsEasterEgg, handleCatGifsEasterEgg),
   ];
 }

@@ -17,5 +17,7 @@ export default createActions({
   PRESSED_ACCEL_Q: identity,
   PRESSED_ACCEL_W: identity,
   PRESSED_ACCEL_T: identity,
+  PRESSED_CTRL_TAB: identity,
+  PRESSED_CTRL_SHIFT_TAB: identity,
   PRESSED_CAT_GIFS_EASTER_EGG: identity,
 });

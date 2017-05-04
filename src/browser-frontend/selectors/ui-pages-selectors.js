@@ -31,6 +31,43 @@ export function getPageIdsInDisplayOrder(state) {
   return getPagesUI(state).get('displayOrder');
 }
 
+export function getPageIdAtIndex(state, index) {
+  const pageIds = getPageIdsInDisplayOrder(state);
+  return pageIds.get(index);
+}
+
+export function getSelectedPageIndex(state) {
+  const selectedPageId = getSelectedPageId(state);
+  const pageIds = getPageIdsInDisplayOrder(state);
+  return pageIds.findIndex(id => id === selectedPageId);
+}
+
+export function getNextSelectedPage(state) {
+  const pageIndex = getSelectedPageIndex(state);
+  const pageIds = getPageIdsInDisplayOrder(state);
+  let newIndex = pageIndex + 1;
+  if (newIndex >= pageIds.count()) {
+    newIndex = 0;
+  }
+  if (pageIndex === newIndex) {
+    return null;
+  }
+  return getPageIdAtIndex(state, newIndex);
+}
+
+export function getPreviousSelectedPage(state) {
+  const pageIndex = getSelectedPageIndex(state);
+  const pageIds = getPageIdsInDisplayOrder(state);
+  let newIndex = pageIndex - 1;
+  if (newIndex < 0) {
+    newIndex = pageIds.count() - 1;
+  }
+  if (pageIndex === newIndex) {
+    return null;
+  }
+  return getPageIdAtIndex(state, newIndex);
+}
+
 // UI page properties getters.
 
 export function getPageVisuals(state, pageId) {

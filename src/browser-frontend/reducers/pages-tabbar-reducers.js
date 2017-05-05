@@ -48,6 +48,10 @@ function moveTabTo(state, {payload: { pageId, newPosition, oldPosition } }) { //
   });
 }
 
+function setDraggingTab(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'draggingTabId'], pageId);
+}
+
 export default handleActions({
   [PagesModelActions.tabbar.setTabState]: setTabState,
   [PagesModelActions.tabbar.preventAllTabAnimations]: preventAllTabAnimations,
@@ -55,4 +59,5 @@ export default handleActions({
   [PagesModelActions.tabbar.startTabLoadedAnimation]: startTabLoadedAnimation,
   [PagesModelActions.tabbar.stopTabLoadedAnimation]: stopTabLoadedAnimation,
   [PagesModelActions.tabbar.moveTabTo]: moveTabTo,
+  [PagesModelActions.tabbar.setDraggingTab]: setDraggingTab,
 }, new Model());

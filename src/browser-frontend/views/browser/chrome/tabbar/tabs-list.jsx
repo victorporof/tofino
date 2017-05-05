@@ -22,6 +22,7 @@ import Styles from './tabs-list.css';
 import Tab from './tab';
 
 @connect(state => ({
+  draggingTabId: UIPagesSelectors.getDraggingTabId(state),
   pageIds: UIPagesSelectors.getPageIdsInDisplayOrder(state),
 }))
 @CSSModules(Styles, {
@@ -36,7 +37,7 @@ export default class TabsList extends PureComponent {
   findDragPosition = (event) => {
     let i = 0;
     let tabList = document.querySelectorAll('a[tabIndex]'); //Do not use tab index, they all eq 0. just to get all the tabs
-    while (i <= tabList.length - 1) {
+    while (i < tabList.length) {
       let tab = tabList[i]
       if ((tab.offsetLeft + (tab.offsetWidth / 2)) >= event.clientX) {
         return i // tab position in tab list
@@ -47,17 +48,25 @@ export default class TabsList extends PureComponent {
 
   dragOver = (event) => {
     event.preventDefault();
-    console.log(this.findDragPosition(event))
+
+    let pageId = this.props.draggingTabId;
+    let oldPosition = this.props.pageIds.indexOf(pageId);
+    let newPosition = this.findDragPosition(event);
+
+    if (oldPosition !== newPosition) {
+      this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, oldPosition}));
+    };
   }
 
   drop = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    let  pageId = event.dataTransfer.getData('pageId');
+    let pageId = this.props.draggingTabId;
     let oldPosition = this.props.pageIds.indexOf(pageId);
     let newPosition = this.findDragPosition(event);
     this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, oldPosition}));
+    this.props.dispatch(PagesModelActions.tabbar.setDraggingTab({ pageId: '' }))
   }
 
   render() {
@@ -79,5 +88,6 @@ export default class TabsList extends PureComponent {
 
 TabsList.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  draggingTabId: PropTypes.string.isRequired,
   pageIds: SharedPropTypes.PageIds.isRequired,
 };

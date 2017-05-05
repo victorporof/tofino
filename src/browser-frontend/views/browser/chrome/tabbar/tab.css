@@ -111,3 +111,7 @@ specific language governing permissions and limitations under the License.
 .tab.selected.tab-loaded {
   background-position: var(--theme-tab-active-background-position);
 }
+
+.tab.dragging {
+  /*opacity: 0;*/
+}

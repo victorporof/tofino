@@ -24,6 +24,7 @@ import TabContents from './tab/tab-contents';
 import PreloadImage from '../../../../../shared/widgets/preload-image';
 
 @connect((state, ownProps) => ({
+  dragging: UIPagesSelectors.getDraggingTabId(state) === ownProps.pageId,
   selected: UIPagesSelectors.getSelectedPageId(state) === ownProps.pageId,
   tooltipText: UIPagesSelectors.getComputedPageTooltipText(state, ownProps.pageId),
   tabState: UIPagesSelectors.getPageTabState(state, ownProps.pageId),
@@ -48,10 +49,11 @@ export default class Tab extends PureComponent {
   }
 
   drag = (e) => {
-    e.dataTransfer.setData("pageId", this.props.pageId);
+    this.props.dispatch(PagesModelActions.tabbar.setDraggingTab({ pageId: this.props.pageId }))
   }
 
   render() {
+    const dragging = this.props.dragging ? 'dragging' : '';
     const activeTabLoadAnimation =
       `url('assets/wipe-blue.gif?${this.props.pageId}-${this.props.tabLoadAnimationPlayCount}')`;
     const inactiveTabLoadAnimation =
@@ -64,7 +66,8 @@ export default class Tab extends PureComponent {
           ${this.props.tabState !== 'open' ? this.props.tabState : ''} \
           ${this.props.tabOwner ? 'has-owner' : ''} \
           ${this.props.tabAnimationsDisabled ? 'noanimate' : ''} \
-          ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''}`
+          ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''} \
+          ${dragging}`
         }
         title={this.props.tooltipText}
         onClick={this.handleClick}
@@ -90,6 +93,7 @@ export default class Tab extends PureComponent {
 
 Tab.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  dragging: PropTypes.bool.isRequired,
   pageId: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
   tooltipText: PropTypes.string.isRequired,

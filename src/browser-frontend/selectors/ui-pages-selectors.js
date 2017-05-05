@@ -27,6 +27,10 @@ export function getSelectedPageId(state) {
   return getPagesUI(state).get('selectedId');
 }
 
+export function getDraggingTabId(state) {
+  return getPagesUI(state).get('draggingTabId');
+}
+
 export function getPageIdsInDisplayOrder(state) {
   return getPagesUI(state).get('displayOrder');
 }

@@ -13,10 +13,12 @@ specific language governing permissions and limitations under the License.
 import Immutable from 'immutable';
 
 const NO_SELECTED_PAGE = '';
+const NO_DRAGGING_TAB = '';
 
 const UIPagesModel = Immutable.Record({
   selectedId: NO_SELECTED_PAGE,
   displayOrder: Immutable.List(),
+  draggingTabId: NO_DRAGGING_TAB,
   visuals: Immutable.OrderedMap(),
 });
 

@@ -47,6 +47,10 @@ export default class Tab extends PureComponent {
     this.props.dispatch(PagesModelActions.setSelectedPage({ pageId: this.props.pageId }));
   }
 
+  drag = (e) => {
+    e.dataTransfer.setData("pageId", this.props.pageId);
+  }
+
   render() {
     const activeTabLoadAnimation =
       `url('assets/wipe-blue.gif?${this.props.pageId}-${this.props.tabLoadAnimationPlayCount}')`;
@@ -73,6 +77,8 @@ export default class Tab extends PureComponent {
             }),
           } : {}),
         }}
+        draggable="true"
+        onDragStart={this.drag}
       >
         <PreloadImage src={activeTabLoadAnimation} />
         <PreloadImage src={inactiveTabLoadAnimation} />

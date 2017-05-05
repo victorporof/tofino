@@ -10,12 +10,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import * as SharedPropTypes from '../../../../model/shared-prop-types';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
+import PagesModelActions from '../../../../actions/pages-model-actions';
 
 import Styles from './tabs-list.css';
 import Tab from './tab';
@@ -27,9 +28,44 @@ import Tab from './tab';
   allowMultiple: true,
 })
 export default class TabsList extends PureComponent {
+
+  dragEnter = (event) => {
+
+  }
+
+  findDragPosition = (event) => {
+    let i = 0;
+    let tabList = document.querySelectorAll('a[tabIndex]'); //Do not use tab index, they all eq 0. just to get all the tabs
+    while (i <= tabList.length - 1) {
+      let tab = tabList[i]
+      if ((tab.offsetLeft + (tab.offsetWidth / 2)) >= event.clientX) {
+        return i // tab position in tab list
+      }
+      i++;
+    }
+  }
+
+  dragOver = (event) => {
+    event.preventDefault();
+    console.log(this.findDragPosition(event))
+  }
+
+  drop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    let  pageId = event.dataTransfer.getData('pageId');
+    let oldPosition = this.props.pageIds.indexOf(pageId);
+    let newPosition = this.findDragPosition(event);
+    this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, oldPosition}));
+  }
+
   render() {
     return (
-      <div styleName="tabs-list">
+      <div styleName="tabs-list"
+        onDragOver={this.dragOver}
+        onDragEnter={this.dragEnter}
+        onDrop={this.drop}>
         {this.props.pageIds.map(pageId => (
           <Tab
             key={pageId}
@@ -42,5 +78,6 @@ export default class TabsList extends PureComponent {
 }
 
 TabsList.WrappedComponent.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   pageIds: SharedPropTypes.PageIds.isRequired,
 };

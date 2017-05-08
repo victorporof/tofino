@@ -36,7 +36,7 @@ export default class TabsList extends PureComponent {
 
   findDragPosition = (event) => {
     let i = 0;
-    let tabList = document.querySelectorAll('a[tabIndex]'); //Do not use tab index, they all eq 0. just to get all the tabs
+    let tabList = document.querySelectorAll('a[dragging=true]'); //Do not use tab index, they all eq 0. just to get all the tabs
     while (i < tabList.length) {
       let tab = tabList[i]
       if ((tab.offsetLeft + (tab.offsetWidth / 2)) >= event.clientX) {

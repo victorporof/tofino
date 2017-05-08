@@ -53,7 +53,6 @@ export default class Tab extends PureComponent {
   }
 
   render() {
-    const dragging = this.props.dragging ? 'dragging' : '';
     const activeTabLoadAnimation =
       `url('assets/wipe-blue.gif?${this.props.pageId}-${this.props.tabLoadAnimationPlayCount}')`;
     const inactiveTabLoadAnimation =
@@ -66,8 +65,7 @@ export default class Tab extends PureComponent {
           ${this.props.tabState !== 'open' ? this.props.tabState : ''} \
           ${this.props.tabOwner ? 'has-owner' : ''} \
           ${this.props.tabAnimationsDisabled ? 'noanimate' : ''} \
-          ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''} \
-          ${dragging}`
+          ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''}`
         }
         title={this.props.tooltipText}
         onClick={this.handleClick}
@@ -82,6 +80,7 @@ export default class Tab extends PureComponent {
         }}
         draggable="true"
         onDragStart={this.drag}
+        dragging={this.props.dragging}
       >
         <PreloadImage src={activeTabLoadAnimation} />
         <PreloadImage src={inactiveTabLoadAnimation} />

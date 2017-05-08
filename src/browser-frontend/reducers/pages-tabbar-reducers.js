@@ -39,10 +39,10 @@ function stopTabLoadedAnimation(state, { payload: { pageId } }) {
   });
 }
 
-function moveTabTo(state, {payload: { pageId, newPosition, oldPosition } }) { // add in oldPositioion
+function moveTabTo(state, {payload: { pageId, newPosition, currentPosition } }) {
   return state.withMutations((mut) => {
     const displayOrder = state.ui.pages.displayOrder;
-    let newDisplayOrder = displayOrder.splice(oldPosition, 1);
+    let newDisplayOrder = displayOrder.splice(currentPosition, 1);
     newDisplayOrder = newDisplayOrder.splice(newPosition, 0, pageId);
     mut.setIn(['ui', 'pages', 'displayOrder'], newDisplayOrder);
   });

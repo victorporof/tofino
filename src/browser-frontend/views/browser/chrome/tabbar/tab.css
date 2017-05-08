@@ -112,6 +112,6 @@ specific language governing permissions and limitations under the License.
   background-position: var(--theme-tab-active-background-position);
 }
 
-.tab.dragging {
-  /*opacity: 0;*/
+.tab[data="dragging"] {
+  height: 0;
 }

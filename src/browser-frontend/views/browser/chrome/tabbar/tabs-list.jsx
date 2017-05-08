@@ -20,6 +20,7 @@ import PagesModelActions from '../../../../actions/pages-model-actions';
 
 import Styles from './tabs-list.css';
 import Tab from './tab';
+import FlipMove from 'react-flip-move';
 
 @connect(state => ({
   draggingTabId: UIPagesSelectors.getDraggingTabId(state),
@@ -31,30 +32,35 @@ import Tab from './tab';
 export default class TabsList extends PureComponent {
 
   dragEnter = (event) => {
-
   }
 
-  findDragPosition = (event) => {
+  findDragPosition = (event, currentPosition) => {
     let i = 0;
-    let tabList = document.querySelectorAll('a[dragging=true]'); //Do not use tab index, they all eq 0. just to get all the tabs
+    let tabList = document.querySelectorAll('a'); //need to be able to select tabs not just by `a`
     while (i < tabList.length) {
-      let tab = tabList[i]
-      if ((tab.offsetLeft + (tab.offsetWidth / 2)) >= event.clientX) {
-        return i // tab position in tab list
+      let tab_rect = tabList[i].getBoundingClientRect();
+      if (i < currentPosition) {
+        if ((tab_rect.left + (tab_rect.width / 2)) >= event.clientX) {
+          return i;
+        }
+      } else if (i > currentPosition) {
+        if ((tab_rect.left + (tab_rect.width / 2)) <= event.clientX) {
+          return i;
+        }
       }
       i++;
     }
+    return currentPosition;
   }
 
   dragOver = (event) => {
     event.preventDefault();
 
     let pageId = this.props.draggingTabId;
-    let oldPosition = this.props.pageIds.indexOf(pageId);
-    let newPosition = this.findDragPosition(event);
-
-    if (oldPosition !== newPosition) {
-      this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, oldPosition}));
+    let currentPosition = this.props.pageIds.indexOf(pageId);
+    let newPosition = this.findDragPosition(event, currentPosition);
+    if (currentPosition !== newPosition) {
+      this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, currentPosition}));
     };
   }
 
@@ -63,15 +69,24 @@ export default class TabsList extends PureComponent {
     event.stopPropagation();
 
     let pageId = this.props.draggingTabId;
-    let oldPosition = this.props.pageIds.indexOf(pageId);
-    let newPosition = this.findDragPosition(event);
-    this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, oldPosition}));
+    let currentPosition = this.props.pageIds.indexOf(pageId);
+    let newPosition = this.findDragPosition(event, currentPosition);
+    if (currentPosition !== newPosition) {
+      this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, currentPosition}));
+    }
     this.props.dispatch(PagesModelActions.tabbar.setDraggingTab({ pageId: '' }))
   }
 
   render() {
     return (
-      <div styleName="tabs-list"
+      <FlipMove
+        // disableAllAnimations={true}
+        appearAnimation="none"
+        enterAnimation="none"
+        leaveAnimation="none"
+        easing="cubic-bezier(0.07, 0.95, 0, 1)"
+        duration="200"
+        styleName="tabs-list"
         onDragOver={this.dragOver}
         onDragEnter={this.dragEnter}
         onDrop={this.drop}>
@@ -81,7 +96,7 @@ export default class TabsList extends PureComponent {
             pageId={pageId}
           />
         ))}
-      </div>
+      </FlipMove>
     );
   }
 }

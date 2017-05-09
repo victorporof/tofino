@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License.
 import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import * as SharedPropTypes from '../../../../model/shared-prop-types';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
@@ -20,89 +21,61 @@ import PagesModelActions from '../../../../actions/pages-model-actions';
 
 import Styles from './tabs-list.css';
 import Tab from './tab';
-import FlipMove from 'react-flip-move';
+
+const SortableTab = SortableElement(({ pageId }) =>
+  <Tab
+    key={pageId}
+    pageId={pageId}
+  />,
+);
+const SortableList = SortableContainer(({ pageIds }) =>
+  <div>
+    {pageIds.map((pageId, index) => (
+      <SortableTab
+        key={pageId}
+        pageId={pageId}
+        index={index}
+      />
+    ))}
+  </div>,
+);
 
 @connect(state => ({
-  draggingTabId: UIPagesSelectors.getDraggingTabId(state),
   pageIds: UIPagesSelectors.getPageIdsInDisplayOrder(state),
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
 })
 export default class TabsList extends PureComponent {
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    const pageIds = this.props.pageIds;
+    if (oldIndex !== newIndex) {
+      const pageId = pageIds._tail.array[oldIndex];
+      let newDisplayOrder = pageIds.splice(oldIndex, 1);
+      newDisplayOrder = newDisplayOrder.splice(newIndex, 0, pageId);
 
-  dragEnter = (event) => {
-  }
-
-  findDragPosition = (event, currentPosition) => {
-    let i = 0;
-    let tabList = document.querySelectorAll('a'); //need to be able to select tabs not just by `a`
-    while (i < tabList.length) {
-      let tab_rect = tabList[i].getBoundingClientRect();
-      if (i < currentPosition) {
-        if ((tab_rect.left + (tab_rect.width / 2)) >= event.clientX) {
-          return i;
-        }
-      } else if (i > currentPosition) {
-        if ((tab_rect.left + (tab_rect.width / 2)) <= event.clientX) {
-          return i;
-        }
-      }
-      i++;
+      this.props.dispatch(PagesModelActions.tabbar.changeDisplayOrder({ newDisplayOrder }));
     }
-    return currentPosition;
-  }
-
-  dragOver = (event) => {
-    event.preventDefault();
-
-    let pageId = this.props.draggingTabId;
-    let currentPosition = this.props.pageIds.indexOf(pageId);
-    let newPosition = this.findDragPosition(event, currentPosition);
-    if (currentPosition !== newPosition) {
-      this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, currentPosition}));
-    };
-  }
-
-  drop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    let pageId = this.props.draggingTabId;
-    let currentPosition = this.props.pageIds.indexOf(pageId);
-    let newPosition = this.findDragPosition(event, currentPosition);
-    if (currentPosition !== newPosition) {
-      this.props.dispatch(PagesModelActions.tabbar.moveTabTo({ pageId, newPosition, currentPosition}));
-    }
-    this.props.dispatch(PagesModelActions.tabbar.setDraggingTab({ pageId: '' }))
   }
 
   render() {
     return (
-      <FlipMove
-        // disableAllAnimations={true}
-        appearAnimation="none"
-        enterAnimation="none"
-        leaveAnimation="none"
-        easing="cubic-bezier(0.07, 0.95, 0, 1)"
-        duration="200"
-        styleName="tabs-list"
-        onDragOver={this.dragOver}
-        onDragEnter={this.dragEnter}
-        onDrop={this.drop}>
-        {this.props.pageIds.map(pageId => (
-          <Tab
-            key={pageId}
-            pageId={pageId}
-          />
-        ))}
-      </FlipMove>
+      <div styleName="tabs-list">
+        <SortableList
+          lockAxis={'x'}
+          lockToContainerEdges
+          axis={'x'}
+          onSortEnd={this.onSortEnd}
+          distance={5}
+          transitionDuration={500}
+          pageIds={this.props.pageIds}
+        />
+      </div>
     );
   }
 }
 
 TabsList.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  draggingTabId: PropTypes.string.isRequired,
   pageIds: SharedPropTypes.PageIds.isRequired,
 };

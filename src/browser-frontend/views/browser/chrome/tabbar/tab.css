@@ -12,6 +12,7 @@ specific language governing permissions and limitations under the License.
 
 .tab {
   position: relative;
+  display: flex; /* needed to keep text centered for drag */
   overflow: hidden;
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
@@ -26,6 +27,7 @@ specific language governing permissions and limitations under the License.
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
   cursor: default;
   transition:
+    transform 0.2s var(--animation-curve),
     width 0.05s var(--animation-curve),
     height 0.2s var(--animation-curve),
     background-position 0.2s var(--animation-curve);
@@ -110,8 +112,4 @@ specific language governing permissions and limitations under the License.
 
 .tab.selected.tab-loaded {
   background-position: var(--theme-tab-active-background-position);
-}
-
-.tab[data="dragging"] {
-  height: 0;
 }

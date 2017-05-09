@@ -39,17 +39,8 @@ function stopTabLoadedAnimation(state, { payload: { pageId } }) {
   });
 }
 
-function moveTabTo(state, {payload: { pageId, newPosition, currentPosition } }) {
-  return state.withMutations((mut) => {
-    const displayOrder = state.ui.pages.displayOrder;
-    let newDisplayOrder = displayOrder.splice(currentPosition, 1);
-    newDisplayOrder = newDisplayOrder.splice(newPosition, 0, pageId);
-    mut.setIn(['ui', 'pages', 'displayOrder'], newDisplayOrder);
-  });
-}
-
-function setDraggingTab(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'draggingTabId'], pageId);
+function changeDisplayOrder(state, { payload: { newDisplayOrder } }) {
+  return state.setIn(['ui', 'pages', 'displayOrder'], newDisplayOrder);
 }
 
 export default handleActions({
@@ -58,6 +49,5 @@ export default handleActions({
   [PagesModelActions.tabbar.allowAllTabAnimations]: allowAllTabAnimations,
   [PagesModelActions.tabbar.startTabLoadedAnimation]: startTabLoadedAnimation,
   [PagesModelActions.tabbar.stopTabLoadedAnimation]: stopTabLoadedAnimation,
-  [PagesModelActions.tabbar.moveTabTo]: moveTabTo,
-  [PagesModelActions.tabbar.setDraggingTab]: setDraggingTab,
+  [PagesModelActions.tabbar.changeDisplayOrder]: changeDisplayOrder,
 }, new Model());

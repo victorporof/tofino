@@ -21,6 +21,7 @@ specific language governing permissions and limitations under the License.
 }
 
 .tabbar.darwin {
+  margin-right: 40px;
   margin-left: 70px;
 }
 

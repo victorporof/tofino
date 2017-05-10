@@ -19,3 +19,12 @@ specific language governing permissions and limitations under the License.
   color: var(--theme-window-color);
   composes: app-drag from '../../../shared/widgets/helpers/common.css';
 }
+
+.window.darwin {
+  --theme-window-border: none;
+}
+
+.window.linux,
+.window.win32 {
+  --theme-window-border: 1px solid #0a75d3;
+}

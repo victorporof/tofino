@@ -91,9 +91,14 @@
   --theme-navbar-height: 40px;
   --theme-navbar-background: #eee;
   --theme-navbar-color: #000;
+  --theme-navbar-button-width: 26px;
+  --theme-navbar-button-height: var(--theme-navbar-button-width);
+  --theme-navbar-button-border-radius: 2px;
+  --theme-navbar-button-margin: 7px;
   --theme-navbar-button-disabled-opacity: 0.2;
   --theme-navbar-button-enabled-opacity: 0.8;
   --theme-navbar-button-enabled-hover-opacity: 1;
+  --theme-navbar-button-enabled-hover-background-color: rgba(0, 0, 0, 0.1);
 
   /* Navbar: Navigation Buttons */
 

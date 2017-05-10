@@ -11,13 +11,16 @@ specific language governing permissions and limitations under the License.
 */
 
 .button {
-  width: var(--theme-navbar-height);
-  height: var(--theme-navbar-height);
+  width: var(--theme-navbar-button-width);
+  height: var(--theme-navbar-button-height);
   justify-content: center;
+  border-radius: var(--theme-navbar-button-border-radius);
+  margin: var(--theme-navbar-button-margin);
   opacity: var(--theme-navbar-button-enabled-opacity);
 }
 
 .button:hover {
+  background-color: var(--theme-navbar-button-enabled-hover-background-color);
   opacity: var(--theme-navbar-button-enabled-hover-opacity);
 }
 

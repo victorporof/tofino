@@ -92,6 +92,8 @@
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
   --theme-tab-background-size: 100% 200%;
   --theme-tab-background-repeat: no-repeat;
+  --theme-tab-close-button-hover: hsla(240, 5%, 5%, 0.1);
+  --theme-tab-close-button-border-radius: 4px;
 
   /* Navbar */
 
@@ -110,6 +112,10 @@
   --theme-forward-button-image: url('../assets/Forward - 16.svg');
   --theme-refresh-button-image: url('../assets/Refresh - 16.svg');
   --theme-home-button-image: url('../assets/Home - 16.svg');
+  --theme-back-button-border: 1px solid var(--theme-separator-color);
+  --theme-back-button-border-radius: 50%;
+  --theme-back-button-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  --theme-back-button-background-color: transparent;
 
   /* Navbar: Toolbar Buttons */
 

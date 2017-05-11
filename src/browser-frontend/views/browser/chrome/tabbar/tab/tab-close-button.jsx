@@ -46,8 +46,9 @@ export default class TabCloseButton extends PureComponent {
       >
         <FittedImage
           src="var(--theme-close-tab-button-image)"
-          width="10px"
-          height="10px"
+          width="11px"
+          height="11px"
+          styleName="tab-close-icon"
         />
       </Button>
     );

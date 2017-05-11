@@ -32,6 +32,12 @@ specific language governing permissions and limitations under the License.
   user-select: none;
 }
 
+.tab:first-child {
+  box-shadow:
+    1px 0 0 0 var(--theme-tab-separator-color),
+    -1px 0 0 0 var(--theme-tab-separator-color);
+}
+
 .tab:not(.selected):not(.foreground-closed):hover {
   background: var(--theme-tab-hover-background);
   color: var(--theme-tab-hover-color);

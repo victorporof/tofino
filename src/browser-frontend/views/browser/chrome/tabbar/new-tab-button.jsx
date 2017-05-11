@@ -43,9 +43,6 @@ export default class NewTabButton extends PureComponent {
           height="12px"
           styleName="icon"
         />
-        <div>
-          New Tab
-        </div>
       </Button>
     );
   }

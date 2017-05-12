@@ -48,13 +48,8 @@ const SortableList = SortableContainer(({ pageIds }) =>
 })
 export default class TabsList extends PureComponent {
   onSortEnd = ({ oldIndex, newIndex }) => {
-    const pageIds = this.props.pageIds;
     if (oldIndex !== newIndex) {
-      const pageId = pageIds._tail.array[oldIndex];
-      let newDisplayOrder = pageIds.splice(oldIndex, 1);
-      newDisplayOrder = newDisplayOrder.splice(newIndex, 0, pageId);
-
-      this.props.dispatch(PagesModelActions.tabbar.changeDisplayOrder({ newDisplayOrder }));
+      this.props.dispatch(PagesModelActions.tabbar.changeDisplayOrder({ oldIndex, newIndex }));
     }
   }
 

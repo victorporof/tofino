@@ -39,7 +39,11 @@ function stopTabLoadedAnimation(state, { payload: { pageId } }) {
   });
 }
 
-function changeDisplayOrder(state, { payload: { newDisplayOrder } }) {
+function changeDisplayOrder(state, { payload: { oldIndex, newIndex } }) {
+  const pageIds = state.ui.pages.displayOrder;
+  const pageId = pageIds.get(oldIndex);
+  let newDisplayOrder = pageIds.splice(oldIndex, 1);
+  newDisplayOrder = newDisplayOrder.splice(newIndex, 0, pageId);
   return state.setIn(['ui', 'pages', 'displayOrder'], newDisplayOrder);
 }
 

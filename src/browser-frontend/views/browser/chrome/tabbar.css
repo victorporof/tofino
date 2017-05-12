@@ -15,17 +15,17 @@ specific language governing permissions and limitations under the License.
   height: var(--theme-tabbar-height);
   box-sizing: border-box;
   flex: 1;
-  padding: 0 10px 0 40px;
   padding-top: var(--theme-tabbar-top-padding);
   background: var(--theme-tabbar-background);
 }
 
 .tabbar.darwin {
-  margin-right: 40px;
-  margin-left: 70px;
+  margin-right: 80px;
+  margin-left: 80px;
 }
 
 .tabbar.linux,
 .tabbar.win32 {
-  margin-right: 144px;
+  margin-right: 154px;
+  margin-left: 40px;
 }

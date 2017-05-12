@@ -11,5 +11,14 @@ specific language governing permissions and limitations under the License.
 */
 
 .back-button {
+  padding: 3px;
+  border: var(--theme-back-button-border);
+  border-radius: var(--theme-back-button-border-radius);
   composes: button from '../navbar-shared.css';
+}
+
+.back-button:not(.disabled):hover {
+  background-color: var(--theme-back-button-background-color);
+  box-shadow: var(--theme-back-button-box-shadow);
+  opacity: var(--theme-navbar-button-enabled-opacity);
 }

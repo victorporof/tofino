@@ -44,18 +44,25 @@
 
   --theme-window-background: #2a2e4e;
   --theme-window-color: #fff;
+  --theme-window-border: 1px solid #0a75d3;
 
   /* Window Management Controls */
 
+  --theme-window-controls-background-position: center center;
+  --theme-window-controls-background-repeat: no-repeat;
   --theme-window-controls-background-size: 16px 16px;
+  --theme-window-controls-hover: hsla(240, 9%, 98%, 0.1);
+  --theme-window-controls-active: hsla(240, 9%, 98%, 0.2);
+  --theme-window-controls-close-hover: #ff0039;
+  --theme-window-controls-close-active: #d70022;
   --theme-window-controls-close: url('../assets/window-controls/glyph-window-close.svg');
   --theme-window-controls-minimize: url('../assets/window-controls/glyph-window-minimize.svg');
   --theme-window-controls-maximize: url('../assets/window-controls/glyph-window-maximize.svg');
 
   /* Tabbar */
 
-  --theme-tabbar-height: 40px;
-  --theme-tabbar-top-padding: 10px;
+  --theme-tabbar-height: 32px;
+  --theme-tabbar-top-padding: 0;
   --theme-tabbar-background: transparent;
   --theme-new-tab-button-image: url('../assets/New - 16.svg');
   --theme-new-tab-button-background: transparent;
@@ -85,6 +92,8 @@
   --theme-close-tab-button-image: url('../assets/Stop - 16.svg');
   --theme-tab-background-size: 100% 200%;
   --theme-tab-background-repeat: no-repeat;
+  --theme-tab-close-button-hover: hsla(240, 5%, 5%, 0.1);
+  --theme-tab-close-button-border-radius: 4px;
 
   /* Navbar */
 
@@ -94,6 +103,8 @@
   --theme-navbar-button-disabled-opacity: 0.2;
   --theme-navbar-button-enabled-opacity: 0.8;
   --theme-navbar-button-enabled-hover-opacity: 1;
+  --theme-navbar-button-border-radius: 2px;
+  --theme-navbar-button-hover-background: hsla(240, 5%, 5%, 0.1);
 
   /* Navbar: Navigation Buttons */
 
@@ -101,6 +112,10 @@
   --theme-forward-button-image: url('../assets/Forward - 16.svg');
   --theme-refresh-button-image: url('../assets/Refresh - 16.svg');
   --theme-home-button-image: url('../assets/Home - 16.svg');
+  --theme-back-button-border: 1px solid var(--theme-separator-color);
+  --theme-back-button-border-radius: 50%;
+  --theme-back-button-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  --theme-back-button-background-color: transparent;
 
   /* Navbar: Toolbar Buttons */
 

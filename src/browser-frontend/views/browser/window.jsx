@@ -15,6 +15,7 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import Mousetrap from 'mousetrap';
 
+import * as Meta from '../../constants/meta';
 import { client } from '../../global';
 import KeyboardShortcutsActions from '../../actions/keyboard-shortcuts-actions';
 import * as SharedPropTypes from '../../model/shared-prop-types';
@@ -26,6 +27,7 @@ import Content from './content';
 
 @connect(() => ({
   client,
+  os: Meta.OS,
 }))
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -73,7 +75,7 @@ export default class Window extends PureComponent {
 
   render() {
     return (
-      <div styleName="window">
+      <div styleName={`window ${this.props.os}`}>
         <Chrome />
         <Content />
       </div>
@@ -82,6 +84,7 @@ export default class Window extends PureComponent {
 }
 
 Window.WrappedComponent.propTypes = {
+  os: PropTypes.string.isRequired,
   client: SharedPropTypes.Client.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

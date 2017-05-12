@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
   <style>
     path {
       fill-rule: evenodd;
+      fill: #fff;
     }
   </style>
-  <path id="glyph-window-maximize" d="M3,3H13V13H3V3ZM5,5h6v6H5V5Z"/>
+  <path id="glyph-window-maximize" d="M3,3V13H13V3Zm9,9H4V4h8Z"/>
 </svg>

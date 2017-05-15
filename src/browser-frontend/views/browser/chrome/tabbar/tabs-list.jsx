@@ -58,6 +58,7 @@ export default class TabsList extends PureComponent {
       <div styleName="tabs-list">
         <SortableList
           lockAxis={'x'}
+          lockOffset={'0px'}
           lockToContainerEdges
           axis={'x'}
           onSortEnd={this.onSortEnd}

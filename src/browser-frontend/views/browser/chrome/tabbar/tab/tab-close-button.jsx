@@ -28,7 +28,7 @@ import FittedImage from '../../../../../../shared/widgets/fitted-image';
   allowMultiple: true,
 })
 export default class TabCloseButton extends PureComponent {
-  handleClick = (e) => {
+  handleMouseDown = (e) => {
     this.props.dispatch(PagesEffects.commands.closeTabAnimated({
       pageId: this.props.pageId,
       removePageAfterMs: 200,
@@ -41,7 +41,7 @@ export default class TabCloseButton extends PureComponent {
       <Button
         title="Close"
         styleName={`tab-close-button ${this.props.selected ? '' : 'tab-deselected'}`}
-        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
       >
         <FittedImage
           src="var(--theme-close-tab-button-image)"

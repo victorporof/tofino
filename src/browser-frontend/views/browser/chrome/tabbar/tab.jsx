@@ -43,8 +43,10 @@ export default class Tab extends PureComponent {
     }));
   }
 
-  handleClick = () => {
-    this.props.dispatch(PagesModelActions.setSelectedPage({ pageId: this.props.pageId }));
+  handleMouseDown = () => {
+    if (!this.props.selected) {
+      this.props.dispatch(PagesModelActions.setSelectedPage({ pageId: this.props.pageId }));
+    }
   }
 
   render() {
@@ -63,7 +65,7 @@ export default class Tab extends PureComponent {
           ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''}`
         }
         title={this.props.tooltipText}
-        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
         style={{
           ...(this.props.tabLoadAnimationRunning ? {
             ...(this.props.selected ? {

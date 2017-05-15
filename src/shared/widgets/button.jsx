@@ -29,6 +29,7 @@ export default class Button extends WidgetComponent {
         styleName={`button ${this.props.disabled ? 'disabled' : 'enabled'}`}
         className={this.props.className}
         onClick={this.props.disabled ? null : this.props.onClick}
+        onMouseDown={this.props.disabled ? null : this.props.onMouseDown}
       >
         {this.props.children}
       </button>
@@ -41,6 +42,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  onMouseDown: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -51,5 +53,6 @@ Button.defaultProps = {
   disabled: false,
   className: '',
   onClick: identity,
+  onMouseDown: identity,
   children: [],
 };

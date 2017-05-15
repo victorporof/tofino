@@ -13,5 +13,8 @@ specific language governing permissions and limitations under the License.
 import Immutable from 'immutable';
 
 export default Immutable.Record({
+  // Keep a separate set of page ids to avoid creating Immutable.js objects
+  // when a list of pages is necessary but their domain state isn't relevant.
+  pageIds: Immutable.List(),
   pagesDomainStateByPageId: Immutable.OrderedMap(),
 });

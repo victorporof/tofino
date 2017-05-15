@@ -29,6 +29,7 @@ function addPage(state, { payload: { url, parentId, background } = {} }) {
 
     const pageDomainState = new DomainPageModel({ id: pageId, ownerId: parentId, url: pageUrl });
     const pageUIState = new UIPageModel({ locationInputBarValue: pageUrl });
+    mut.updateIn(['domain', 'pages', 'pageIds'], l => l.push(pageId));
     mut.updateIn(['domain', 'pages', 'pagesDomainStateByPageId'], m => m.set(pageId, pageDomainState));
     mut.updateIn(['ui', 'pages', 'pagesUIStateByPageId'], m => m.set(pageId, pageUIState));
 
@@ -48,13 +49,16 @@ function removePage(state, { payload: { pageId, withoutSelectingNextLogicalPage 
   }
 
   return state.withMutations((mut) => {
-    const pageIndex = state.ui.pages.displayOrder.findIndex(id => id === pageId);
+    const pageDomainIndex = state.domain.pages.pageIds.findIndex(id => id === pageId);
+    const pageDisplayIndex = state.ui.pages.displayOrder.findIndex(id => id === pageId);
     const pageCount = state.ui.pages.displayOrder.count();
     const selectedPageId = state.ui.pages.selectedPageId;
 
     mut.updateIn(['domain', 'pages', 'pagesDomainStateByPageId'], m => m.delete(pageId));
+    mut.updateIn(['domain', 'pages', 'pageIds'], l => l.delete(pageDomainIndex));
+
     mut.updateIn(['ui', 'pages', 'pagesUIStateByPageId'], m => m.delete(pageId));
-    mut.updateIn(['ui', 'pages', 'displayOrder'], l => l.delete(pageIndex));
+    mut.updateIn(['ui', 'pages', 'displayOrder'], l => l.delete(pageDisplayIndex));
 
     if (pageCount === 1) {
       mut.deleteIn(['ui', 'pages', 'selectedPageId']);
@@ -65,10 +69,10 @@ function removePage(state, { payload: { pageId, withoutSelectingNextLogicalPage 
       return;
     }
 
-    if (pageIndex === pageCount - 1) {
-      mut.setIn(['ui', 'pages', 'selectedPageId'], state.ui.pages.displayOrder.get(pageIndex - 1));
+    if (pageDisplayIndex === pageCount - 1) {
+      mut.setIn(['ui', 'pages', 'selectedPageId'], state.ui.pages.displayOrder.get(pageDisplayIndex - 1));
     } else {
-      mut.setIn(['ui', 'pages', 'selectedPageId'], state.ui.pages.displayOrder.get(pageIndex + 1));
+      mut.setIn(['ui', 'pages', 'selectedPageId'], state.ui.pages.displayOrder.get(pageDisplayIndex + 1));
     }
   });
 }

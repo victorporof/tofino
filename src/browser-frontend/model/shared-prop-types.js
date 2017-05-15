@@ -17,4 +17,5 @@ export const Client = PropTypes.shape({
   send: PropTypes.func.isRequired,
 });
 
-export const PageIds = ImmutablePropTypes.listOf(PropTypes.string.isRequired);
+export const PageIdsList = ImmutablePropTypes.listOf(PropTypes.string.isRequired);
+export const PageIdsSet = ImmutablePropTypes.setOf(PropTypes.string.isRequired);

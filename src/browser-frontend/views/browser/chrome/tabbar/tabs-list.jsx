@@ -72,5 +72,5 @@ export default class TabsList extends PureComponent {
 
 TabsList.WrappedComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  pageIds: SharedPropTypes.PageIds.isRequired,
+  pageIds: SharedPropTypes.PageIdsList.isRequired,
 };

@@ -20,6 +20,10 @@ export function getAllPages(state) {
   return getAppPagesDomainState(state).get('pagesDomainStateByPageId');
 }
 
+export function getPageIdsInCreationOrder(state) {
+  return getAppPagesDomainState(state).get('pageIds');
+}
+
 // Domain page properties getters.
 
 export function getPageDomainStateById(state, pageId) {

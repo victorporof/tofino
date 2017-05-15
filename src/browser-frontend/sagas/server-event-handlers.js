@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License.
 import { takeEvery, put } from 'redux-saga/effects';
 
 import SharedActions from '../../shared/actions/shared-actions';
-import KeyboardShortcutsActions from '../actions/keyboard-shortcuts-actions';
+import KeyboardShortcutsEffects from '../actions/effects/keyboard-shortcuts-effects';
 
 // Some keyboard shortcuts need to be registered at the platform level,
 // because they clash with OS-level shortcuts (e.g. Cmd+W on macOS
@@ -21,9 +21,9 @@ import KeyboardShortcutsActions from '../actions/keyboard-shortcuts-actions';
 // is tasked with overriding these shortcuts and providing us control.
 function* onKeyShortcutPressed({ payload: { shortcut } }) {
   if (shortcut.keys === 'CommandOrControl+Q') {
-    yield put(KeyboardShortcutsActions.pressedAccelQ());
+    yield put(KeyboardShortcutsEffects.commands.handleAccelQ());
   } else if (shortcut.keys === 'CommandOrControl+W') {
-    yield put(KeyboardShortcutsActions.pressedAccelW());
+    yield put(KeyboardShortcutsEffects.commands.handleAccelW());
   }
 }
 

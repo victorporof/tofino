@@ -17,7 +17,7 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import * as SharedPropTypes from '../../../../model/shared-prop-types';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
-import PagesModelActions from '../../../../actions/pages-model-actions';
+import PagesModelActions from '../../../../actions/model/pages-model-actions';
 
 import Styles from './tabs-list.css';
 import Tab from './tab';

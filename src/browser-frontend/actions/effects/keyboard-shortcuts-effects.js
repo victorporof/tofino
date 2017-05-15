@@ -14,7 +14,12 @@ import { createActions } from 'redux-actions';
 import identity from 'lodash/identity';
 
 export default createActions({
-  NOTIFY_PAGE_VISITED: identity,
-  NOTIFY_PAGE_STARRED: identity,
-  NOTIFY_PAGE_UNSTARRED: identity,
+  COMMANDS: {
+    HANDLE_ACCEL_Q: identity,
+    HANDLE_ACCEL_W: identity,
+    HANDLE_ACCEL_T: identity,
+    HANDLE_CTRL_TAB: identity,
+    HANDLE_CTRL_SHIFT_TAB: identity,
+    HANDLE_CAT_GIFS_EASTER_EGG: identity,
+  },
 });

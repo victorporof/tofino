@@ -14,8 +14,8 @@ import { takeEvery, take, call, put, select } from 'redux-saga/effects';
 
 import * as Endpoints from '../constants/endpoints';
 import WebContents from '../../shared/widgets/web-contents';
-import WebContentsActions from '../actions/webcontents-actions';
-import PagesModelActions from '../actions/pages-model-actions';
+import WebContentsEffects from '../actions/effects/webcontents-effects';
+import PagesModelActions from '../actions/model/pages-model-actions';
 import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 
@@ -32,7 +32,7 @@ function* navigatePageTo({ payload: { pageId, url } }) {
 
   if ((prevUrl === Endpoints.BLANK_PAGE && url !== Endpoints.BLANK_PAGE) ||
       (prevUrl !== Endpoints.BLANK_PAGE && url === Endpoints.BLANK_PAGE)) {
-    yield take(WebContentsActions.events.pageDidChangeImpl);
+    yield take(WebContentsEffects.events.pageDidChangeImpl);
   }
 
   yield call(webContents.impl.navigateTo, url);
@@ -85,9 +85,9 @@ function* navigatePageRefresh({ payload: { pageId } }) {
 
 export default function* () {
   yield [
-    takeEvery(WebContentsActions.commands.navigatePageTo, navigatePageTo),
-    takeEvery(WebContentsActions.commands.navigatePageBack, navigatePageBack),
-    takeEvery(WebContentsActions.commands.navigatePageForward, navigatePageForward),
-    takeEvery(WebContentsActions.commands.navigatePageRefresh, navigatePageRefresh),
+    takeEvery(WebContentsEffects.commands.navigatePageTo, navigatePageTo),
+    takeEvery(WebContentsEffects.commands.navigatePageBack, navigatePageBack),
+    takeEvery(WebContentsEffects.commands.navigatePageForward, navigatePageForward),
+    takeEvery(WebContentsEffects.commands.navigatePageRefresh, navigatePageRefresh),
   ];
 }

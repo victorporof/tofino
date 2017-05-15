@@ -12,12 +12,12 @@ specific language governing permissions and limitations under the License.
 
 import * as RootSelectors from './root-selectors';
 
-export function getDev(state) {
+export function getAppDevDomainState(state) {
   return RootSelectors.getAppDomainState(state).get('dev');
 }
 
 // Domain dev properties getters.
 
 export function getPerfRecording(state) {
-  return getDev(state).get('perfRecording');
+  return getAppDevDomainState(state).get('perfRecording');
 }

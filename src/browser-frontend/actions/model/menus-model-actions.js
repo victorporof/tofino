@@ -10,16 +10,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import Immutable from 'immutable';
+import { createActions } from 'redux-actions';
+import identity from 'lodash/identity';
 
-const NO_SELECTED_PAGE = '';
-
-const UIPagesModel = Immutable.Record({
-  selectedPageId: NO_SELECTED_PAGE,
-  displayOrder: Immutable.List(),
-  pagesUIStateByPageId: Immutable.OrderedMap(),
+export default createActions({
+  SET_APP_MENU_OPEN: identity,
+  SET_APP_MENU_CLOSED: identity,
 });
-
-UIPagesModel.NO_SELECTED_PAGE = NO_SELECTED_PAGE;
-
-export default UIPagesModel;

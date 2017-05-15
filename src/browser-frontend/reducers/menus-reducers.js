@@ -13,17 +13,17 @@ specific language governing permissions and limitations under the License.
 import { handleActions } from 'redux-actions';
 
 import Model from '../model';
-import MenusModelActions from '../actions/menus-model-actions';
+import MenusModelActions from '../actions/model/menus-model-actions';
 
-function openAppMenu(state) {
+function setAppMenuOpen(state) {
   return state.setIn(['ui', 'menus', 'appMenuOpen'], true);
 }
 
-function closeAppMenu(state) {
+function setAppMenuClosed(state) {
   return state.setIn(['ui', 'menus', 'appMenuOpen'], false);
 }
 
 export default handleActions({
-  [MenusModelActions.openAppMenu]: openAppMenu,
-  [MenusModelActions.closeAppMenu]: closeAppMenu,
+  [MenusModelActions.setAppMenuOpen]: setAppMenuOpen,
+  [MenusModelActions.setAppMenuClosed]: setAppMenuClosed,
 }, new Model());

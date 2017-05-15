@@ -12,8 +12,8 @@ specific language governing permissions and limitations under the License.
 
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import DeveloperActions from '../actions/developer-actions';
-import DeveloperModelActions from '../actions/developer-model-actions';
+import DeveloperEffects from '../actions/effects/developer-effects';
+import DeveloperModelActions from '../actions/model/developer-model-actions';
 import ReactPerf from '../../shared/util/react-perf';
 
 function* startRecording() {
@@ -26,7 +26,7 @@ function* stopRecording({ payload: { logMeasured } }) {
   yield put(DeveloperModelActions.setPerfRecordingNotRunning());
 
   if (logMeasured) {
-    yield put(DeveloperActions.commands.perf.printMeasured());
+    yield put(DeveloperEffects.commands.perf.printMeasured());
   }
 }
 
@@ -37,8 +37,8 @@ function* printMeasured() {
 
 export default function* () {
   yield [
-    takeEvery(DeveloperActions.commands.perf.startRecording, startRecording),
-    takeEvery(DeveloperActions.commands.perf.stopRecording, stopRecording),
-    takeEvery(DeveloperActions.commands.perf.printMeasured, printMeasured),
+    takeEvery(DeveloperEffects.commands.perf.startRecording, startRecording),
+    takeEvery(DeveloperEffects.commands.perf.stopRecording, stopRecording),
+    takeEvery(DeveloperEffects.commands.perf.printMeasured, printMeasured),
   ];
 }

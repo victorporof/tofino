@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import WebContentsActions from '../../../../../actions/webcontents-actions';
+import WebContentsEffects from '../../../../../actions/effects/webcontents-effects';
 import * as Endpoints from '../../../../../constants/endpoints';
 
 import Styles from './home-button.css';
@@ -27,7 +27,7 @@ import AnimatedImageButton from '../../../../../../shared/widgets/animated-image
 })
 export default class HomeButton extends PureComponent {
   handleClick = () => {
-    this.props.dispatch(WebContentsActions.commands.navigatePageTo({
+    this.props.dispatch(WebContentsEffects.commands.navigatePageTo({
       pageId: this.props.pageId,
       url: Endpoints.HOME_PAGE_URL,
     }));

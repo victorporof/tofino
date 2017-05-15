@@ -13,12 +13,15 @@ specific language governing permissions and limitations under the License.
 import { delay } from 'redux-saga';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
-import PagesModelActions from '../actions/pages-model-actions';
+import PagesEffects from '../actions/effects/pages-effects';
+import PagesModelActions from '../actions/model/pages-model-actions';
 import UIPageModel from '../model/ui-page-model';
-import { getSelectedPageId } from '../selectors/ui-pages-selectors';
+import * as UIPagesSelectors from '../selectors/ui-pages-selectors';
 
 function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
-  const selectedPageId = yield select(getSelectedPageId);
+  const selectedPageId = yield select(UIPagesSelectors.getSelectedPageId);
+  const nextSelectedPageId = yield select(UIPagesSelectors.getNextLogicalPageId);
+
   const tabState = selectedPageId === pageId
     ? UIPageModel.TAB_STATES.FOREGROUND_CLOSED
     : UIPageModel.TAB_STATES.BACKGROUND_CLOSED;
@@ -28,9 +31,11 @@ function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
     tabState,
   }));
 
-  yield put(PagesModelActions.selectNextLogicalPage({
-    pageId,
-  }));
+  if (tabState === UIPageModel.TAB_STATES.FOREGROUND_CLOSED) {
+    yield put(PagesModelActions.setSelectedPage({
+      pageId: nextSelectedPageId,
+    }));
+  }
 
   yield call(delay, removePageAfterMs);
   yield put(PagesModelActions.removePage({
@@ -41,6 +46,6 @@ function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
 
 export default function* () {
   yield [
-    takeEvery(PagesModelActions.tabbar.closeTabAnimated, closeTabAnimated),
+    takeEvery(PagesEffects.commands.closeTabAnimated, closeTabAnimated),
   ];
 }

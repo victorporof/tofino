@@ -12,9 +12,10 @@ specific language governing permissions and limitations under the License.
 
 import Immutable from 'immutable';
 
+import DomainPagesModel from './domain-pages-model';
 import DomainDevModel from './domain-dev-model';
 
 export default Immutable.Record({
-  pages: Immutable.OrderedMap(),
+  pages: new DomainPagesModel(),
   dev: new DomainDevModel(),
 });

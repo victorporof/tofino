@@ -73,15 +73,15 @@ specific language governing permissions and limitations under the License.
     transform 0.2s 0.2s var(--animation-curve);
 }
 
-.tab.has-owner.initial > * {
-  opacity: var(--theme-tab-initial-opacity);
-  transform: translate(0, var(--theme-tab-open-height));
-}
-
 .tab.has-owner.initial {
   left: calc(0px - var(--theme-tab-open-width)); /* stylelint-disable-line */
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
+}
+
+.tab.has-owner.initial > * {
+  opacity: var(--theme-tab-initial-opacity);
+  transform: translate(0, var(--theme-tab-open-height));
 }
 
 .tab.background-closed {

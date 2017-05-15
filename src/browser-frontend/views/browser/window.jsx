@@ -17,7 +17,7 @@ import Mousetrap from 'mousetrap';
 
 import * as Meta from '../../constants/meta';
 import { client } from '../../global';
-import KeyboardShortcutsActions from '../../actions/keyboard-shortcuts-actions';
+import KeyboardShortcutsEffects from '../../actions/effects/keyboard-shortcuts-effects';
 import * as SharedPropTypes from '../../model/shared-prop-types';
 import SharedActions from '../../../shared/actions/shared-actions';
 
@@ -49,27 +49,27 @@ export default class Window extends PureComponent {
     this.mousetrap = Mousetrap();
     this.mousetrap.bind('mod+q', (e) => {
       e.preventDefault();
-      this.props.dispatch(KeyboardShortcutsActions.pressedAccelQ());
+      this.props.dispatch(KeyboardShortcutsEffects.commands.handleAccelQ());
     });
     this.mousetrap.bind('mod+w', (e) => {
       e.preventDefault();
-      this.props.dispatch(KeyboardShortcutsActions.pressedAccelW());
+      this.props.dispatch(KeyboardShortcutsEffects.commands.handleAccelW());
     });
     this.mousetrap.bind('mod+t', (e) => {
       e.preventDefault();
-      this.props.dispatch(KeyboardShortcutsActions.pressedAccelT());
+      this.props.dispatch(KeyboardShortcutsEffects.commands.handleAccelT());
     });
     this.mousetrap.bind('ctrl+tab', (e) => {
       e.preventDefault();
-      this.props.dispatch(KeyboardShortcutsActions.pressedCtrlTab());
+      this.props.dispatch(KeyboardShortcutsEffects.commands.handleCtrlTab());
     });
     this.mousetrap.bind('ctrl+shift+tab', (e) => {
       e.preventDefault();
-      this.props.dispatch(KeyboardShortcutsActions.pressedCtrlShiftTab());
+      this.props.dispatch(KeyboardShortcutsEffects.commands.handleCtrlShiftTab());
     });
     this.mousetrap.bind('up up down down left right left right b a', (e) => {
       e.preventDefault();
-      this.props.dispatch(KeyboardShortcutsActions.pressedCatGifsEasterEgg());
+      this.props.dispatch(KeyboardShortcutsEffects.commands.handleCatGifsEasterEgg());
     });
   }
 

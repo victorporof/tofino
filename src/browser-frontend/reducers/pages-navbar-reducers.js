@@ -13,34 +13,34 @@ specific language governing permissions and limitations under the License.
 import { handleActions } from 'redux-actions';
 
 import Model from '../model';
-import PagesModelActions from '../actions/pages-model-actions';
+import PagesModelActions from '../actions/model/pages-model-actions';
 
 function setLocationInputBarValue(state, { payload: { pageId, value } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'locationInputBarValue'], value);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'locationInputBarValue'], value);
 }
 
 function setBackButtonEnabled(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'backButtonEnabled'], true);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'backButtonEnabled'], true);
 }
 
 function setBackButtonDisabled(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'backButtonEnabled'], false);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'backButtonEnabled'], false);
 }
 
 function setForwardButtonEnabled(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'forwardButtonEnabled'], true);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'forwardButtonEnabled'], true);
 }
 
 function setForwardButtonDisabled(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'forwardButtonEnabled'], false);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'forwardButtonEnabled'], false);
 }
 
 function setReloadButtonEnabled(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'reloadButtonEnabled'], true);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'reloadButtonEnabled'], true);
 }
 
 function setReloadButtonDisabled(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'reloadButtonEnabled'], false);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'reloadButtonEnabled'], false);
 }
 
 export default handleActions({

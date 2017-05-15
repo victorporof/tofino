@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License.
 import { takeEvery, call, select } from 'redux-saga/effects';
 
 import { client } from '../global';
-import ProfileActions from '../actions/profile-actions';
+import ProfileEffects from '../actions/effects/profile-effects';
 import SharedActions from '../../shared/actions/shared-actions';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 
@@ -39,8 +39,8 @@ function* notifyPageUnstarred({ payload: { pageId } }) {
 
 export default function* () {
   yield [
-    takeEvery(ProfileActions.notifyPageVisited, notifyPageVisited),
-    takeEvery(ProfileActions.notifyPageStarred, notifyPageStarred),
-    takeEvery(ProfileActions.notifyPageUnstarred, notifyPageUnstarred),
+    takeEvery(ProfileEffects.commands.notifyPageVisited, notifyPageVisited),
+    takeEvery(ProfileEffects.commands.notifyPageStarred, notifyPageStarred),
+    takeEvery(ProfileEffects.commands.notifyPageUnstarred, notifyPageUnstarred),
   ];
 }

@@ -15,31 +15,37 @@ import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as RootSelectors from './root-selectors';
 import * as DomainPagesSelectors from './domain-pages-selectors';
 
-export function getPagesUI(state) {
+export function getAppPagesUIState(state) {
   return RootSelectors.getAppUIState(state).get('pages');
 }
 
-export function getAllPagesVisuals(state) {
-  return getPagesUI(state).get('visuals');
+export function getAllPages(state) {
+  return getAppPagesUIState(state).get('pagesUIStateByPageId');
 }
 
 export function getSelectedPageId(state) {
-  return getPagesUI(state).get('selectedId');
+  return getAppPagesUIState(state).get('selectedPageId');
 }
 
 export function getPageIdsInDisplayOrder(state) {
-  return getPagesUI(state).get('displayOrder');
+  return getAppPagesUIState(state).get('displayOrder');
 }
+
+// UI page computed selection getters.
 
 export function getPageIdAtIndex(state, index) {
   const pageIds = getPageIdsInDisplayOrder(state);
   return pageIds.get(index);
 }
 
+export function getPageIndexById(state, pageId) {
+  const pageIds = getPageIdsInDisplayOrder(state);
+  return pageIds.findIndex(id => id === pageId);
+}
+
 export function getSelectedPageIndex(state) {
   const selectedPageId = getSelectedPageId(state);
-  const pageIds = getPageIdsInDisplayOrder(state);
-  return pageIds.findIndex(id => id === selectedPageId);
+  return getPageIndexById(state, selectedPageId);
 }
 
 export function getNextSelectedPage(state) {
@@ -68,42 +74,51 @@ export function getPreviousSelectedPage(state) {
   return getPageIdAtIndex(state, newIndex);
 }
 
+export function getNextLogicalPageId(state) {
+  const pageIndex = getSelectedPageIndex(state);
+  const pageIds = getPageIdsInDisplayOrder(state);
+
+  return pageIds.get(pageIndex === pageIds.count() - 1
+    ? pageIndex - 1
+    : pageIndex + 1);
+}
+
 // UI page properties getters.
 
-export function getPageVisuals(state, pageId) {
-  return getAllPagesVisuals(state).get(pageId);
+export function getPageUIStateById(state, pageId) {
+  return getAllPages(state).get(pageId);
 }
 
 export function getPageLocationInputBarValue(state, pageId) {
-  return getPageVisuals(state, pageId).get('locationInputBarValue');
+  return getPageUIStateById(state, pageId).get('locationInputBarValue');
 }
 
 export function getPageBackButtonEnabled(state, pageId) {
-  return getPageVisuals(state, pageId).get('backButtonEnabled');
+  return getPageUIStateById(state, pageId).get('backButtonEnabled');
 }
 
 export function getPageForwardButtonEnabled(state, pageId) {
-  return getPageVisuals(state, pageId).get('forwardButtonEnabled');
+  return getPageUIStateById(state, pageId).get('forwardButtonEnabled');
 }
 
 export function getPageReloadButtonEnabled(state, pageId) {
-  return getPageVisuals(state, pageId).get('reloadButtonEnabled');
+  return getPageUIStateById(state, pageId).get('reloadButtonEnabled');
 }
 
 export function getPageTabState(state, pageId) {
-  return getPageVisuals(state, pageId).get('tabState');
+  return getPageUIStateById(state, pageId).get('tabState');
 }
 
 export function getTabAnimationsDisabled(state, pageId) {
-  return getPageVisuals(state, pageId).get('tabAnimationsDisabled');
+  return getPageUIStateById(state, pageId).get('tabAnimationsDisabled');
 }
 
 export function getTabLoadAnimationRunning(state, pageId) {
-  return getPageVisuals(state, pageId).get('tabLoadAnimationRunning');
+  return getPageUIStateById(state, pageId).get('tabLoadAnimationRunning');
 }
 
 export function getTabLoadAnimationPlayCount(state, pageId) {
-  return getPageVisuals(state, pageId).get('tabLoadAnimationPlayCount');
+  return getPageUIStateById(state, pageId).get('tabLoadAnimationPlayCount');
 }
 
 // UI page computed properties getters.

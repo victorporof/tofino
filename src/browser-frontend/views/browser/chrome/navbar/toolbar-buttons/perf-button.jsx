@@ -18,7 +18,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 import * as DomainDevSelectors from '../../../../../selectors/domain-dev-selectors';
-import DeveloperActions from '../../../../../actions/developer-actions';
+import DeveloperEffects from '../../../../../actions/effects/developer-effects';
 
 import Styles from './perf-button.css';
 import Button from '../../../../../../shared/widgets/button';
@@ -33,9 +33,9 @@ import Button from '../../../../../../shared/widgets/button';
 export default class PerfButton extends PureComponent {
   handleClick = () => {
     if (!this.props.recording) {
-      this.props.dispatch(DeveloperActions.commands.perf.startRecording());
+      this.props.dispatch(DeveloperEffects.commands.perf.startRecording());
     } else {
-      this.props.dispatch(DeveloperActions.commands.perf.stopRecording({ logMeasured: true }));
+      this.props.dispatch(DeveloperEffects.commands.perf.stopRecording({ logMeasured: true }));
     }
   }
 

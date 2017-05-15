@@ -14,8 +14,8 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import { client } from '../global';
 import SharedActions from '../../shared/actions/shared-actions';
-import KeyboardShortcutsActions from '../actions/keyboard-shortcuts-actions';
-import PagesModelActions from '../actions/pages-model-actions';
+import KeyboardShortcutsEffects from '../actions/effects/keyboard-shortcuts-effects';
+import PagesModelActions from '../actions/model/pages-model-actions';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 import * as UIPagesSelectors from '../selectors/ui-pages-selectors';
 
@@ -24,7 +24,7 @@ function* handleAccelQ() {
 }
 
 function* handleAccelW() {
-  const count = (yield select(DomainPagesSelectors.getPages)).count();
+  const count = (yield select(DomainPagesSelectors.getAllPages)).count();
   if (count === 1) {
     client.send(SharedActions.events.fromFrontend.toServer.app.window.requestedClose());
     return;
@@ -59,11 +59,11 @@ function* handleCatGifsEasterEgg() {
 
 export default function* () {
   yield [
-    takeEvery(KeyboardShortcutsActions.pressedAccelQ, handleAccelQ),
-    takeEvery(KeyboardShortcutsActions.pressedAccelW, handleAccelW),
-    takeEvery(KeyboardShortcutsActions.pressedAccelT, handleAccelT),
-    takeEvery(KeyboardShortcutsActions.pressedCtrlTab, handleCtrlTab),
-    takeEvery(KeyboardShortcutsActions.pressedCtrlShiftTab, handleCtrlShiftTab),
-    takeEvery(KeyboardShortcutsActions.pressedCatGifsEasterEgg, handleCatGifsEasterEgg),
+    takeEvery(KeyboardShortcutsEffects.commands.handleAccelQ, handleAccelQ),
+    takeEvery(KeyboardShortcutsEffects.commands.handleAccelW, handleAccelW),
+    takeEvery(KeyboardShortcutsEffects.commands.handleAccelT, handleAccelT),
+    takeEvery(KeyboardShortcutsEffects.commands.handleCtrlTab, handleCtrlTab),
+    takeEvery(KeyboardShortcutsEffects.commands.handleCtrlShiftTab, handleCtrlShiftTab),
+    takeEvery(KeyboardShortcutsEffects.commands.handleCatGifsEasterEgg, handleCatGifsEasterEgg),
   ];
 }

@@ -18,13 +18,13 @@ import logger from '../../logger';
 
 import SharedActions from '../../../shared/actions/shared-actions';
 
-function create({ payload: { url } }) {
+function createWindow({ payload: { url } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
   opn(url, { app: yargs.argv.browser });
 }
 
 export default function* () {
   yield [
-    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.create, create),
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.create, createWindow),
   ];
 }

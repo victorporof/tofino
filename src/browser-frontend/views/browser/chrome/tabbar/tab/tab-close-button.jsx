@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import PagesModelActions from '../../../../../actions/pages-model-actions';
+import PagesEffects from '../../../../../actions/effects/pages-effects';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 
 import Styles from './tab-close-button.css';
@@ -29,10 +29,9 @@ import FittedImage from '../../../../../../shared/widgets/fitted-image';
 })
 export default class TabCloseButton extends PureComponent {
   handleClick = (e) => {
-    this.props.dispatch(PagesModelActions.tabbar.closeTabAnimated({
+    this.props.dispatch(PagesEffects.commands.closeTabAnimated({
       pageId: this.props.pageId,
       removePageAfterMs: 200,
-      selected: this.props.selected,
     }));
     e.stopPropagation();
   }

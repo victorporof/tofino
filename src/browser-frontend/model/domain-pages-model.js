@@ -10,14 +10,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import { createActions } from 'redux-actions';
-import identity from 'lodash/identity';
+import Immutable from 'immutable';
 
-export default createActions({
-  PRESSED_ACCEL_Q: identity,
-  PRESSED_ACCEL_W: identity,
-  PRESSED_ACCEL_T: identity,
-  PRESSED_CTRL_TAB: identity,
-  PRESSED_CTRL_SHIFT_TAB: identity,
-  PRESSED_CAT_GIFS_EASTER_EGG: identity,
+export default Immutable.Record({
+  pagesDomainStateByPageId: Immutable.OrderedMap(),
 });

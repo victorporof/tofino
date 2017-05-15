@@ -14,3 +14,7 @@ specific language governing permissions and limitations under the License.
   overflow: hidden;
   padding: 0 1px;
 }
+
+.tabs-list div {
+  overflow: hidden;
+}

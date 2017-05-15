@@ -11,6 +11,7 @@ specific language governing permissions and limitations under the License.
 */
 
 .tab-contents {
+  display: flex; /* needed to keep text centered for drag */
   overflow: hidden;
   flex: 1;
   align-items: center;

@@ -12,12 +12,13 @@ specific language governing permissions and limitations under the License.
 
 .tab {
   position: relative;
+  display: flex; /* needed to keep text centered for drag */
   overflow: hidden;
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
   align-items: center;
   margin-top: auto;
-  background-image: linear-gradient(to bottom, var(--theme-tab-inactive-background) 50%, #0a8dff 50%, #0a8dff 53%, var(--theme-tab-active-background) 53%);
+  background-image: linear-gradient(to bottom, var(--theme-window-background) 50%, #0a8dff 50%, #0a8dff 53%, var(--theme-tab-active-background) 53%);
   background-position: var(--theme-tab-inactive-background-position);
   background-repeat: var(--theme-tab-background-repeat);
   background-size: var(--theme-tab-background-size);
@@ -26,6 +27,7 @@ specific language governing permissions and limitations under the License.
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
   cursor: default;
   transition:
+    transform 0.2s var(--animation-curve),
     width 0.05s var(--animation-curve),
     height 0.2s var(--animation-curve),
     background-position 0.2s var(--animation-curve);

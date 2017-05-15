@@ -32,6 +32,7 @@ export default createActions({
     START_TAB_LOADED_ANIMATION: identity,
     STOP_TAB_LOADED_ANIMATION: identity,
     CLOSE_TAB_ANIMATED: identity,
+    CHANGE_DISPLAY_ORDER: identity,
   },
   NAVBAR: {
     SET_LOCATION_INPUT_BAR_VALUE: identity,

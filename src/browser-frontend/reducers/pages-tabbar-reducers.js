@@ -39,10 +39,19 @@ function stopTabLoadedAnimation(state, { payload: { pageId } }) {
   });
 }
 
+function changeDisplayOrder(state, { payload: { oldIndex, newIndex } }) {
+  const pageIds = state.ui.pages.displayOrder;
+  const pageId = pageIds.get(oldIndex);
+  let newDisplayOrder = pageIds.splice(oldIndex, 1);
+  newDisplayOrder = newDisplayOrder.splice(newIndex, 0, pageId);
+  return state.setIn(['ui', 'pages', 'displayOrder'], newDisplayOrder);
+}
+
 export default handleActions({
   [PagesModelActions.tabbar.setTabState]: setTabState,
   [PagesModelActions.tabbar.preventAllTabAnimations]: preventAllTabAnimations,
   [PagesModelActions.tabbar.allowAllTabAnimations]: allowAllTabAnimations,
   [PagesModelActions.tabbar.startTabLoadedAnimation]: startTabLoadedAnimation,
   [PagesModelActions.tabbar.stopTabLoadedAnimation]: stopTabLoadedAnimation,
+  [PagesModelActions.tabbar.changeDisplayOrder]: changeDisplayOrder,
 }, new Model());

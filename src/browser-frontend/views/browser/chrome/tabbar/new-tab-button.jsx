@@ -17,8 +17,7 @@ import { connect } from 'react-redux';
 import PagesModelActions from '../../../../actions/pages-model-actions';
 
 import Styles from './new-tab-button.css';
-import Button from '../../../../../shared/widgets/button';
-import FittedImage from '../../../../../shared/widgets/fitted-image';
+import ImageButton from '../../../../../shared/widgets/image-button';
 
 @connect(() => ({
 }))
@@ -32,18 +31,15 @@ export default class NewTabButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <ImageButton
         title="New Tab"
         styleName="new-tab-button"
         onClick={this.handleClick}
-      >
-        <FittedImage
-          src="var(--theme-new-tab-button-image)"
-          width="12px"
-          height="12px"
-          styleName="icon"
-        />
-      </Button>
+        src="var(--theme-new-tab-button-image)"
+        width="12px"
+        height="12px"
+        imageStyle={Styles.icon}
+      />
     );
   }
 }

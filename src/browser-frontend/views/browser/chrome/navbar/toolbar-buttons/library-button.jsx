@@ -14,8 +14,7 @@ import React, { PureComponent } from 'react';
 import CSSModules from 'react-css-modules';
 
 import Styles from './library-button.css';
-import Button from '../../../../../../shared/widgets/button';
-import FittedImage from '../../../../../../shared/widgets/fitted-image';
+import ImageButton from '../../../../../../shared/widgets/image-button';
 
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -27,17 +26,14 @@ export default class LibraryButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <ImageButton
         title="Library"
         styleName="library-button"
         onClick={this.handleClick}
-      >
-        <FittedImage
-          src="var(--theme-app-library-button-image)"
-          width="16px"
-          height="16px"
-        />
-      </Button>
+        src="var(--theme-app-library-button-image)"
+        width="16px"
+        height="16px"
+      />
     );
   }
 }

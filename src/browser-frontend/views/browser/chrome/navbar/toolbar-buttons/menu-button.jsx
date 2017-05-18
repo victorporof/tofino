@@ -15,8 +15,7 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import Styles from './menu-button.css';
-import Button from '../../../../../../shared/widgets/button';
-import FittedImage from '../../../../../../shared/widgets/fitted-image';
+import ImageButton from '../../../../../../shared/widgets/image-button';
 
 import MenusModelActions from '../../../../../actions/menus-model-actions';
 import * as UIMenusSelectors from '../../../../../selectors/ui-menus-selectors';
@@ -38,18 +37,15 @@ export default class MenuButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <ImageButton
         title="Menu"
         styleName="menu-button"
         className="app-menu-doorhanger-anchor"
         onClick={this.handleClick}
-      >
-        <FittedImage
-          src="var(--theme-app-menu-button-image)"
-          width="16px"
-          height="16px"
-        />
-      </Button>
+        src="var(--theme-app-menu-button-image)"
+        width="16px"
+        height="16px"
+      />
     );
   }
 }

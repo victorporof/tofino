@@ -17,8 +17,7 @@ import PagesModelActions from '../../../../../../actions/pages-model-actions';
 import ProfileActions from '../../../../../../actions/profile-actions';
 import * as DomainPagesSelectors from '../../../../../../selectors/domain-pages-selectors';
 
-import Button from '../../../../../../../shared/widgets/button';
-import FittedImage from '../../../../../../../shared/widgets/fitted-image';
+import ImageButton from '../../../../../../../shared/widgets/image-button';
 
 @connect((state, ownProps) => ({
   bookmarked: DomainPagesSelectors.getPageBookmarkedState(state, ownProps.pageId),
@@ -36,18 +35,15 @@ export default class LocationBookmarkButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <ImageButton
         title="Bookmark"
         onClick={this.handleClick}
-      >
-        <FittedImage
-          src={this.props.bookmarked
+        src={this.props.bookmarked
             ? 'var(--theme-locationbar-unbookmark-button-image)'
             : 'var(--theme-locationbar-bookmark-button-image)'}
-          width="16px"
-          height="16px"
-        />
-      </Button>
+        width="16px"
+        height="16px"
+      />
     );
   }
 }

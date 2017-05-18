@@ -13,8 +13,7 @@ specific language governing permissions and limitations under the License.
 
 import React, { PureComponent, PropTypes } from 'react';
 
-import Button from '../../../../../shared/widgets/button';
-import FittedImage from '../../../../../shared/widgets/fitted-image';
+import ImageButton from '../../../../../shared/widgets/image-button';
 
 export default class CopyButton extends PureComponent {
   handleCopy = () => {
@@ -23,17 +22,14 @@ export default class CopyButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <ImageButton
         className={this.props.className}
         title="Copy"
         onClick={this.handleCopy}
-      >
-        <FittedImage
-          src="var(--theme-app-menu-copy-button-image)"
-          width="14px"
-          height="14px"
-        />
-      </Button>
+        src="var(--theme-app-menu-copy-button-image)"
+        width="14px"
+        height="14px"
+      />
     );
   }
 }

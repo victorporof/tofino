@@ -13,8 +13,7 @@ specific language governing permissions and limitations under the License.
 
 import React, { PureComponent, PropTypes } from 'react';
 
-import Button from '../../../../../shared/widgets/button';
-import FittedImage from '../../../../../shared/widgets/fitted-image';
+import AnimatedImageButton from '../../../../../shared/widgets/animated-image-button';
 
 export default class CutButton extends PureComponent {
   handleCut = () => {
@@ -23,17 +22,14 @@ export default class CutButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <AnimatedImageButton
         className={this.props.className}
         title="Cut"
         onClick={this.handleCut}
-      >
-        <FittedImage
-          src="var(--theme-app-menu-cut-button-image)"
-          width="14px"
-          height="14px"
-        />
-      </Button>
+        src="var(--theme-app-menu-cut-button-image)"
+        width="14px"
+        height="14px"
+      />
     );
   }
 }

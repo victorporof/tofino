@@ -18,8 +18,7 @@ import WebContentsActions from '../../../../../actions/webcontents-actions';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 
 import Styles from './forward-button.css';
-import Button from '../../../../../../shared/widgets/button';
-import FittedImage from '../../../../../../shared/widgets/fitted-image';
+import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
 @connect((state, ownProps) => ({
   disabled: !UIPagesSelectors.getPageForwardButtonEnabled(state, ownProps.pageId),
@@ -36,18 +35,15 @@ export default class ForwardButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <AnimatedImageButton
         title="Forward"
         styleName="forward-button"
         disabled={this.props.disabled}
         onClick={this.handleClick}
-      >
-        <FittedImage
-          src="var(--theme-forward-button-image)"
-          width="16px"
-          height="16px"
-        />
-      </Button>
+        src="var(--theme-forward-button-image)"
+        width="16px"
+        height="16px"
+      />
     );
   }
 }

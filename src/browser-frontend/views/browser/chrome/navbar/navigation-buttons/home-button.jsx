@@ -18,8 +18,7 @@ import WebContentsActions from '../../../../../actions/webcontents-actions';
 import * as Endpoints from '../../../../../constants/endpoints';
 
 import Styles from './home-button.css';
-import Button from '../../../../../../shared/widgets/button';
-import FittedImage from '../../../../../../shared/widgets/fitted-image';
+import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
 @connect(() => ({
 }))
@@ -36,17 +35,14 @@ export default class HomeButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <AnimatedImageButton
         title="Home"
         styleName="home-button"
         onClick={this.handleClick}
-      >
-        <FittedImage
-          src="var(--theme-home-button-image)"
-          width="16px"
-          height="16px"
-        />
-      </Button>
+        src="var(--theme-home-button-image)"
+        width="16px"
+        height="16px"
+      />
     );
   }
 }

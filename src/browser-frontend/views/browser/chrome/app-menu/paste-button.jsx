@@ -13,8 +13,7 @@ specific language governing permissions and limitations under the License.
 
 import React, { PureComponent, PropTypes } from 'react';
 
-import Button from '../../../../../shared/widgets/button';
-import FittedImage from '../../../../../shared/widgets/fitted-image';
+import AnimatedImageButton from '../../../../../shared/widgets/animated-image-button';
 
 export default class PasteButton extends PureComponent {
   handlePaste = () => {
@@ -23,17 +22,14 @@ export default class PasteButton extends PureComponent {
 
   render() {
     return (
-      <Button
+      <AnimatedImageButton
         className={this.props.className}
         title="Paste"
         onClick={this.handlePaste}
-      >
-        <FittedImage
-          src="var(--theme-app-menu-paste-button-image)"
-          width="14px"
-          height="14px"
-        />
-      </Button>
+        src="var(--theme-app-menu-paste-button-image)"
+        width="14px"
+        height="14px"
+      />
     );
   }
 }

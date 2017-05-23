@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 import PagesModelActions from '../../../../actions/pages-model-actions';
 
 import Styles from './new-tab-button.css';
-import ImageButton from '../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../shared/widgets/animated-image-button';
 
 @connect(() => ({
 }))
@@ -31,7 +31,7 @@ export default class NewTabButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="New Tab"
         styleName="new-tab-button"
         onClick={this.handleClick}

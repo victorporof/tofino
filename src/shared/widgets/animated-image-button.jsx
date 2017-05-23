@@ -14,19 +14,20 @@ import React, { PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 
 import WidgetComponent from './helpers/widget-component';
-import Styles from './image-button.css';
+import Styles from './animated-image-button.css';
 import Button from './button';
 import FittedImage from './fitted-image';
 
 @CSSModules(Styles, {
   allowMultiple: true,
 })
-export default class ImageButton extends WidgetComponent {
+export default class AnimatedImageButton extends WidgetComponent {
   render() {
     return (
       <Button
         title={this.props.title}
-        className={`${this.props.className} ${Styles.button}`}
+        styleName="button"
+        className={this.props.className}
         disabled={this.props.disabled}
         onClick={this.props.onClick}
       >
@@ -34,14 +35,15 @@ export default class ImageButton extends WidgetComponent {
           src={this.props.src}
           width={this.props.width}
           height={this.props.height}
-          className={`${this.props.imageStyle} ${Styles['fitted-image']}`}
+          styleName="image"
+          className={this.props.imageStyle}
         />
       </Button>
     );
   }
 }
 
-ImageButton.propTypes = {
+AnimatedImageButton.propTypes = {
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
   disabled: PropTypes.bool,

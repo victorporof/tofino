@@ -15,7 +15,7 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import Styles from './menu-button.css';
-import ImageButton from '../../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
 import MenusModelActions from '../../../../../actions/menus-model-actions';
 import * as UIMenusSelectors from '../../../../../selectors/ui-menus-selectors';
@@ -37,7 +37,7 @@ export default class MenuButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="Menu"
         styleName="menu-button"
         className="app-menu-doorhanger-anchor"

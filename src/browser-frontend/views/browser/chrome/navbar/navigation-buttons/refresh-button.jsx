@@ -18,7 +18,7 @@ import WebContentsActions from '../../../../../actions/webcontents-actions';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 
 import Styles from './refresh-button.css';
-import ImageButton from '../../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
 @connect((state, ownProps) => ({
   disabled: !UIPagesSelectors.getPageReloadButtonEnabled(state, ownProps.pageId),
@@ -35,7 +35,7 @@ export default class RefreshButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="Refresh"
         styleName="refresh-button"
         disabled={this.props.disabled}

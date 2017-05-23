@@ -18,7 +18,7 @@ import WebContentsActions from '../../../../../actions/webcontents-actions';
 import * as Endpoints from '../../../../../constants/endpoints';
 
 import Styles from './home-button.css';
-import ImageButton from '../../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
 @connect(() => ({
 }))
@@ -35,7 +35,7 @@ export default class HomeButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="Home"
         styleName="home-button"
         onClick={this.handleClick}

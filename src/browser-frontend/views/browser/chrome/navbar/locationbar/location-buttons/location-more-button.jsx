@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License.
 
 import React, { PureComponent } from 'react';
 
-import ImageButton from '../../../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../../../shared/widgets/animated-image-button';
 
 export default class LocationMoreButton extends PureComponent {
   handleClick = () => {
@@ -21,7 +21,7 @@ export default class LocationMoreButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="More"
         onClick={this.handleClick}
         src="var(--theme-locationbar-more-button-image)"

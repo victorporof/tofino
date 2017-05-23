@@ -10,10 +10,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-.button .fitted-image {
+.button .image {
   transition: transform 0.2s var(--animation-curve);
 }
 
-.button:hover:active .fitted-image {
+.button:hover:active .image {
   transform: scale(1.08);
 }

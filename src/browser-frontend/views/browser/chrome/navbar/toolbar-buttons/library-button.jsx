@@ -14,7 +14,7 @@ import React, { PureComponent } from 'react';
 import CSSModules from 'react-css-modules';
 
 import Styles from './library-button.css';
-import ImageButton from '../../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
 @CSSModules(Styles, {
   allowMultiple: true,
@@ -26,7 +26,7 @@ export default class LibraryButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="Library"
         styleName="library-button"
         onClick={this.handleClick}

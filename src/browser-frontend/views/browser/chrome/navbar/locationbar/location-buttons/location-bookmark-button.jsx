@@ -17,7 +17,7 @@ import PagesModelActions from '../../../../../../actions/pages-model-actions';
 import ProfileActions from '../../../../../../actions/profile-actions';
 import * as DomainPagesSelectors from '../../../../../../selectors/domain-pages-selectors';
 
-import ImageButton from '../../../../../../../shared/widgets/image-button';
+import AnimatedImageButton from '../../../../../../../shared/widgets/animated-image-button';
 
 @connect((state, ownProps) => ({
   bookmarked: DomainPagesSelectors.getPageBookmarkedState(state, ownProps.pageId),
@@ -35,7 +35,7 @@ export default class LocationBookmarkButton extends PureComponent {
 
   render() {
     return (
-      <ImageButton
+      <AnimatedImageButton
         title="Bookmark"
         onClick={this.handleClick}
         src={this.props.bookmarked

@@ -44,8 +44,29 @@ function* closeTabAnimated({ payload: { pageId, removePageAfterMs } }) {
   }));
 }
 
+function* reorderTabsAnimated({ payload: { oldIndex, newIndex } }) {
+  const pageIds = yield select(UIPagesSelectors.getPageIdsInDisplayOrder);
+  const reorderedPageId = yield select(UIPagesSelectors.getPageIdAtIndex, oldIndex);
+
+  for (const pageId of pageIds.values()) {
+    if (pageId !== reorderedPageId) {
+      yield put(PagesModelActions.tabbar.setAllTabAnimationsDisabled({ pageId }));
+    }
+  }
+
+  yield put(PagesModelActions.tabbar.changeDisplayOrder({ oldIndex, newIndex }));
+  yield call(delay, 50);
+
+  for (const pageId of pageIds.values()) {
+    if (pageId !== reorderedPageId) {
+      yield put(PagesModelActions.tabbar.setAllTabAnimationsEnabled({ pageId }));
+    }
+  }
+}
+
 export default function* () {
   yield [
     takeEvery(PagesEffects.commands.closeTabAnimated, closeTabAnimated),
+    takeEvery(PagesEffects.commands.reorderTabsAnimated, reorderTabsAnimated),
   ];
 }

@@ -16,5 +16,6 @@ import identity from 'lodash/identity';
 export default createActions({
   COMMANDS: {
     CLOSE_TAB_ANIMATED: identity,
+    REORDER_TABS_ANIMATED: identity,
   },
 });

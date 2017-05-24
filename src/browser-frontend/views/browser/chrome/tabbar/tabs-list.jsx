@@ -17,7 +17,7 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import * as SharedPropTypes from '../../../../model/shared-prop-types';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
-import PagesModelActions from '../../../../actions/model/pages-model-actions';
+import PagesEffects from '../../../../actions/effects/pages-effects';
 
 import Styles from './tabs-list.css';
 import Tab from './tab';
@@ -28,6 +28,7 @@ const SortableTab = SortableElement(({ pageId }) =>
     pageId={pageId}
   />,
 );
+
 const SortableList = SortableContainer(({ pageIds }) =>
   <div>
     {pageIds.map((pageId, index) => (
@@ -49,7 +50,7 @@ const SortableList = SortableContainer(({ pageIds }) =>
 export default class TabsList extends PureComponent {
   onSortEnd = ({ oldIndex, newIndex }) => {
     if (oldIndex !== newIndex) {
-      this.props.dispatch(PagesModelActions.tabbar.changeDisplayOrder({ oldIndex, newIndex }));
+      this.props.dispatch(PagesEffects.commands.reorderTabsAnimated({ oldIndex, newIndex }));
     }
   }
 

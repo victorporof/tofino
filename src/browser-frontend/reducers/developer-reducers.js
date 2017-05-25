@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License.
 import { handleActions } from 'redux-actions';
 
 import Model from '../model';
-import DeveloperModelActions from '../actions/developer-model-actions';
+import DeveloperModelActions from '../actions/model/developer-model-actions';
 
 function setPerfRecordingRunning(state) {
   return state.setIn(['domain', 'dev', 'perfRecording'], true);

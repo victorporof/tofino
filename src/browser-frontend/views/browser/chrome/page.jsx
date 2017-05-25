@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import WebContentsActions from '../../../actions/webcontents-actions';
+import WebContentsEffects from '../../../actions/effects/webcontents-effects';
 import * as Meta from '../../../constants/meta';
 import * as Endpoints from '../../../constants/endpoints';
 import * as DomainPagesSelectors from '../../../selectors/domain-pages-selectors';
@@ -41,12 +41,12 @@ export default class Page extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.dispatch(WebContentsActions.events.pageDidMount({ pageId: this.props.pageId }));
+    this.props.dispatch(WebContentsEffects.events.pageDidMount({ pageId: this.props.pageId }));
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.implType !== prevProps.implType) {
-      this.props.dispatch(WebContentsActions.events.pageDidChangeImpl({ pageId: this.props.pageId }));
+      this.props.dispatch(WebContentsEffects.events.pageDidChangeImpl({ pageId: this.props.pageId }));
     }
   }
 
@@ -55,43 +55,43 @@ export default class Page extends PureComponent {
   }
 
   handleDidStartLoading = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidStartLoading({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidStartLoading({ pageId: this.props.pageId, ...args }));
   }
 
   handleDidStopLoading = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidStopLoading({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidStopLoading({ pageId: this.props.pageId, ...args }));
   }
 
   handleDidSucceedLoad = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidSucceedLoad({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidSucceedLoad({ pageId: this.props.pageId, ...args }));
   }
 
   handleDidFailLoad = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidFailLoad({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidFailLoad({ pageId: this.props.pageId, ...args }));
   }
 
   handlePageDomReady = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDomReady({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDomReady({ pageId: this.props.pageId, ...args }));
   }
 
   handlePageTitleSet = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageTitleSet({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageTitleSet({ pageId: this.props.pageId, ...args }));
   }
 
   handlePageFaviconsSet = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageFaviconsSet({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageFaviconsSet({ pageId: this.props.pageId, ...args }));
   }
 
   handleDidNavigate = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigate({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidNavigate({ pageId: this.props.pageId, ...args }));
   }
 
   handleDidNavigateInternal = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigateInternal({ pageId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidNavigateInternal({ pageId: this.props.pageId, ...args }));
   }
 
   handleDidNavigateToNewWindow = (args) => {
-    this.props.dispatch(WebContentsActions.events.pageDidNavigateToNewWindow({ parentId: this.props.pageId, ...args }));
+    this.props.dispatch(WebContentsEffects.events.pageDidNavigateToNewWindow({ parentId: this.props.pageId, ...args }));
   }
 
   render() {

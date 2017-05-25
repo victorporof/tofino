@@ -20,7 +20,7 @@ import { spawn } from '../../../shared/util/spawn';
 import * as Paths from '../../../shared/paths';
 import SharedActions from '../../../shared/actions/shared-actions';
 
-function* create({ meta: client, payload: { winId, url, width, height, style } }) {
+function* createWindow({ meta: client, payload: { winId, url, width, height, style } }) {
   logger.log(`Chrome frontend hosted at ${url}`);
 
   const qbrt = process.platform === 'win32'
@@ -52,6 +52,6 @@ function* create({ meta: client, payload: { winId, url, width, height, style } }
 
 export default function* () {
   yield [
-    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.create, create),
+    takeEvery(SharedActions.commands.fromServer.toRunner.app.window.create, createWindow),
   ];
 }

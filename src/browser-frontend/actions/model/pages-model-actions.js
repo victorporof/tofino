@@ -24,14 +24,12 @@ export default createActions({
   SET_PAGE_BOOKMARKED: identity,
   SET_PAGE_UNBOOKMARKED: identity,
   SET_SELECTED_PAGE: identity,
-  SELECT_NEXT_LOGICAL_PAGE: identity,
   TABBAR: {
     SET_TAB_STATE: identity,
-    PREVENT_ALL_TAB_ANIMATIONS: identity,
-    ALLOW_ALL_TAB_ANIMATIONS: identity,
-    START_TAB_LOADED_ANIMATION: identity,
-    STOP_TAB_LOADED_ANIMATION: identity,
-    CLOSE_TAB_ANIMATED: identity,
+    SET_ALL_TAB_ANIMATIONS_ENABLED: identity,
+    SET_ALL_TAB_ANIMATIONS_DISABLED: identity,
+    SET_TAB_LOADED_ANIMATION_ENABLED: identity,
+    SET_TAB_LOADED_ANIMATION_DISABLED: identity,
     CHANGE_DISPLAY_ORDER: identity,
   },
   NAVBAR: {

@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 import Styles from './menu-button.css';
 import AnimatedImageButton from '../../../../../../shared/widgets/animated-image-button';
 
-import MenusModelActions from '../../../../../actions/menus-model-actions';
+import MenusModelActions from '../../../../../actions/model/menus-model-actions';
 import * as UIMenusSelectors from '../../../../../selectors/ui-menus-selectors';
 
 @connect(state => ({
@@ -29,9 +29,9 @@ import * as UIMenusSelectors from '../../../../../selectors/ui-menus-selectors';
 export default class MenuButton extends PureComponent {
   handleClick = () => {
     if (this.props.appMenuOpen) {
-      this.props.dispatch(MenusModelActions.closeAppMenu());
+      this.props.dispatch(MenusModelActions.setAppMenuClosed());
     } else {
-      this.props.dispatch(MenusModelActions.openAppMenu());
+      this.props.dispatch(MenusModelActions.setAppMenuOpen());
     }
   }
 

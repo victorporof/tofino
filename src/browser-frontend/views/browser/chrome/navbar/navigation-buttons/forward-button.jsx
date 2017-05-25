@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import WebContentsActions from '../../../../../actions/webcontents-actions';
+import WebContentsEffects from '../../../../../actions/effects/webcontents-effects';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 
 import Styles from './forward-button.css';
@@ -28,7 +28,7 @@ import AnimatedImageButton from '../../../../../../shared/widgets/animated-image
 })
 export default class ForwardButton extends PureComponent {
   handleClick = () => {
-    this.props.dispatch(WebContentsActions.commands.navigatePageForward({
+    this.props.dispatch(WebContentsEffects.commands.navigatePageForward({
       pageId: this.props.pageId,
     }));
   }

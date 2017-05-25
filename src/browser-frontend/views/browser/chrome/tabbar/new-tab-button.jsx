@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import PagesModelActions from '../../../../actions/pages-model-actions';
+import PagesModelActions from '../../../../actions/model/pages-model-actions';
 
 import Styles from './new-tab-button.css';
 import AnimatedImageButton from '../../../../../shared/widgets/animated-image-button';

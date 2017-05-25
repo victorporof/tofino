@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License.
 import { call, put } from 'redux-saga/effects';
 
 import WebContents from '../../shared/widgets/web-contents';
-import PagesModelActions from '../actions/pages-model-actions';
+import PagesModelActions from '../actions/model/pages-model-actions';
 
 export function* updateNavigationButtonsEnabledState({ payload: { pageId } }) {
   const webContents = WebContents.getWebContentsWithId(pageId);

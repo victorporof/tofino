@@ -10,22 +10,22 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 */
 
-import developerActionHandlers from './developer-action-handlers';
 import serverEventHandlers from './server-event-handlers';
-import keyboardShortcutsActionHandlers from './keyboard-shortcuts-action-handlers';
 import webContentsEventHandlers from './webcontents-event-handlers';
 import webContentsCommandHandlers from './webcontents-command-handlers';
-import profileActionHandlers from './profile-action-handlers';
-import tabsActionHandlers from './tabs-action-handlers';
+import pagesCommandHandlers from './pages-command-handlers';
+import profileCommandHandlers from './profile-command-handlers';
+import developerCommandHandlers from './developer-command-handlers';
+import keyboardShortcutsCommandHandlers from './keyboard-shortcuts-command-handlers';
 
 export default function* () {
   yield [
-    developerActionHandlers(),
     serverEventHandlers(),
-    keyboardShortcutsActionHandlers(),
     webContentsEventHandlers(),
     webContentsCommandHandlers(),
-    profileActionHandlers(),
-    tabsActionHandlers(),
+    pagesCommandHandlers(),
+    profileCommandHandlers(),
+    developerCommandHandlers(),
+    keyboardShortcutsCommandHandlers(),
   ];
 }

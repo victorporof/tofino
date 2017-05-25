@@ -18,7 +18,7 @@ import isUUID from 'is-uuid';
 
 import Model from '../model';
 import * as Endpoints from '../constants/endpoints';
-import PagesModelActions from '../actions/pages-model-actions';
+import PagesModelActions from '../actions/model/pages-model-actions';
 import DomainPageModel from '../model/domain-page-model';
 import UIPageModel from '../model/ui-page-model';
 
@@ -29,15 +29,16 @@ function addPage(state, { payload: { url, parentId, background } = {} }) {
 
     const pageDomainState = new DomainPageModel({ id: pageId, ownerId: parentId, url: pageUrl });
     const pageUIState = new UIPageModel({ locationInputBarValue: pageUrl });
-    mut.updateIn(['domain', 'pages'], m => m.set(pageId, pageDomainState));
-    mut.updateIn(['ui', 'pages', 'visuals'], m => m.set(pageId, pageUIState));
+    mut.updateIn(['domain', 'pages', 'pageIds'], l => l.push(pageId));
+    mut.updateIn(['domain', 'pages', 'pagesDomainStateByPageId'], m => m.set(pageId, pageDomainState));
+    mut.updateIn(['ui', 'pages', 'pagesUIStateByPageId'], m => m.set(pageId, pageUIState));
 
     const pageCount = state.ui.pages.displayOrder.count();
     const pageIndex = parentId ? state.ui.pages.displayOrder.findIndex(id => id === parentId) + 1 : pageCount;
     mut.updateIn(['ui', 'pages', 'displayOrder'], l => l.insert(pageIndex, pageId));
 
     if (!background) {
-      mut.setIn(['ui', 'pages', 'selectedId'], pageId);
+      mut.setIn(['ui', 'pages', 'selectedPageId'], pageId);
     }
   });
 }
@@ -48,85 +49,70 @@ function removePage(state, { payload: { pageId, withoutSelectingNextLogicalPage 
   }
 
   return state.withMutations((mut) => {
-    const pageIndex = state.ui.pages.displayOrder.findIndex(id => id === pageId);
+    const pageDomainIndex = state.domain.pages.pageIds.findIndex(id => id === pageId);
+    const pageDisplayIndex = state.ui.pages.displayOrder.findIndex(id => id === pageId);
     const pageCount = state.ui.pages.displayOrder.count();
-    const selectedId = state.ui.pages.selectedId;
+    const selectedPageId = state.ui.pages.selectedPageId;
 
-    mut.updateIn(['domain', 'pages'], m => m.delete(pageId));
-    mut.updateIn(['ui', 'pages', 'visuals'], m => m.delete(pageId));
-    mut.updateIn(['ui', 'pages', 'displayOrder'], l => l.delete(pageIndex));
+    mut.updateIn(['domain', 'pages', 'pagesDomainStateByPageId'], m => m.delete(pageId));
+    mut.updateIn(['domain', 'pages', 'pageIds'], l => l.delete(pageDomainIndex));
+
+    mut.updateIn(['ui', 'pages', 'pagesUIStateByPageId'], m => m.delete(pageId));
+    mut.updateIn(['ui', 'pages', 'displayOrder'], l => l.delete(pageDisplayIndex));
 
     if (pageCount === 1) {
-      mut.deleteIn(['ui', 'pages', 'selectedId']);
+      mut.deleteIn(['ui', 'pages', 'selectedPageId']);
       return;
     }
 
-    if (pageId !== selectedId || withoutSelectingNextLogicalPage) {
+    if (pageId !== selectedPageId || withoutSelectingNextLogicalPage) {
       return;
     }
 
-    if (pageIndex === pageCount - 1) {
-      mut.setIn(['ui', 'pages', 'selectedId'], state.ui.pages.displayOrder.get(pageIndex - 1));
+    if (pageDisplayIndex === pageCount - 1) {
+      mut.setIn(['ui', 'pages', 'selectedPageId'], state.ui.pages.displayOrder.get(pageDisplayIndex - 1));
     } else {
-      mut.setIn(['ui', 'pages', 'selectedId'], state.ui.pages.displayOrder.get(pageIndex + 1));
-    }
-  });
-}
-
-function selectNextLogicalPage(state, { payload: { pageId } }) {
-  return state.withMutations((mut) => {
-    const pageIndex = state.ui.pages.displayOrder.findIndex(id => id === pageId);
-    const selectedId = state.ui.pages.selectedId;
-    const pageCount = state.ui.pages.displayOrder.count();
-
-    if (pageId !== selectedId) {
-      return;
-    }
-
-    if (pageIndex === pageCount - 1) {
-      mut.setIn(['ui', 'pages', 'selectedId'], state.ui.pages.displayOrder.get(pageIndex - 1));
-    } else {
-      mut.setIn(['ui', 'pages', 'selectedId'], state.ui.pages.displayOrder.get(pageIndex + 1));
+      mut.setIn(['ui', 'pages', 'selectedPageId'], state.ui.pages.displayOrder.get(pageDisplayIndex + 1));
     }
   });
 }
 
 function setSelectedPage(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'selectedId'], pageId);
+  return state.setIn(['ui', 'pages', 'selectedPageId'], pageId);
 }
 
 function resetPageData(state, { payload: { pageId } }) {
-  return state.deleteIn(['domain', 'pages', pageId, 'transient']);
+  return state.deleteIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'transient']);
 }
 
 function setPageUrl(state, { payload: { pageId, url } }) {
-  return state.setIn(['domain', 'pages', pageId, 'url'], url);
+  return state.setIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'url'], url);
 }
 
 function setPageLoadState(state, { payload: { pageId, loadState } }) {
-  return state.setIn(['domain', 'pages', pageId, 'transient', 'loadState'], loadState);
+  return state.setIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'transient', 'loadState'], loadState);
 }
 
 function setPageTitle(state, { payload: { pageId, title } }) {
-  return state.setIn(['domain', 'pages', pageId, 'transient', 'title'], title);
+  return state.setIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'transient', 'title'], title);
 }
 
 function setPageFavicons(state, { payload: { pageId, favicons } }) {
-  return state.setIn(['domain', 'pages', pageId, 'transient', 'favicons'], Immutable.List(favicons));
+  const list = Immutable.List(favicons);
+  return state.setIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'transient', 'favicons'], list);
 }
 
 function setPageBookmarked(state, { payload: { pageId } }) {
-  return state.setIn(['domain', 'pages', pageId, 'transient', 'bookmarked'], true);
+  return state.setIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'transient', 'bookmarked'], true);
 }
 
 function setPageUnbookmarked(state, { payload: { pageId } }) {
-  return state.setIn(['domain', 'pages', pageId, 'transient', 'bookmarked'], false);
+  return state.setIn(['domain', 'pages', 'pagesDomainStateByPageId', pageId, 'transient', 'bookmarked'], false);
 }
 
 export default handleActions({
   [PagesModelActions.addPage]: addPage,
   [PagesModelActions.removePage]: removePage,
-  [PagesModelActions.selectNextLogicalPage]: selectNextLogicalPage,
   [PagesModelActions.setSelectedPage]: setSelectedPage,
   [PagesModelActions.resetPageData]: resetPageData,
   [PagesModelActions.setPageUrl]: setPageUrl,

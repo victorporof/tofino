@@ -18,7 +18,7 @@ import { AppContainer } from 'react-hot-loader';
 import * as Meta from './constants/meta';
 import * as Endpoints from './constants/endpoints';
 import SharedActions from '../shared/actions/shared-actions';
-import PagesModelActions from './actions/pages-model-actions';
+import PagesModelActions from './actions/model/pages-model-actions';
 import Window from './views/browser/window';
 
 export const setupWs = async (client) => {

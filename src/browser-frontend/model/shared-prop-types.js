@@ -13,18 +13,9 @@ specific language governing permissions and limitations under the License.
 import { PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import DomainPageModel from './domain-page-model';
-import DomainPageTransientModel from './domain-page-transient-model';
-
 export const Client = PropTypes.shape({
   send: PropTypes.func.isRequired,
 });
 
-export const Page = PropTypes.instanceOf(DomainPageModel);
-export const Pages = ImmutablePropTypes.listOf(Page.isRequired);
-
-export const PageMeta = PropTypes.instanceOf(DomainPageTransientModel);
-export const PageMetas = ImmutablePropTypes.listOf(PageMeta.isRequired);
-
-export const PageIds = ImmutablePropTypes.listOf(PropTypes.string.isRequired);
+export const PageIdsList = ImmutablePropTypes.listOf(PropTypes.string.isRequired);
 export const PageIdsSet = ImmutablePropTypes.setOf(PropTypes.string.isRequired);

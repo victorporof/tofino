@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License.
   background-position: var(--theme-tab-inactive-background-position);
   background-repeat: var(--theme-tab-background-repeat);
   background-size: var(--theme-tab-background-size);
-  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
+  box-shadow: -1px 0 0 0 var(--theme-tab-separator-color);
   color: var(--theme-tab-inactive-color);
   composes: app-no-drag from '../../../../../shared/widgets/helpers/common.css';
   cursor: default;
@@ -34,10 +34,10 @@ specific language governing permissions and limitations under the License.
   user-select: none;
 }
 
-.tab:first-child {
+.tab:last-child {
   box-shadow:
-    1px 0 0 0 var(--theme-tab-separator-color),
-    -1px 0 0 0 var(--theme-tab-separator-color);
+    -1px 0 0 0 var(--theme-tab-separator-color),
+    1px 0 0 0 var(--theme-tab-separator-color);
 }
 
 .tab:not(.selected):not(.foreground-closed):hover {
@@ -47,8 +47,16 @@ specific language governing permissions and limitations under the License.
 
 .tab.selected {
   background-position: var(--theme-tab-active-background-position);
-  box-shadow: none; /* stylelint-disable-line sh-waqar/declaration-use-variable */
+  box-shadow: none; /* stylelint-disable-line */
   color: var(--theme-tab-active-color);
+}
+
+.tab.selected + .tab {
+  box-shadow: none; /* stylelint-disable-line */
+}
+
+.tab.selected + .tab:last-child {
+  box-shadow: 1px 0 0 0 var(--theme-tab-separator-color);
 }
 
 .tab.initial {
@@ -59,6 +67,7 @@ specific language governing permissions and limitations under the License.
 .tab.has-owner {
   left: 0;
   transition:
+    transform 0.2s var(--animation-curve),
     left 0.2s var(--animation-curve),
     width 0.05s var(--animation-curve),
     height 0.2s var(--animation-curve),
@@ -73,15 +82,15 @@ specific language governing permissions and limitations under the License.
     transform 0.2s 0.2s var(--animation-curve);
 }
 
-.tab.has-owner.initial > * {
-  opacity: var(--theme-tab-initial-opacity);
-  transform: translate(0, var(--theme-tab-open-height));
-}
-
 .tab.has-owner.initial {
   left: calc(0px - var(--theme-tab-open-width)); /* stylelint-disable-line */
   width: var(--theme-tab-open-width);
   height: var(--theme-tab-open-height);
+}
+
+.tab.has-owner.initial > * {
+  opacity: var(--theme-tab-initial-opacity);
+  transform: translate(0, var(--theme-tab-open-height));
 }
 
 .tab.background-closed {

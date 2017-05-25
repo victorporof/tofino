@@ -14,6 +14,9 @@ import { createActions } from 'redux-actions';
 import identity from 'lodash/identity';
 
 export default createActions({
-  OPEN_APP_MENU: identity,
-  CLOSE_APP_MENU: identity,
+  COMMANDS: {
+    NOTIFY_PAGE_VISITED: identity,
+    NOTIFY_PAGE_STARRED: identity,
+    NOTIFY_PAGE_UNSTARRED: identity,
+  },
 });

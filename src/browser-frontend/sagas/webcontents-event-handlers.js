@@ -15,15 +15,15 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import * as Endpoints from '../constants/endpoints';
 import * as Helpers from './helpers';
-import WebContentsActions from '../actions/webcontents-actions';
-import ProfileActions from '../actions/profile-actions';
-import PagesModelActions from '../actions/pages-model-actions';
+import WebContentsEffects from '../actions/effects/webcontents-effects';
+import ProfileEffects from '../actions/effects/profile-effects';
+import PagesModelActions from '../actions/model/pages-model-actions';
 import DomainPageTransientModel from '../model/domain-page-transient-model';
 import * as DomainPagesSelectors from '../selectors/domain-pages-selectors';
 
 function* onPageDidMount({ payload: { pageId } }) {
   const url = yield select(DomainPagesSelectors.getPageUrl, pageId);
-  yield put(WebContentsActions.commands.navigatePageTo({ pageId, url }));
+  yield put(WebContentsEffects.commands.navigatePageTo({ pageId, url }));
 }
 
 function* onPageDidStartLoading({ payload: { pageId } }) {
@@ -45,12 +45,12 @@ function* onPageDidStopLoading({ payload: { pageId } }) {
   }
 
   // Show the tab loaded flash, but not on about:blank pages.
-  yield put(PagesModelActions.tabbar.startTabLoadedAnimation({ pageId }));
+  yield put(PagesModelActions.tabbar.setTabLoadedAnimationEnabled({ pageId }));
   yield call(delay, 400);
 
   // If the page still exists at this point, hide the tab loaded flash.
-  if (yield select(DomainPagesSelectors.getPageById, pageId)) {
-    yield put(PagesModelActions.tabbar.stopTabLoadedAnimation({ pageId }));
+  if (yield select(DomainPagesSelectors.getPageDomainStateById, pageId)) {
+    yield put(PagesModelActions.tabbar.setTabLoadedAnimationDisabled({ pageId }));
   }
 }
 
@@ -68,7 +68,7 @@ function* onPageDomReady({ payload: { pageId } }) {
   // available. Note that we can't do it in the `onPageTitleSet` event, nor the
   // `onPageFaviconsSet` event, because not all pages have titles or favicons,
   // in which case those listeners never get called.
-  yield put(ProfileActions.notifyPageVisited({ pageId }));
+  yield put(ProfileEffects.commands.notifyPageVisited({ pageId }));
 }
 
 function* onPageTitleSet({ payload: { pageId, title } }) {
@@ -105,7 +105,7 @@ function* onPageDidNavigateInternal({ payload: { pageId, url, isMainFrame } }) {
     yield* onPageDidNavigate({ payload: { pageId, url } });
 
     // Store page visit in profile history on internal navigations as well.
-    yield put(ProfileActions.notifyPageVisited({ pageId }));
+    yield put(ProfileEffects.commands.notifyPageVisited({ pageId }));
   }
 }
 
@@ -113,27 +113,27 @@ function* onPageDidNavigateToNewWindow({ payload: { parentId, url } }) {
   yield put(PagesModelActions.addPage({ parentId, url, background: false }));
 
   // Prevent the deselect animation of the parent tab when opening a child tab.
-  yield put(PagesModelActions.tabbar.preventAllTabAnimations({ pageId: parentId }));
+  yield put(PagesModelActions.tabbar.setAllTabAnimationsDisabled({ pageId: parentId }));
   yield call(delay, 200);
 
   // If the page still exists at this point, allow animations again.
-  if (yield select(DomainPagesSelectors.getPageById, parentId)) {
-    yield put(PagesModelActions.tabbar.allowAllTabAnimations({ pageId: parentId }));
+  if (yield select(DomainPagesSelectors.getPageDomainStateById, parentId)) {
+    yield put(PagesModelActions.tabbar.setAllTabAnimationsEnabled({ pageId: parentId }));
   }
 }
 
 export default function* () {
   yield [
-    takeEvery(WebContentsActions.events.pageDidMount, onPageDidMount),
-    takeEvery(WebContentsActions.events.pageDidStartLoading, onPageDidStartLoading),
-    takeEvery(WebContentsActions.events.pageDidStopLoading, onPageDidStopLoading),
-    takeEvery(WebContentsActions.events.pageDidSucceedLoad, onPageDidSucceedLoad),
-    takeEvery(WebContentsActions.events.pageDidFailLoad, onPageDidFailLoad),
-    takeEvery(WebContentsActions.events.pageDomReady, onPageDomReady),
-    takeEvery(WebContentsActions.events.pageTitleSet, onPageTitleSet),
-    takeEvery(WebContentsActions.events.pageFaviconsSet, onPageFaviconsSet),
-    takeEvery(WebContentsActions.events.pageDidNavigate, onPageDidNavigate),
-    takeEvery(WebContentsActions.events.pageDidNavigateInternal, onPageDidNavigateInternal),
-    takeEvery(WebContentsActions.events.pageDidNavigateToNewWindow, onPageDidNavigateToNewWindow),
+    takeEvery(WebContentsEffects.events.pageDidMount, onPageDidMount),
+    takeEvery(WebContentsEffects.events.pageDidStartLoading, onPageDidStartLoading),
+    takeEvery(WebContentsEffects.events.pageDidStopLoading, onPageDidStopLoading),
+    takeEvery(WebContentsEffects.events.pageDidSucceedLoad, onPageDidSucceedLoad),
+    takeEvery(WebContentsEffects.events.pageDidFailLoad, onPageDidFailLoad),
+    takeEvery(WebContentsEffects.events.pageDomReady, onPageDomReady),
+    takeEvery(WebContentsEffects.events.pageTitleSet, onPageTitleSet),
+    takeEvery(WebContentsEffects.events.pageFaviconsSet, onPageFaviconsSet),
+    takeEvery(WebContentsEffects.events.pageDidNavigate, onPageDidNavigate),
+    takeEvery(WebContentsEffects.events.pageDidNavigateInternal, onPageDidNavigateInternal),
+    takeEvery(WebContentsEffects.events.pageDidNavigateToNewWindow, onPageDidNavigateToNewWindow),
   ];
 }

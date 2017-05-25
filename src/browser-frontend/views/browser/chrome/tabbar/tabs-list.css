@@ -12,9 +12,9 @@ specific language governing permissions and limitations under the License.
 
 .tabs-list {
   overflow: hidden;
-  padding: 0 1px;
 }
 
-.tabs-list div {
+.tabs-list > div {
   overflow: hidden;
+  padding: 0 1px;
 }

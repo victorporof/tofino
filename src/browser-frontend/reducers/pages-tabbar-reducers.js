@@ -13,29 +13,29 @@ specific language governing permissions and limitations under the License.
 import { handleActions } from 'redux-actions';
 
 import Model from '../model';
-import PagesModelActions from '../actions/pages-model-actions';
+import PagesModelActions from '../actions/model/pages-model-actions';
 
 function setTabState(state, { payload: { pageId, tabState } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabState'], tabState);
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'tabState'], tabState);
 }
 
-function preventAllTabAnimations(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabAnimationsDisabled'], true);
+function setAllTabAnimationsEnabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'tabAnimationsDisabled'], false);
 }
 
-function allowAllTabAnimations(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabAnimationsDisabled'], false);
+function setAllTabAnimationsDisabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'tabAnimationsDisabled'], true);
 }
 
-function startTabLoadedAnimation(state, { payload: { pageId } }) {
-  return state.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationRunning'], true);
+function setTabLoadedAnimationEnabled(state, { payload: { pageId } }) {
+  return state.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'tabLoadAnimationRunning'], true);
 }
 
-function stopTabLoadedAnimation(state, { payload: { pageId } }) {
+function setTabLoadedAnimationDisabled(state, { payload: { pageId } }) {
   return state.withMutations((mut) => {
-    const playCount = state.ui.pages.visuals.get(pageId).tabLoadAnimationPlayCount;
-    mut.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationRunning'], false);
-    mut.setIn(['ui', 'pages', 'visuals', pageId, 'tabLoadAnimationPlayCount'], playCount + 1);
+    const playCount = state.ui.pages.pagesUIStateByPageId.get(pageId).tabLoadAnimationPlayCount;
+    mut.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'tabLoadAnimationRunning'], false);
+    mut.setIn(['ui', 'pages', 'pagesUIStateByPageId', pageId, 'tabLoadAnimationPlayCount'], playCount + 1);
   });
 }
 
@@ -49,9 +49,9 @@ function changeDisplayOrder(state, { payload: { oldIndex, newIndex } }) {
 
 export default handleActions({
   [PagesModelActions.tabbar.setTabState]: setTabState,
-  [PagesModelActions.tabbar.preventAllTabAnimations]: preventAllTabAnimations,
-  [PagesModelActions.tabbar.allowAllTabAnimations]: allowAllTabAnimations,
-  [PagesModelActions.tabbar.startTabLoadedAnimation]: startTabLoadedAnimation,
-  [PagesModelActions.tabbar.stopTabLoadedAnimation]: stopTabLoadedAnimation,
+  [PagesModelActions.tabbar.setAllTabAnimationsEnabled]: setAllTabAnimationsEnabled,
+  [PagesModelActions.tabbar.setAllTabAnimationsDisabled]: setAllTabAnimationsDisabled,
+  [PagesModelActions.tabbar.setTabLoadedAnimationEnabled]: setTabLoadedAnimationEnabled,
+  [PagesModelActions.tabbar.setTabLoadedAnimationDisabled]: setTabLoadedAnimationDisabled,
   [PagesModelActions.tabbar.changeDisplayOrder]: changeDisplayOrder,
 }, new Model());

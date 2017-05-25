@@ -12,10 +12,10 @@ specific language governing permissions and limitations under the License.
 
 import * as RootSelectors from './root-selectors';
 
-export function getMenusUI(state) {
+export function getAppMenusUIState(state) {
   return RootSelectors.getAppUIState(state).get('menus');
 }
 
 export function getAppMenuOpen(state) {
-  return getMenusUI(state).get('appMenuOpen');
+  return getAppMenusUIState(state).get('appMenuOpen');
 }

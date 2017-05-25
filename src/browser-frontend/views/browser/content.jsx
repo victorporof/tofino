@@ -16,13 +16,14 @@ import { connect } from 'react-redux';
 
 import * as SharedPropTypes from '../../model/shared-prop-types';
 import * as UIPagesSelectors from '../../selectors/ui-pages-selectors';
+import * as DomainPagesSelectors from '../../selectors/domain-pages-selectors';
 
 import Styles from './content.css';
 import NavBar from './chrome/navbar';
 import Page from './chrome/page';
 
 @connect(state => ({
-  pageIds: UIPagesSelectors.getPageIdsInDisplayOrder(state),
+  pageIds: DomainPagesSelectors.getPageIdsInCreationOrder(state),
   selectedPageId: UIPagesSelectors.getSelectedPageId(state),
 }))
 @CSSModules(Styles, {
@@ -47,6 +48,6 @@ export default class Content extends PureComponent {
 }
 
 Content.WrappedComponent.propTypes = {
-  pageIds: SharedPropTypes.PageIds.isRequired,
+  pageIds: SharedPropTypes.PageIdsList.isRequired,
   selectedPageId: PropTypes.string.isRequired,
 };

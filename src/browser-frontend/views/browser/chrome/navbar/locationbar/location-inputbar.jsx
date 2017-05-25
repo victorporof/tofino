@@ -16,8 +16,8 @@ import { connect } from 'react-redux';
 
 import { fixURL } from '../../../../../../shared/util/search';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
-import PagesModelActions from '../../../../../actions/pages-model-actions';
-import WebContentsActions from '../../../../../actions/webcontents-actions';
+import PagesModelActions from '../../../../../actions/model/pages-model-actions';
+import WebContentsEffects from '../../../../../actions/effects/webcontents-effects';
 
 import Styles from './location-inputbar.css';
 import Input from '../../../../../../shared/widgets/input';
@@ -39,7 +39,7 @@ export default class LocationInputBar extends PureComponent {
 
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      this.props.dispatch(WebContentsActions.commands.navigatePageTo({
+      this.props.dispatch(WebContentsEffects.commands.navigatePageTo({
         pageId: this.props.pageId,
         url: fixURL(e.target.value),
       }));

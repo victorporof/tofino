@@ -12,26 +12,34 @@ specific language governing permissions and limitations under the License.
 
 import * as RootSelectors from './root-selectors';
 
-export function getPages(state) {
+export function getAppPagesDomainState(state) {
   return RootSelectors.getAppDomainState(state).get('pages');
+}
+
+export function getAllPages(state) {
+  return getAppPagesDomainState(state).get('pagesDomainStateByPageId');
+}
+
+export function getPageIdsInCreationOrder(state) {
+  return getAppPagesDomainState(state).get('pageIds');
 }
 
 // Domain page properties getters.
 
-export function getPageById(state, pageId) {
-  return getPages(state).get(pageId);
+export function getPageDomainStateById(state, pageId) {
+  return getAllPages(state).get(pageId);
 }
 
 export function getPageOwnerId(state, pageId) {
-  return getPageById(state, pageId).get('ownerId');
+  return getPageDomainStateById(state, pageId).get('ownerId');
 }
 
 export function getPageUrl(state, pageId) {
-  return getPageById(state, pageId).get('url');
+  return getPageDomainStateById(state, pageId).get('url');
 }
 
 export function getPageTransient(state, pageId) {
-  return getPageById(state, pageId).get('transient');
+  return getPageDomainStateById(state, pageId).get('transient');
 }
 
 // Domain page transient properties getters.

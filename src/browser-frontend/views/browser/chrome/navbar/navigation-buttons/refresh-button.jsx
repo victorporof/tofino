@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import WebContentsActions from '../../../../../actions/webcontents-actions';
+import WebContentsEffects from '../../../../../actions/effects/webcontents-effects';
 import * as UIPagesSelectors from '../../../../../selectors/ui-pages-selectors';
 
 import Styles from './refresh-button.css';
@@ -28,7 +28,7 @@ import AnimatedImageButton from '../../../../../../shared/widgets/animated-image
 })
 export default class RefreshButton extends PureComponent {
   handleClick = () => {
-    this.props.dispatch(WebContentsActions.commands.navigatePageRefresh({
+    this.props.dispatch(WebContentsEffects.commands.navigatePageRefresh({
       pageId: this.props.pageId,
     }));
   }

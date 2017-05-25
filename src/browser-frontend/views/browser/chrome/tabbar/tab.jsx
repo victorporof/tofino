@@ -14,7 +14,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 
-import PagesModelActions from '../../../../actions/pages-model-actions';
+import PagesModelActions from '../../../../actions/model/pages-model-actions';
 import UIPageModel from '../../../../model/ui-page-model';
 import * as UIPagesSelectors from '../../../../selectors/ui-pages-selectors';
 import * as DomainPagesSelectors from '../../../../selectors/domain-pages-selectors';
@@ -43,8 +43,10 @@ export default class Tab extends PureComponent {
     }));
   }
 
-  handleClick = () => {
-    this.props.dispatch(PagesModelActions.setSelectedPage({ pageId: this.props.pageId }));
+  handleMouseDown = () => {
+    if (!this.props.selected) {
+      this.props.dispatch(PagesModelActions.setSelectedPage({ pageId: this.props.pageId }));
+    }
   }
 
   render() {
@@ -63,7 +65,7 @@ export default class Tab extends PureComponent {
           ${this.props.tabLoadAnimationRunning ? 'tab-loaded' : ''}`
         }
         title={this.props.tooltipText}
-        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
         style={{
           ...(this.props.tabLoadAnimationRunning ? {
             ...(this.props.selected ? {

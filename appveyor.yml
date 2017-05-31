@@ -13,11 +13,7 @@ skip_commits:
 cache:
   - node_modules
 
-branches:
-  only:
-    - bfg-browser
-    - mentat-test
-
+# TODO: Find a way to cache neon-mentat build between first install and package
 test_script:
   - npm run test
   - npm run package

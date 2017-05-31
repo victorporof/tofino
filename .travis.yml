@@ -14,8 +14,3 @@ before_install:
 script:
   - npm run test
   - npm run package
-
-branches:
-  only:
-    - bfg-browser
-    - mentat-test
